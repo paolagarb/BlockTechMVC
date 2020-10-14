@@ -12,5 +12,9 @@ namespace BlockTechMVC.Models
         public TipoTransacao Tipo { get; set; }
         public DateTime Data { get; set; }
         public double Valor { get; set; }
+        public int CriptomoedaHojeId { get; set; }
+        public CriptomoedaHoje CriptomoedaHoje { get; set; }
+        public int ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

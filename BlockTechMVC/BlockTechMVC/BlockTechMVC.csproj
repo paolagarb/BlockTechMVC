@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="ApplicationWUser.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Home\Criptomoedas.cshtml" />
     <Content Remove="Views\Home\Privacy.cshtml" />
     <Content Remove="Views\Home\Transacoes.cshtml" />

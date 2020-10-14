@@ -47,7 +47,6 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
             [Display(Name = "Nome")]
             public string Nome { get; set; }
 
@@ -56,6 +55,7 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
             public string Documento { get; set; }
 
             [Required]
+            [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
