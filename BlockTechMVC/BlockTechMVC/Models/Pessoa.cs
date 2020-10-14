@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace BlockTechMVC.Models
 {
-    public class Criptomoeda
+    public class Pessoa
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Simbolo { get; set; }
+
     }
 }

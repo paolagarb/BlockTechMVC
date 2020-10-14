@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BlockTechMVC.Models.Enums
 {
-    public enum Transacao : int
+    public enum TipoTransacao : int
     {
         Transferencia = 0,
         Venda = 1,
