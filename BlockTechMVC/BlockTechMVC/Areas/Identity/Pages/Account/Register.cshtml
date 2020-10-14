@@ -13,9 +13,50 @@
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Input.Nome"></label>
+                <input asp-for="Input.Nome" class="form-control" />
+                <span asp-validation-for="Input.Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Documento"></label>
+                <input asp-for="Input.Documento" class="form-control" />
+                <span asp-validation-for="Input.Documento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Cep"></label>
+                <input asp-for="Input.Cep" class="form-control" />
+                <span asp-validation-for="Input.Cep" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Uf"></label>
+                <input asp-for="Input.Uf" class="form-control" />
+                <span asp-validation-for="Input.Uf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Cidade"></label>
+                <input asp-for="Input.Cidade" class="form-control" />
+                <span asp-validation-for="Input.Cidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Rua"></label>
+                <input asp-for="Input.Rua" class="form-control" />
+                <span asp-validation-for="Input.Rua" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Numero"></label>
+                <input asp-for="Input.Numero" class="form-control" />
+                <span asp-validation-for="Input.Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Telefone"></label>
+                <input asp-for="Input.Telefone" class="form-control" />
+                <span asp-validation-for="Input.Telefone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Password"></label>

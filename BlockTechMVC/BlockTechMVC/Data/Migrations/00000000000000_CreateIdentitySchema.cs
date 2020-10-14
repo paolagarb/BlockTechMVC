@@ -40,7 +40,15 @@ namespace BlockTechMVC.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Nome = table.Column<string>(maxLength: 65, nullable: false),
+                    Documento = table.Column<string>(maxLength: 18, nullable: false),
+                    Cep = table.Column<string>(maxLength: 9, nullable: false),
+                    Uf = table.Column<string>(maxLength: 2, nullable: false),
+                    Cidade = table.Column<string>(maxLength: 50, nullable: false),
+                    Rua = table.Column<string>(maxLength: 65, nullable: false),
+                    Numero = table.Column<string>(maxLength: 7, nullable: false),
+                    Telefone = table.Column<string>(maxLength: 17, nullable: false)
                 },
                 constraints: table =>
                 {
