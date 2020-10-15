@@ -12,5 +12,18 @@ namespace BlockTechMVC.Models
         public double Valor { get; set; }
         public Criptomoeda Criptomoeda { get; set; }
         public int CriptomoedaId { get; set; }
+
+        public CriptomoedaHoje()
+        {
+
+        }
+
+        public CriptomoedaHoje(int id, DateTime data, double valor, Criptomoeda criptomoeda)
+        {
+            Id = id;
+            Data = data;
+            Valor = valor;
+            Criptomoeda = criptomoeda;
+        }
     }
 }

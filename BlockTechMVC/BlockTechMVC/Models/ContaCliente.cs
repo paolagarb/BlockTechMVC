@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,30 @@ namespace BlockTechMVC.Models
     {
         public int Id { get; set; }
         public string NumeroConta { get; set; }
+        public DateTime DataAbertura { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public int ApplicationUserId { get; set; }
+        public Transacao Transacao { get; set; }
+        public int TransacaoId { get; set; }
+        public List<Conta> Conta { get; set; }
+        public int ContaId { get; set; }
+        public ContaCliente()
+        {
+
+        }
+
+        public ContaCliente(int id, string numeroConta, ApplicationUser applicationUser, DateTime dataAbertura, Transacao transacao)
+        {
+            Id = id;
+            NumeroConta = numeroConta;
+            DataAbertura = dataAbertura;
+            ApplicationUser = applicationUser;
+            Transacao = Transacao;
+        }
+
+        public void AddConta(Conta conta)
+        {
+            Conta.Add(conta);
+        }
     }
 }

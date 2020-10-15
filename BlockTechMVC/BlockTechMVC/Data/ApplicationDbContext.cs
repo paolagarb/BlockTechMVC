@@ -16,9 +16,7 @@ namespace BlockTechMVC.Data
         public DbSet<BlockTechMVC.Models.Transacao> Transacao { get; set; }
         public DbSet<BlockTechMVC.Models.Criptomoeda> Criptomoeda { get; set; }
         public DbSet<BlockTechMVC.Models.CriptomoedaHoje> CriptomoedaHoje { get; set; }
-        public DbSet<BlockTechMVC.Models.ApplicationUser> ApplicationUsers { get; set; } //
-        public DbSet<BlockTechMVC.Models.SaldoCriptomoedaHoje> SaldoCriptomoedaHoje { get; set; }
-        public DbSet<BlockTechMVC.Models.CompraCriptomoeda> CompraCriptomoeda { get; set; }
+        public DbSet<BlockTechMVC.Models.ApplicationUser> ApplicationUsers { get; set; } 
         public DbSet<BlockTechMVC.Models.ContaCliente> ContaCliente { get; set; }
     }
 }

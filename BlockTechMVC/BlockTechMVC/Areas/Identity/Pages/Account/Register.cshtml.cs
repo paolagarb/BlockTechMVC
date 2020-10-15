@@ -47,7 +47,7 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "Nome")]
+            [Display(Name = "Nome/Razão Social")]
             public string Nome { get; set; }
 
             [Required]
