@@ -15,6 +15,7 @@ namespace BlockTechMVC.Models
         public CriptomoedaHoje CriptomoedaHoje { get; set; }
         public int CriptomoedaHojeId { get; set; }
         public int ValorAplicado { get; set; } //Valor aplicado na criptomoeda
+        public double QuantidadeCriptomoeda { get; set; }
 
         public CompraCriptomoeda()
         {
@@ -30,11 +31,8 @@ namespace BlockTechMVC.Models
             CriptomoedaHoje = criptomoedaHoje;
             CriptomoedaHojeId = criptomoedaHojeId;
             ValorAplicado = valorAplicado;
+            QuantidadeCriptomoeda = valorAplicado / criptomoedaHoje.Valor;
         }
 
-        public double CalcularQuantidadeCriptomoeda()
-        {
-            return (ValorAplicado / CriptomoedaHoje.Valor);
-        }
     }
 }

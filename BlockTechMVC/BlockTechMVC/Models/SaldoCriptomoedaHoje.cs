@@ -11,6 +11,7 @@ namespace BlockTechMVC.Models
         public DateTime Data { get; set; }
         public CompraCriptomoeda CompraCriptomoeda {get;set;}
         public int CompraCriptomoedaId { get; set; }
+        public double Saldo { get; set; }
 
         public SaldoCriptomoedaHoje()
         {
@@ -23,11 +24,7 @@ namespace BlockTechMVC.Models
             Data = data;
             CompraCriptomoeda = compraCriptomoeda;
             CompraCriptomoedaId = compraCriptomoedaId;
-        }
-
-        public double CalcularSaldoHoje(CompraCriptomoeda compraCriptomoeda)
-        {
-            return compraCriptomoeda.ValorAplicado * compraCriptomoeda.CalcularQuantidadeCriptomoeda();
+            Saldo = CompraCriptomoeda.QuantidadeCriptomoeda * compraCriptomoeda.CriptomoedaHoje.Valor;
         }
     }
 }
