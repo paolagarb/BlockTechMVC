@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace BlockTechMVC.Data.Migrations
+namespace BlockTechMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -108,35 +108,36 @@ namespace BlockTechMVC.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("BlockTechMVC.Models.CompraCriptomoeda", b =>
+            modelBuilder.Entity("BlockTechMVC.Models.Conta", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ContaClienteId")
+                    b.Property<string>("Agencia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Banco")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ContaClienteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CriptomoedaHojeId")
-                        .HasColumnType("int");
+                    b.Property<string>("NomeDestinatario")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("NumeroConta")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("QuantidadeCriptomoeda")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ValorAplicado")
-                        .HasColumnType("int");
+                    b.Property<string>("TipoConta")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ContaClienteId");
 
-                    b.HasIndex("CriptomoedaHojeId");
-
-                    b.ToTable("CompraCriptomoeda");
+                    b.ToTable("Conta");
                 });
 
             modelBuilder.Entity("BlockTechMVC.Models.ContaCliente", b =>
@@ -151,6 +152,12 @@ namespace BlockTechMVC.Data.Migrations
 
                     b.Property<string>("ApplicationUserId1")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ContaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataAbertura")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("NumeroConta")
                         .HasColumnType("nvarchar(max)");
@@ -203,27 +210,25 @@ namespace BlockTechMVC.Data.Migrations
                     b.ToTable("CriptomoedaHoje");
                 });
 
-            modelBuilder.Entity("BlockTechMVC.Models.SaldoCriptomoedaHoje", b =>
+            modelBuilder.Entity("BlockTechMVC.Models.Saldo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompraCriptomoedaId")
+                    b.Property<double>("SaldoAtualRS")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TransacaoId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Saldo")
+                    b.Property<double>("quantidadeCripo")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompraCriptomoedaId");
-
-                    b.ToTable("SaldoCriptomoedaHoje");
+                    b.ToTable("Saldo");
                 });
 
             modelBuilder.Entity("BlockTechMVC.Models.Transacao", b =>
@@ -233,17 +238,20 @@ namespace BlockTechMVC.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ApplicationUserId")
+                    b.Property<int>("ContaClienteId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId1")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ContaId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CriptomoedaHojeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("SaldoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
@@ -253,9 +261,13 @@ namespace BlockTechMVC.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId1");
+                    b.HasIndex("ContaClienteId");
+
+                    b.HasIndex("ContaId");
 
                     b.HasIndex("CriptomoedaHojeId");
+
+                    b.HasIndex("SaldoId");
 
                     b.ToTable("Transacao");
                 });
@@ -395,19 +407,11 @@ namespace BlockTechMVC.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BlockTechMVC.Models.CompraCriptomoeda", b =>
+            modelBuilder.Entity("BlockTechMVC.Models.Conta", b =>
                 {
-                    b.HasOne("BlockTechMVC.Models.ContaCliente", "ContaCliente")
-                        .WithMany()
-                        .HasForeignKey("ContaClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlockTechMVC.Models.CriptomoedaHoje", "CriptomoedaHoje")
-                        .WithMany()
-                        .HasForeignKey("CriptomoedaHojeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("BlockTechMVC.Models.ContaCliente", null)
+                        .WithMany("Conta")
+                        .HasForeignKey("ContaClienteId");
                 });
 
             modelBuilder.Entity("BlockTechMVC.Models.ContaCliente", b =>
@@ -426,26 +430,29 @@ namespace BlockTechMVC.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BlockTechMVC.Models.SaldoCriptomoedaHoje", b =>
-                {
-                    b.HasOne("BlockTechMVC.Models.CompraCriptomoeda", "CompraCriptomoeda")
-                        .WithMany()
-                        .HasForeignKey("CompraCriptomoedaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BlockTechMVC.Models.Transacao", b =>
                 {
-                    b.HasOne("BlockTechMVC.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("BlockTechMVC.Models.ContaCliente", "ContaCliente")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ContaClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlockTechMVC.Models.Conta", "ContaDestino")
+                        .WithMany()
+                        .HasForeignKey("ContaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BlockTechMVC.Models.CriptomoedaHoje", "CriptomoedaHoje")
                         .WithMany()
                         .HasForeignKey("CriptomoedaHojeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("BlockTechMVC.Models.Saldo", null)
+                        .WithMany("Transacao")
+                        .HasForeignKey("SaldoId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

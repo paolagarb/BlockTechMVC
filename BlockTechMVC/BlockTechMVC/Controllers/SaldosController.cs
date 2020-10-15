@@ -10,23 +10,22 @@ using BlockTechMVC.Models;
 
 namespace BlockTechMVC.Controllers
 {
-    public class CriptomoedaHojesController : Controller
+    public class SaldosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CriptomoedaHojesController(ApplicationDbContext context)
+        public SaldosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: CriptomoedaHojes
+        // GET: Saldos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.CriptomoedaHoje.Include(c => c.Criptomoeda);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Saldo.ToListAsync());
         }
 
-        // GET: CriptomoedaHojes/Details/5
+        // GET: Saldos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
 
-            var criptomoedaHoje = await _context.CriptomoedaHoje
-                .Include(c => c.Criptomoeda)
+            var saldo = await _context.Saldo
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (criptomoedaHoje == null)
+            if (saldo == null)
             {
                 return NotFound();
             }
 
-            return View(criptomoedaHoje);
+            return View(saldo);
         }
 
-        // GET: CriptomoedaHojes/Create
+        // GET: Saldos/Create
         public IActionResult Create()
         {
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id");
             return View();
         }
 
-        // POST: CriptomoedaHojes/Create
+        // POST: Saldos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
+        public async Task<IActionResult> Create([Bind("Id,TransacaoId,SaldoAtualRS,quantidadeCripo")] Saldo saldo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(criptomoedaHoje);
+                _context.Add(saldo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id", criptomoedaHoje.CriptomoedaId);
-            return View(criptomoedaHoje);
+            return View(saldo);
         }
 
-        // GET: CriptomoedaHojes/Edit/5
+        // GET: Saldos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
 
-            var criptomoedaHoje = await _context.CriptomoedaHoje.FindAsync(id);
-            if (criptomoedaHoje == null)
+            var saldo = await _context.Saldo.FindAsync(id);
+            if (saldo == null)
             {
                 return NotFound();
             }
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id", criptomoedaHoje.CriptomoedaId);
-            return View(criptomoedaHoje);
+            return View(saldo);
         }
 
-        // POST: CriptomoedaHojes/Edit/5
+        // POST: Saldos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TransacaoId,SaldoAtualRS,quantidadeCripo")] Saldo saldo)
         {
-            if (id != criptomoedaHoje.Id)
+            if (id != saldo.Id)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace BlockTechMVC.Controllers
             {
                 try
                 {
-                    _context.Update(criptomoedaHoje);
+                    _context.Update(saldo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CriptomoedaHojeExists(criptomoedaHoje.Id))
+                    if (!SaldoExists(saldo.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace BlockTechMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id", criptomoedaHoje.CriptomoedaId);
-            return View(criptomoedaHoje);
+            return View(saldo);
         }
 
-        // GET: CriptomoedaHojes/Delete/5
+        // GET: Saldos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +124,30 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
 
-            var criptomoedaHoje = await _context.CriptomoedaHoje
-                .Include(c => c.Criptomoeda)
+            var saldo = await _context.Saldo
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (criptomoedaHoje == null)
+            if (saldo == null)
             {
                 return NotFound();
             }
 
-            return View(criptomoedaHoje);
+            return View(saldo);
         }
 
-        // POST: CriptomoedaHojes/Delete/5
+        // POST: Saldos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var criptomoedaHoje = await _context.CriptomoedaHoje.FindAsync(id);
-            _context.CriptomoedaHoje.Remove(criptomoedaHoje);
+            var saldo = await _context.Saldo.FindAsync(id);
+            _context.Saldo.Remove(saldo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CriptomoedaHojeExists(int id)
+        private bool SaldoExists(int id)
         {
-            return _context.CriptomoedaHoje.Any(e => e.Id == id);
+            return _context.Saldo.Any(e => e.Id == id);
         }
     }
 }

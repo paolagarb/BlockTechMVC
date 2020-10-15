@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlockTechMVC.Data.Migrations
+namespace BlockTechMVC.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Db : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,14 +40,14 @@ namespace BlockTechMVC.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(maxLength: 65, nullable: false),
-                    Documento = table.Column<string>(maxLength: 18, nullable: false),
-                    Cep = table.Column<string>(maxLength: 9, nullable: false),
-                    Uf = table.Column<string>(maxLength: 2, nullable: false),
-                    Cidade = table.Column<string>(maxLength: 50, nullable: false),
-                    Rua = table.Column<string>(maxLength: 65, nullable: false),
-                    Numero = table.Column<string>(maxLength: 7, nullable: false),
-                    Telefone = table.Column<string>(maxLength: 17, nullable: false)
+                    Nome = table.Column<string>(nullable: true),
+                    Documento = table.Column<string>(nullable: true),
+                    Cep = table.Column<string>(nullable: true),
+                    Uf = table.Column<string>(nullable: true),
+                    Cidade = table.Column<string>(nullable: true),
+                    Rua = table.Column<string>(nullable: true),
+                    Numero = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,11 +55,40 @@ namespace BlockTechMVC.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Criptomoeda",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(nullable: true),
+                    Simbolo = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Criptomoeda", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Saldo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TransacaoId = table.Column<int>(nullable: false),
+                    SaldoAtualRS = table.Column<double>(nullable: false),
+                    quantidadeCripo = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Saldo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -81,7 +109,7 @@ namespace BlockTechMVC.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -161,6 +189,117 @@ namespace BlockTechMVC.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ContaCliente",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NumeroConta = table.Column<string>(nullable: true),
+                    DataAbertura = table.Column<DateTime>(nullable: false),
+                    ApplicationUserId1 = table.Column<string>(nullable: true),
+                    ApplicationUserId = table.Column<int>(nullable: false),
+                    ContaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContaCliente", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContaCliente_AspNetUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CriptomoedaHoje",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Valor = table.Column<double>(nullable: false),
+                    CriptomoedaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CriptomoedaHoje", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CriptomoedaHoje_Criptomoeda_CriptomoedaId",
+                        column: x => x.CriptomoedaId,
+                        principalTable: "Criptomoeda",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Conta",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Banco = table.Column<string>(nullable: true),
+                    Agencia = table.Column<string>(nullable: true),
+                    NumeroConta = table.Column<string>(nullable: true),
+                    TipoConta = table.Column<string>(nullable: true),
+                    NomeDestinatario = table.Column<string>(nullable: true),
+                    ContaClienteId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Conta", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Conta_ContaCliente_ContaClienteId",
+                        column: x => x.ContaClienteId,
+                        principalTable: "ContaCliente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transacao",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Tipo = table.Column<int>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Valor = table.Column<double>(nullable: false),
+                    CriptomoedaHojeId = table.Column<int>(nullable: false),
+                    ContaClienteId = table.Column<int>(nullable: false),
+                    ContaId = table.Column<int>(nullable: false),
+                    SaldoId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transacao", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transacao_ContaCliente_ContaClienteId",
+                        column: x => x.ContaClienteId,
+                        principalTable: "ContaCliente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transacao_Conta_ContaId",
+                        column: x => x.ContaId,
+                        principalTable: "Conta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transacao_CriptomoedaHoje_CriptomoedaHojeId",
+                        column: x => x.CriptomoedaHojeId,
+                        principalTable: "CriptomoedaHoje",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transacao_Saldo_SaldoId",
+                        column: x => x.SaldoId,
+                        principalTable: "Saldo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -199,6 +338,41 @@ namespace BlockTechMVC.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Conta_ContaClienteId",
+                table: "Conta",
+                column: "ContaClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContaCliente_ApplicationUserId1",
+                table: "ContaCliente",
+                column: "ApplicationUserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CriptomoedaHoje_CriptomoedaId",
+                table: "CriptomoedaHoje",
+                column: "CriptomoedaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transacao_ContaClienteId",
+                table: "Transacao",
+                column: "ContaClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transacao_ContaId",
+                table: "Transacao",
+                column: "ContaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transacao_CriptomoedaHojeId",
+                table: "Transacao",
+                column: "CriptomoedaHojeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transacao_SaldoId",
+                table: "Transacao",
+                column: "SaldoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -219,7 +393,25 @@ namespace BlockTechMVC.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Transacao");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Conta");
+
+            migrationBuilder.DropTable(
+                name: "CriptomoedaHoje");
+
+            migrationBuilder.DropTable(
+                name: "Saldo");
+
+            migrationBuilder.DropTable(
+                name: "ContaCliente");
+
+            migrationBuilder.DropTable(
+                name: "Criptomoeda");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

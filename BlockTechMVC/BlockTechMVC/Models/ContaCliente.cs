@@ -13,8 +13,6 @@ namespace BlockTechMVC.Models
         public DateTime DataAbertura { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public int ApplicationUserId { get; set; }
-        public Transacao Transacao { get; set; }
-        public int TransacaoId { get; set; }
         public List<Conta> Conta { get; set; }
         public int ContaId { get; set; }
         public ContaCliente()
@@ -22,13 +20,12 @@ namespace BlockTechMVC.Models
 
         }
 
-        public ContaCliente(int id, string numeroConta, ApplicationUser applicationUser, DateTime dataAbertura, Transacao transacao)
+        public ContaCliente(int id, string numeroConta, ApplicationUser applicationUser, DateTime dataAbertura)
         {
             Id = id;
             NumeroConta = numeroConta;
             DataAbertura = dataAbertura;
             ApplicationUser = applicationUser;
-            Transacao = Transacao;
         }
 
         public void AddConta(Conta conta)
