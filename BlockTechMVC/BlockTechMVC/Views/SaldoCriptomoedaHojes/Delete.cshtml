@@ -1,0 +1,57 @@
+﻿@model BlockTechMVC.Models.SaldoCriptomoedaHoje
+
+@{
+    ViewData["Title"] = "Deletar";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Tem certeza que deseja deletar??</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompraCriptomoeda.ContaCliente.ApplicationUser.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompraCriptomoeda.ContaCliente.ApplicationUser.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Simbolo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Simbolo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompraCriptomoeda.ValorAplicado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompraCriptomoeda.ValorAplicado)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompraCriptomoeda.CalcularQuantidadeCriptomoeda())
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompraCriptomoeda.CalcularQuantidadeCriptomoeda())
+        </dd>
+
+    </dl>
+    
+    <form asp-action="Deletar">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Deletar" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

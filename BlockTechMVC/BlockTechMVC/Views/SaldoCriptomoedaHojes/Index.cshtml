@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BlockTechMVC.Models.SaldoCriptomoedaHoje>
+
+@{
+    ViewData["Title"] = "Saldo Criptomoedas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Adicionar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompraCriptomoeda.ContaCliente.ApplicationUser.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Simbolo)
+            </th>  
+            <th>
+                @Html.DisplayNameFor(model => model.CompraCriptomoeda.CalcularQuantidadeCriptomoeda())
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompraCriptomoeda.ContaCliente.ApplicationUser.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td> 
+            <td>
+                @Html.DisplayFor(modelItem => item.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Nome)
+            </td>       
+            <td>
+                @Html.DisplayFor(modelItem => item.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Simbolo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompraCriptomoeda.CalcularQuantidadeCriptomoeda())
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
