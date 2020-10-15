@@ -1,7 +1,7 @@
-﻿@model IEnumerable<BlockTechMVC.Models.Transacao>
+﻿@model IEnumerable<BlockTechMVC.Models.CriptomoedaHoje>
 
 @{
-    ViewData["Title"] = "Transações";
+    ViewData["Title"] = "Criptomoedas";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -13,7 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Tipo)
+                @Html.DisplayNameFor(model => model.Criptomoeda.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Criptomoeda.Simbolo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Data)
@@ -21,14 +24,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Valor)
             </th>
-            <!--
-            <th>
-                @Html.DisplayNameFor(model => model.CriptomoedaHoje)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUserId)
-            </th>
-             -->
+            <!--    <th>
+            @Html.DisplayNameFor(model => model.Criptomoeda)
+        </th>
+        -->
             <th></th>
         </tr>
     </thead>
@@ -36,20 +35,20 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
+                @Html.DisplayFor(modelItem => item.Criptomoeda.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Criptomoeda.Simbolo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Data)
             </td>
             <td>
-                R$ @Html.DisplayFor(modelItem => item.Valor)
+                @Html.DisplayFor(modelItem => item.Valor)
             </td>
             <!--
             <td>
-                @Html.DisplayFor(modelItem => item.CriptomoedaHoje.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUserId)
+                @Html.DisplayFor(modelItem => item.Criptomoeda.Id)
             </td>
             -->
             <td>
