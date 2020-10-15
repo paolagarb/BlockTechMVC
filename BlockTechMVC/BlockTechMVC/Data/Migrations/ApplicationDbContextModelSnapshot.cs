@@ -124,6 +124,9 @@ namespace BlockTechMVC.Data.Migrations
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("QuantidadeCriptomoeda")
+                        .HasColumnType("float");
+
                     b.Property<int>("ValorAplicado")
                         .HasColumnType("int");
 
@@ -212,6 +215,9 @@ namespace BlockTechMVC.Data.Migrations
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("Saldo")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

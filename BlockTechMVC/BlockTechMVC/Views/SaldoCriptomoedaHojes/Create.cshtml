@@ -37,9 +37,14 @@
                 <span asp-validation-for="CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Simbolo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CompraCriptomoeda.CalcularQuantidadeCriptomoeda()" class="control-label"></label>
-                <select asp-for="CompraCriptomoeda.CalcularQuantidadeCriptomoeda()" class="form-control"></select>
-                <span asp-validation-for="CompraCriptomoeda.CalcularQuantidadeCriptomoeda()" class="text-danger"></span>
+                <label asp-for="CompraCriptomoeda.QuantidadeCriptomoeda" class="control-label"></label>
+                <select asp-for="CompraCriptomoeda.QuantidadeCriptomoeda" class="form-control"></select>
+                <span asp-validation-for="CompraCriptomoeda.QuantidadeCriptomoeda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Saldo" class="control-label"></label>
+                <select asp-for="Saldo" class="form-control"></select>
+                <span asp-validation-for="Saldo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Adicionar" class="btn btn-primary" />

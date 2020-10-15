@@ -25,7 +25,10 @@
                 @Html.DisplayNameFor(model => model.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Simbolo)
             </th>  
             <th>
-                @Html.DisplayNameFor(model => model.CompraCriptomoeda.CalcularQuantidadeCriptomoeda())
+                @Html.DisplayNameFor(model => model.CompraCriptomoeda.QuantidadeCriptomoeda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Saldo)
             </th>
             <th></th>
         </tr>
@@ -46,7 +49,10 @@
                 @Html.DisplayFor(modelItem => item.CompraCriptomoeda.CriptomoedaHoje.Criptomoeda.Simbolo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompraCriptomoeda.CalcularQuantidadeCriptomoeda())
+                @Html.DisplayFor(modelItem => item.CompraCriptomoeda.QuantidadeCriptomoeda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Saldo)
             </td>
 
             <td>

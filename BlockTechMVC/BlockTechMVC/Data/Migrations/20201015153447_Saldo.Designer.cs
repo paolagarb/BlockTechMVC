@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlockTechMVC.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201015151431_Saldo")]
+    [Migration("20201015153447_Saldo")]
     partial class Saldo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,6 +126,9 @@ namespace BlockTechMVC.Data.Migrations
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("QuantidadeCriptomoeda")
+                        .HasColumnType("float");
+
                     b.Property<int>("ValorAplicado")
                         .HasColumnType("int");
 
@@ -214,6 +217,9 @@ namespace BlockTechMVC.Data.Migrations
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("Saldo")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
