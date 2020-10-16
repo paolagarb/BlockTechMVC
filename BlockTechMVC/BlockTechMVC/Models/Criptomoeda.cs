@@ -10,6 +10,7 @@ namespace BlockTechMVC.Models
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Simbolo { get; set; }
+        public DateTime Cadastro { get; set; }
 
         public Criptomoeda()
         {
@@ -20,6 +21,7 @@ namespace BlockTechMVC.Models
         {
             Nome = nome;
             Simbolo = simbolo;
+            Cadastro = DateTime.Now;
         }
     }
 }
