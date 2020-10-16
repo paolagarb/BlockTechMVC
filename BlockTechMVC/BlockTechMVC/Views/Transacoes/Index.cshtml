@@ -13,22 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Tipo)
+                @Html.DisplayNameFor(model => model.CriptomoedaHoje.Criptomoeda.Nome)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Data)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CriptomoedaHoje)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContaCliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContaDestino)
             </th>
             <th></th>
         </tr>
@@ -37,22 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
+                @Html.DisplayFor(modelItem => item.CriptomoedaHoje.Criptomoeda.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Data)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CriptomoedaHoje.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContaCliente.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContaDestino.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
