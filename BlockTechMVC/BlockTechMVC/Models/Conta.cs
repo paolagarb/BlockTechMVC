@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlockTechMVC.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace BlockTechMVC.Models
         public string Banco { get; set; }
         public string Agencia { get; set; }
         public string NumeroConta { get; set; }
-        public string TipoConta { get; set; }
+        public TipoConta TipoConta { get; set; }
         public string NomeDestinatario { get; set; }
 
         public Conta()
@@ -19,7 +20,7 @@ namespace BlockTechMVC.Models
 
         }
 
-        public Conta(int id, string banco, string agencia, string numeroConta, string tipoConta, string nomeDestinatario)
+        public Conta(int id, string banco, string agencia, string numeroConta, TipoConta tipoConta, string nomeDestinatario)
         {
             Id = id;
             Banco = banco;

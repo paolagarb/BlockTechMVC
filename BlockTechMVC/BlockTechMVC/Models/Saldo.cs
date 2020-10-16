@@ -17,6 +17,12 @@ namespace BlockTechMVC.Models
         {
 
         }
+        public Saldo(int id, double saldoAtualRS, double quantidadeCripo)
+        {
+            Id = id;
+            SaldoAtualRS = saldoAtualRS;
+            this.quantidadeCripo = quantidadeCripo;
+        }
 
         public void AddTransacao(Transacao transacao)
         {
