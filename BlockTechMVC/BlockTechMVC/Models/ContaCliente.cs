@@ -20,9 +20,8 @@ namespace BlockTechMVC.Models
 
         }
         
-        public ContaCliente(int id, string numeroConta, DateTime dataAbertura, ApplicationUser applicationUser)
+        public ContaCliente(string numeroConta, DateTime dataAbertura, ApplicationUser applicationUser)
         {
-            Id = id;
             NumeroConta = numeroConta;
             DataAbertura = dataAbertura;
             ApplicationUser = applicationUser;

@@ -22,9 +22,8 @@ namespace BlockTechMVC.Models
 
         }
 
-        public ApplicationUser(string id, string email, string nome, string documento, string cep, string uf, string cidade, string rua, string numero, string telefone, string password)
+        public ApplicationUser(string email, string nome, string documento, string cep, string uf, string cidade, string rua, string numero, string telefone, string password)
         {
-            Id = id;
             Email = email;
             Nome = nome;
             Documento = documento;

@@ -16,9 +16,8 @@ namespace BlockTechMVC.Models
 
         }
 
-        public Criptomoeda(int id, string nome, string simbolo)
+        public Criptomoeda(string nome, string simbolo)
         {
-            Id = id;
             Nome = nome;
             Simbolo = simbolo;
         }

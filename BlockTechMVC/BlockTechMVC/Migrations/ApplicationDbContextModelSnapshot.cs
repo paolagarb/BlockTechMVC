@@ -130,8 +130,8 @@ namespace BlockTechMVC.Migrations
                     b.Property<string>("NumeroConta")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TipoConta")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TipoConta")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -241,7 +241,7 @@ namespace BlockTechMVC.Migrations
                     b.Property<int>("ContaClienteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ContaId")
+                    b.Property<int>("ContaDestinoId")
                         .HasColumnType("int");
 
                     b.Property<int>("CriptomoedaHojeId")
@@ -263,7 +263,7 @@ namespace BlockTechMVC.Migrations
 
                     b.HasIndex("ContaClienteId");
 
-                    b.HasIndex("ContaId");
+                    b.HasIndex("ContaDestinoId");
 
                     b.HasIndex("CriptomoedaHojeId");
 
@@ -440,7 +440,7 @@ namespace BlockTechMVC.Migrations
 
                     b.HasOne("BlockTechMVC.Models.Conta", "ContaDestino")
                         .WithMany()
-                        .HasForeignKey("ContaId")
+                        .HasForeignKey("ContaDestinoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

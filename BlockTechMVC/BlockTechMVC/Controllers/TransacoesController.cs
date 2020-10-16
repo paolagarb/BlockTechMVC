@@ -70,7 +70,7 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaId);
+            ViewData["ContaDestinoId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaDestinoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
             return View(transacao);
         }
@@ -89,7 +89,7 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaId);
+            ViewData["ContaDestinoId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaDestinoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
             return View(transacao);
         }
@@ -127,7 +127,7 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaId);
+            ViewData["ContaDestinoId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaDestinoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
             return View(transacao);
         }

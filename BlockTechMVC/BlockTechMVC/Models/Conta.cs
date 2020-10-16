@@ -20,9 +20,8 @@ namespace BlockTechMVC.Models
 
         }
 
-        public Conta(int id, string banco, string agencia, string numeroConta, TipoConta tipoConta, string nomeDestinatario)
+        public Conta(string banco, string agencia, string numeroConta, TipoConta tipoConta, string nomeDestinatario)
         {
-            Id = id;
             Banco = banco;
             Agencia = agencia;
             NumeroConta = numeroConta;

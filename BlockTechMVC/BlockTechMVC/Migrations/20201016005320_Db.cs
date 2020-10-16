@@ -242,7 +242,7 @@ namespace BlockTechMVC.Migrations
                     Banco = table.Column<string>(nullable: true),
                     Agencia = table.Column<string>(nullable: true),
                     NumeroConta = table.Column<string>(nullable: true),
-                    TipoConta = table.Column<string>(nullable: true),
+                    TipoConta = table.Column<int>(nullable: false),
                     NomeDestinatario = table.Column<string>(nullable: true),
                     ContaClienteId = table.Column<int>(nullable: true)
                 },
@@ -268,7 +268,7 @@ namespace BlockTechMVC.Migrations
                     Valor = table.Column<double>(nullable: false),
                     CriptomoedaHojeId = table.Column<int>(nullable: false),
                     ContaClienteId = table.Column<int>(nullable: false),
-                    ContaId = table.Column<int>(nullable: false),
+                    ContaDestinoId = table.Column<int>(nullable: true),
                     SaldoId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -281,8 +281,8 @@ namespace BlockTechMVC.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transacao_Conta_ContaId",
-                        column: x => x.ContaId,
+                        name: "FK_Transacao_Conta_ContaDestinoId",
+                        column: x => x.ContaDestinoId,
                         principalTable: "Conta",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -360,9 +360,9 @@ namespace BlockTechMVC.Migrations
                 column: "ContaClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transacao_ContaId",
+                name: "IX_Transacao_ContaDestinoId",
                 table: "Transacao",
-                column: "ContaId");
+                column: "ContaDestinoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transacao_CriptomoedaHojeId",
