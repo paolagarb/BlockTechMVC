@@ -49,9 +49,9 @@ namespace BlockTechMVC.Data
 
             ContaCliente cc1 = new ContaCliente("012342-12", DateTime.Now, u1);
 
-            Transacao t1 = new Transacao(TipoTransacao.Compra, DateTime.Now, 500, ch6, cc1);
+           Transacao t1 = new Transacao(TipoTransacao.Compra, DateTime.Now, 500, ch6, cc1);
 
-            Saldo s1 = new Saldo(1000, 0);
+            Saldo s1 = new Saldo(1000, 0, t1);
 
             _context.Criptomoeda.AddRange(c1, c2, c3, c4, c5, c6);
             _context.CriptomoedaHoje.AddRange(ch1, ch2, ch3, ch4, ch5, ch6);

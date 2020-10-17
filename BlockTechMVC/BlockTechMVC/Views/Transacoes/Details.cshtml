@@ -1,21 +1,15 @@
 ﻿@model BlockTechMVC.Models.Transacao
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
     <h4>Transacao</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tipo)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Data)
         </dt>
@@ -23,32 +17,32 @@
             @Html.DisplayFor(model => model.Data)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ContaCliente.ApplicationUser.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CriptomoedaHoje.Criptomoeda.Nome)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CriptomoedaHoje.Criptomoeda.Nome)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Valor)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Valor)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriptomoedaHoje)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriptomoedaHoje.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContaCliente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContaCliente.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContaDestino)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContaDestino.Id)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Voltar</a>
 </div>
