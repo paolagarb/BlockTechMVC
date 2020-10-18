@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC.Controllers
 {
+    [Authorize]
     public class CriptomoedasHojeController : Controller
     {
         private readonly ApplicationDbContext _context;
