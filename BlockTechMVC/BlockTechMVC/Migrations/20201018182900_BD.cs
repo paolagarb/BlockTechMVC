@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlockTechMVC.Migrations
 {
-    public partial class Db : Migration
+    public partial class BD : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,13 +55,31 @@ namespace BlockTechMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Conta",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Banco = table.Column<string>(nullable: true),
+                    Agencia = table.Column<string>(nullable: true),
+                    NumeroConta = table.Column<string>(nullable: true),
+                    TipoConta = table.Column<int>(nullable: false),
+                    NomeDestinatario = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Conta", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Criptomoeda",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(nullable: true),
-                    Simbolo = table.Column<string>(nullable: true)
+                    Simbolo = table.Column<string>(nullable: true),
+                    Cadastro = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,19 +215,24 @@ namespace BlockTechMVC.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NumeroConta = table.Column<string>(nullable: true),
                     DataAbertura = table.Column<DateTime>(nullable: false),
-                    ApplicationUserId1 = table.Column<string>(nullable: true),
-                    ApplicationUserId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     ContaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ContaCliente", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContaCliente_AspNetUsers_ApplicationUserId1",
-                        column: x => x.ApplicationUserId1,
+                        name: "FK_ContaCliente_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ContaCliente_Conta_ContaId",
+                        column: x => x.ContaId,
+                        principalTable: "Conta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -234,30 +257,6 @@ namespace BlockTechMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Conta",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Banco = table.Column<string>(nullable: true),
-                    Agencia = table.Column<string>(nullable: true),
-                    NumeroConta = table.Column<string>(nullable: true),
-                    TipoConta = table.Column<int>(nullable: false),
-                    NomeDestinatario = table.Column<string>(nullable: true),
-                    ContaClienteId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Conta", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Conta_ContaCliente_ContaClienteId",
-                        column: x => x.ContaClienteId,
-                        principalTable: "ContaCliente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Transacao",
                 columns: table => new
                 {
@@ -268,7 +267,6 @@ namespace BlockTechMVC.Migrations
                     Valor = table.Column<double>(nullable: false),
                     CriptomoedaHojeId = table.Column<int>(nullable: false),
                     ContaClienteId = table.Column<int>(nullable: false),
-                    ContaDestinoId = table.Column<int>(nullable: true),
                     SaldoId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -278,12 +276,6 @@ namespace BlockTechMVC.Migrations
                         name: "FK_Transacao_ContaCliente_ContaClienteId",
                         column: x => x.ContaClienteId,
                         principalTable: "ContaCliente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Transacao_Conta_ContaDestinoId",
-                        column: x => x.ContaDestinoId,
-                        principalTable: "Conta",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -340,14 +332,14 @@ namespace BlockTechMVC.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Conta_ContaClienteId",
-                table: "Conta",
-                column: "ContaClienteId");
+                name: "IX_ContaCliente_ApplicationUserId",
+                table: "ContaCliente",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ContaCliente_ApplicationUserId1",
+                name: "IX_ContaCliente_ContaId",
                 table: "ContaCliente",
-                column: "ApplicationUserId1");
+                column: "ContaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CriptomoedaHoje_CriptomoedaId",
@@ -358,11 +350,6 @@ namespace BlockTechMVC.Migrations
                 name: "IX_Transacao_ContaClienteId",
                 table: "Transacao",
                 column: "ContaClienteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transacao_ContaDestinoId",
-                table: "Transacao",
-                column: "ContaDestinoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transacao_CriptomoedaHojeId",
@@ -399,7 +386,7 @@ namespace BlockTechMVC.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Conta");
+                name: "ContaCliente");
 
             migrationBuilder.DropTable(
                 name: "CriptomoedaHoje");
@@ -408,13 +395,13 @@ namespace BlockTechMVC.Migrations
                 name: "Saldo");
 
             migrationBuilder.DropTable(
-                name: "ContaCliente");
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Conta");
 
             migrationBuilder.DropTable(
                 name: "Criptomoeda");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

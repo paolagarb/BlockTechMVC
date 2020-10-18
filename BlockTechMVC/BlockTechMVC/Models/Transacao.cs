@@ -16,9 +16,7 @@ namespace BlockTechMVC.Models
         public CriptomoedaHoje CriptomoedaHoje { get; set; }
         public int ContaClienteId { get; set; }
         public ContaCliente ContaCliente { get; set; }
-        public int ContaDestinoId { get; set; }
-        public Conta ContaDestino { get; set; } //para transferência
-       
+
         public Transacao()
         {
 
@@ -33,10 +31,10 @@ namespace BlockTechMVC.Models
             ContaCliente = contaCliente;
         }
 
-        public Transacao(TipoTransacao tipo, DateTime data, double valor, CriptomoedaHoje criptomoedaHoje, ContaCliente contaCliente, Conta contaDestino) : this(tipo, data, valor, criptomoedaHoje, contaCliente)
-        {
-            ContaDestino = contaDestino;
-        }
+        //public Transacao(Tipotransacao tipo, datetime data, double valor, Criptomoedahoje criptomoedahoje, contacliente contacliente, conta contadestino) : this(tipo, data, valor, criptomoedahoje, contacliente)
+        //{
+        //    contadestino = contadestino;
+        //}
 
         public double CalcularQuantidadeCripto()
         {

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlockTechMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201016181425_DtCripto")]
-    partial class DtCripto
+    [Migration("20201018182900_BD")]
+    partial class BD
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,9 +123,6 @@ namespace BlockTechMVC.Migrations
                     b.Property<string>("Banco")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ContaClienteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NomeDestinatario")
                         .HasColumnType("nvarchar(max)");
 
@@ -137,8 +134,6 @@ namespace BlockTechMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContaClienteId");
-
                     b.ToTable("Conta");
                 });
 
@@ -149,10 +144,7 @@ namespace BlockTechMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId1")
+                    b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ContaId")
@@ -166,7 +158,9 @@ namespace BlockTechMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId1");
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ContaId");
 
                     b.ToTable("ContaCliente");
                 });
@@ -246,9 +240,6 @@ namespace BlockTechMVC.Migrations
                     b.Property<int>("ContaClienteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ContaDestinoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CriptomoedaHojeId")
                         .HasColumnType("int");
 
@@ -267,8 +258,6 @@ namespace BlockTechMVC.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ContaClienteId");
-
-                    b.HasIndex("ContaDestinoId");
 
                     b.HasIndex("CriptomoedaHojeId");
 
@@ -412,18 +401,17 @@ namespace BlockTechMVC.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BlockTechMVC.Models.Conta", b =>
-                {
-                    b.HasOne("BlockTechMVC.Models.ContaCliente", null)
-                        .WithMany("Conta")
-                        .HasForeignKey("ContaClienteId");
-                });
-
             modelBuilder.Entity("BlockTechMVC.Models.ContaCliente", b =>
                 {
                     b.HasOne("BlockTechMVC.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("BlockTechMVC.Models.Conta", "Conta")
+                        .WithMany()
+                        .HasForeignKey("ContaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BlockTechMVC.Models.CriptomoedaHoje", b =>
@@ -440,12 +428,6 @@ namespace BlockTechMVC.Migrations
                     b.HasOne("BlockTechMVC.Models.ContaCliente", "ContaCliente")
                         .WithMany()
                         .HasForeignKey("ContaClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlockTechMVC.Models.Conta", "ContaDestino")
-                        .WithMany()
-                        .HasForeignKey("ContaDestinoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

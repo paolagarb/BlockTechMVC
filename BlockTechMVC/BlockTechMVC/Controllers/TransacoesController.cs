@@ -24,7 +24,7 @@ namespace BlockTechMVC.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Transacao.Include(t => t.ContaCliente).Include(t => t.ContaDestino).Include(t => t.CriptomoedaHoje);
+            var applicationDbContext = _context.Transacao.Include(t => t.ContaCliente).Include(t => t.CriptomoedaHoje);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -38,7 +38,6 @@ namespace BlockTechMVC.Controllers
 
             var transacao = await _context.Transacao
                 .Include(t => t.ContaCliente)
-                .Include(t => t.ContaDestino)
                 .Include(t => t.CriptomoedaHoje)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transacao == null)
@@ -72,7 +71,6 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["ContaDestinoId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaDestinoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
             return View(transacao);
         }
@@ -91,7 +89,6 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["ContaDestinoId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaDestinoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
             return View(transacao);
         }
@@ -129,7 +126,6 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["ContaDestinoId"] = new SelectList(_context.Conta, "Id", "Id", transacao.ContaDestinoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
             return View(transacao);
         }
@@ -144,7 +140,6 @@ namespace BlockTechMVC.Controllers
 
             var transacao = await _context.Transacao
                 .Include(t => t.ContaCliente)
-                .Include(t => t.ContaDestino)
                 .Include(t => t.CriptomoedaHoje)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transacao == null)
