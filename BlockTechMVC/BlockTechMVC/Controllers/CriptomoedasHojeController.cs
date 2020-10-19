@@ -51,7 +51,8 @@ namespace BlockTechMVC.Controllers
         public IActionResult Create()
         {
 
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id");
+            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome");
+            ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
             return View();
         }
 
@@ -70,9 +71,13 @@ namespace BlockTechMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id", criptomoedaHoje.CriptomoedaId);
-            
-            ViewBag.CriptomoedaNome = new SelectList(_context.Criptomoeda.ToList(), "Id", "Nome");
+            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
+
+            ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
+            //ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.Criptomoeda);
+
+            //var cripto = _context.CriptomoedaHoje.Include(c => c.Criptomoeda);
+            //ViewBag.CriptomoedaNome = new SelectList(_context.Criptomoeda.ToList(), "Id", "Nome");
 
             return View();
         }
@@ -90,7 +95,9 @@ namespace BlockTechMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id", criptomoedaHoje.CriptomoedaId);
+            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
+
+            ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
             return View(criptomoedaHoje);
         }
 
@@ -126,7 +133,9 @@ namespace BlockTechMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id", criptomoedaHoje.CriptomoedaId);
+            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
+
+            ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
             return View(criptomoedaHoje);
         }
 
