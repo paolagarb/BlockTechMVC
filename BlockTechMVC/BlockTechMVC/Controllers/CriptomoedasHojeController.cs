@@ -50,6 +50,7 @@ namespace BlockTechMVC.Controllers
         // GET: CriptomoedasHoje/Create
         public IActionResult Create()
         {
+
             ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id");
             return View();
         }
@@ -61,6 +62,8 @@ namespace BlockTechMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
+           // ViewData["NomesCriptomoedas"] = new SelectList(_context.Criptomoeda, "Id", "Nome");
+
             if (ModelState.IsValid)
             {
                 _context.Add(criptomoedaHoje);
@@ -68,6 +71,8 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id", criptomoedaHoje.CriptomoedaId);
+            
+            ViewBag.CriptomoedaNome = new SelectList(_context.Criptomoeda, "Id", "Nome");
             return View(criptomoedaHoje);
         }
 

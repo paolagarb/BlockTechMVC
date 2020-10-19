@@ -18,16 +18,16 @@ namespace BlockTechMVC.Data
 
         public void Seed()
         {
-            //if (_context.ApplicationUser.Any()
-            // || _context.Conta.Any()
-            // || _context.ContaCliente.Any()
-            // || _context.Criptomoeda.Any()
-            // || _context.CriptomoedaHoje.Any()
-            // || _context.Saldo.Any()
-            // || _context.Transacao.Any())
-            //{
-            //    return;
-            //}
+            if (_context.ApplicationUser.Any()
+             || _context.Conta.Any()
+             || _context.ContaCliente.Any()
+             || _context.Criptomoeda.Any()
+             || _context.CriptomoedaHoje.Any()
+             || _context.Saldo.Any()
+             || _context.Transacao.Any())
+            {
+                return;
+            }
 
             Criptomoeda c1 = new Criptomoeda("Bitcoin", "BTC");
             Criptomoeda c2 = new Criptomoeda("EOS", "EOS");
