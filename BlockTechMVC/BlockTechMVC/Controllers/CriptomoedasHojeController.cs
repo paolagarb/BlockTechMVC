@@ -24,6 +24,7 @@ namespace BlockTechMVC.Controllers
         // GET: CriptomoedasHoje
         public async Task<IActionResult> Index()
         {
+            //var applicationDbContext = _context.CriptomoedaHoje.Where(c => c.Data == DateTime.Now).Include(c => c.Criptomoeda);
             var applicationDbContext = _context.CriptomoedaHoje.Include(c => c.Criptomoeda);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -63,21 +64,17 @@ namespace BlockTechMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
-           // ViewData["NomesCriptomoedas"] = new SelectList(_context.Criptomoeda, "Id", "Nome");
-
             if (ModelState.IsValid)
             {
                 _context.Add(criptomoedaHoje);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
+            //ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
+            ViewBag.CriptomoedaIdSimb = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
 
-            ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
-            //ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.Criptomoeda);
-
-            //var cripto = _context.CriptomoedaHoje.Include(c => c.Criptomoeda);
-            //ViewBag.CriptomoedaNome = new SelectList(_context.Criptomoeda.ToList(), "Id", "Nome");
 
             return View();
         }

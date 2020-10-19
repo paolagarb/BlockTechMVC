@@ -11,6 +11,8 @@ namespace BlockTechMVC.Models
     {
         public int Id { get; set; }
         public string Banco { get; set; }
+
+        [StringLength(4, ErrorMessage = "Número Inválido.")]
         public string Agencia { get; set; }
 
         [Display(Name ="Número da Conta")]

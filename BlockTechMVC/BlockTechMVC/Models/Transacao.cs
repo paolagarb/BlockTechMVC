@@ -13,6 +13,10 @@ namespace BlockTechMVC.Models
 
         [Display(Name ="Tipo de Transação")]
         public TipoTransacao Tipo { get; set; }
+
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime Data { get; set; }
         public double Valor { get; set; }
         public int CriptomoedaHojeId { get; set; }

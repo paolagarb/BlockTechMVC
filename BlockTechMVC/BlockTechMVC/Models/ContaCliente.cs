@@ -15,6 +15,8 @@ namespace BlockTechMVC.Models
         public string NumeroConta { get; set; } //IDENTITY
 
         [Display(Name ="Data de Abertura")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DataAbertura { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public Conta Conta { get; set; }
