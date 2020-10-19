@@ -84,6 +84,10 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
             public string Telefone { get; set; }
 
             [Required]
+            [Display(Name = "Nome de Usuário")]
+            public string UserName { get; set; }
+
+            [Required]
             [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
@@ -122,7 +126,7 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirme seu email",
                         $"Por favor, confirme sua conta até <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

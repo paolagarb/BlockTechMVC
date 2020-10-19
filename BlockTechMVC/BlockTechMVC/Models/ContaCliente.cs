@@ -12,7 +12,7 @@ namespace BlockTechMVC.Models
         public int Id { get; set; }
         
         [Display(Name="Número da Conta")]
-        public string NumeroConta { get; set; }
+        public string NumeroConta { get; set; } //IDENTITY
 
         [Display(Name ="Data de Abertura")]
         public DateTime DataAbertura { get; set; }
@@ -24,9 +24,8 @@ namespace BlockTechMVC.Models
 
         }
         
-        public ContaCliente(string numeroConta, DateTime dataAbertura, ApplicationUser applicationUser, Conta conta)
+        public ContaCliente(DateTime dataAbertura, ApplicationUser applicationUser, Conta conta)
         {
-            NumeroConta = numeroConta;
             DataAbertura = dataAbertura;
             ApplicationUser = applicationUser;
             Conta = conta;

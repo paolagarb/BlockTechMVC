@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,7 +9,10 @@ namespace BlockTechMVC.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        [Display(Name = "Nome ou Razão Social")]
         public string Nome { get; set; } //Razão Social ou Nome
+
+        [Display(Name = "CPF/CNPJ")]
         public string Documento { get; set; } //CPF ou CNPJ
         public string Cep { get; set; }
         public string Uf { get; set; }

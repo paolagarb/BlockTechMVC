@@ -73,7 +73,8 @@ namespace BlockTechMVC.Controllers
             ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Id", criptomoedaHoje.CriptomoedaId);
             
             ViewBag.CriptomoedaNome = new SelectList(_context.Criptomoeda.ToList(), "Id", "Nome");
-            return View(criptomoedaHoje);
+
+            return View();
         }
 
         // GET: CriptomoedasHoje/Edit/5

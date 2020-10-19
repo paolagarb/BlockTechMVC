@@ -9,7 +9,11 @@ namespace BlockTechMVC.Models
     public class Criptomoeda
     {
         public int Id { get; set; }
+
+        [Display(Name ="Nome da Criptomoeda")]
         public string Nome { get; set; }
+
+        [Display(Name = "Símbolo da Criptomoeda")]
         public string Simbolo { get; set; }
 
         [Display(Name ="Data de Cadastro")]
