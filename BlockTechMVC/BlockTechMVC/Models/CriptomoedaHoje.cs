@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace BlockTechMVC.Models
     {
         public int Id { get; set; }
         public DateTime Data { get; set; }
+
+        [Column(TypeName ="decimal(20,2)")]
         public double Valor { get; set; }
         public Criptomoeda Criptomoeda { get; set; }
         public int CriptomoedaId { get; set; }

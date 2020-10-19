@@ -24,13 +24,12 @@ namespace BlockTechMVC.Models
 
         }
 
-        public Conta(string banco, string agencia, string numeroConta, TipoConta tipoConta, string nomeDestinatario)
+        public Conta(string banco, string agencia, string numeroConta, TipoConta tipoConta)
         {
             Banco = banco;
             Agencia = agencia;
             NumeroConta = numeroConta;
             TipoConta = tipoConta;
-            NomeDestinatario = nomeDestinatario;
         }
     }
 }
