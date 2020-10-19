@@ -17,7 +17,7 @@ namespace BlockTechMVC.Models
 
         [Column(TypeName = "decimal(20,2)")]
         public double Valor { get; set; }
-        public Criptomoeda Criptomoeda { get; set; }
+        public virtual Criptomoeda Criptomoeda { get; set; }            ///
         public int CriptomoedaId { get; set; }
 
         public CriptomoedaHoje()

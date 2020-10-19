@@ -18,8 +18,8 @@ namespace BlockTechMVC.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DataAbertura { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
-        public Conta Conta { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual Conta Conta { get; set; }
         public int ContaId { get; set; }
         public ContaCliente()
         {

@@ -20,9 +20,9 @@ namespace BlockTechMVC.Models
         public DateTime Data { get; set; }
         public double Valor { get; set; }
         public int CriptomoedaHojeId { get; set; }
-        public CriptomoedaHoje CriptomoedaHoje { get; set; }
+        public virtual CriptomoedaHoje CriptomoedaHoje { get; set; }
         public int ContaClienteId { get; set; }
-        public ContaCliente ContaCliente { get; set; }
+        public virtual ContaCliente ContaCliente { get; set; }
 
         public Transacao()
         {
