@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,11 @@ namespace BlockTechMVC.Models
         public int Id { get; set; }
         public List<Transacao> Transacao { get; set; } = new List<Transacao>();
         public int TransacaoId { get; set; }
+
+        [Display(Name ="Saldo Atual")]
         public double SaldoAtualRS { get; set; } = 0;
+
+        [Display(Name ="Saldo em Criptomoeda")]
         public double quantidadeCripo { get; set; } = 0;
 
         public Saldo()
