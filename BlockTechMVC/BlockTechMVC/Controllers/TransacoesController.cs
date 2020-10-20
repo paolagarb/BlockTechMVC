@@ -49,6 +49,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Transacoes/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id");
@@ -62,6 +63,7 @@ namespace BlockTechMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Tipo,Data,Valor,CriptomoedaHojeId,ContaClienteId,ContaId")] Transacao transacao)
         {
             if (ModelState.IsValid)
@@ -76,6 +78,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Transacoes/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -98,6 +101,7 @@ namespace BlockTechMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Data,Valor,CriptomoedaHojeId,ContaClienteId,ContaId")] Transacao transacao)
         {
             if (id != transacao.Id)
@@ -131,6 +135,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Transacoes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -153,6 +158,7 @@ namespace BlockTechMVC.Controllers
         // POST: Transacoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var transacao = await _context.Transacao.FindAsync(id);

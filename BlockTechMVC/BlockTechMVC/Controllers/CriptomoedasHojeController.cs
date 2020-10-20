@@ -72,6 +72,7 @@ namespace BlockTechMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
             if (ModelState.IsValid)
@@ -90,6 +91,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: CriptomoedasHoje/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,6 +115,7 @@ namespace BlockTechMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
             if (id != criptomoedaHoje.Id)
@@ -147,6 +150,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: CriptomoedasHoje/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -166,6 +170,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // POST: CriptomoedasHoje/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
