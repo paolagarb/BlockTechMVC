@@ -49,6 +49,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: CriptomoedasHoje/Create
+        //[Authorize(Policy ="Administrador")]
         public IActionResult Create()
         {
 
@@ -71,10 +72,10 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
+            //ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
             //ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
             ViewBag.CriptomoedaIdSimb = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
-
+            ViewBag.CriptomoedaId = new SelectList(_context.Criptomoeda, "Id", "Nome");
 
             return View();
         }

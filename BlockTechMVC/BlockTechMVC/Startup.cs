@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlockTechMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC
 {
@@ -36,6 +37,20 @@ namespace BlockTechMVC
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddScoped<SeedingService>();
+
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            //        .RequireAuthenticatedUser()
+            //        .Build();
+            //    options.AddPolicy("Administrador", policy => policy.RequireClaim("UserName", "Administrador"));
+            //});
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("Administrador", policy => policy.RequireClaim("UserName", "Administrador"));
+
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
