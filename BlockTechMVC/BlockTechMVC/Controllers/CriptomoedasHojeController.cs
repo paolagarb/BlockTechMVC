@@ -58,7 +58,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: CriptomoedasHoje/Create
-        //[Authorize(Policy ="Administrador")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
 
