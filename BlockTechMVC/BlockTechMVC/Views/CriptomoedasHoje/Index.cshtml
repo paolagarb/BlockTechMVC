@@ -8,6 +8,15 @@
 <p>
     <a asp-action="Create">Adicionar</a>
 </p>
+
+<form asp-controller="CriptomoedasHoje" asp-action="Index">
+    <p>
+        Data: <input type="date" name="SearchDate">
+        <input type="submit" value="Filtrar" />
+    </p>
+</form>
+
+
 <table class="table">
     <thead>
         <tr>

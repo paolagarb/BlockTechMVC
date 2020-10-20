@@ -22,11 +22,25 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: CriptomoedasHoje
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime searchDate)
         {
-            //var applicationDbContext = _context.CriptomoedaHoje.Where(c => c.Data == DateTime.Now).Include(c => c.Criptomoeda);
-            var applicationDbContext = _context.CriptomoedaHoje.Include(c => c.Criptomoeda);
-            return View(await applicationDbContext.ToListAsync());
+            var criptomoedas = from c in _context.CriptomoedaHoje select c;
+           
+
+            //if (!String.IsNullOrEmpty(searchDate.ToString()))
+            if (searchDate == null)
+            {
+                criptomoedas = criptomoedas.Where(c => c.Data.Equals(DateTime.Now));
+            } else
+            {
+                criptomoedas = criptomoedas.Where(c => c.Data.Equals(searchDate));
+            }
+
+            return View(await criptomoedas.ToListAsync());
+
+
+            //var applicationDbContext = _context.CriptomoedaHoje.Include(c => c.Criptomoeda);
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: CriptomoedasHoje/Details/5
