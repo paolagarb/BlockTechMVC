@@ -17,9 +17,7 @@ namespace BlockTechMVC.Models
         [StringLength(5, ErrorMessage = "Esse símbolo não existe.")]
         public string Simbolo { get; set; }
 
-        //[StringLength(20, ErrorMessage = "Essa Criptomoeda não existe.")]
-        //[Display(Name ="Data de Cadastro")]
-
+        [Display(Name ="Data de Cadastro")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Cadastro { get; set; }
