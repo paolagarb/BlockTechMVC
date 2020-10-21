@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BlockTechMVC.Controllers
 {
@@ -61,7 +62,6 @@ namespace BlockTechMVC.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-
             ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome");
             ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
             return View();
@@ -102,8 +102,8 @@ namespace BlockTechMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
 
+            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
             ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
             return View(criptomoedaHoje);
         }

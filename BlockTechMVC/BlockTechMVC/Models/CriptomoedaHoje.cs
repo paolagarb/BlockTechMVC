@@ -12,13 +12,15 @@ namespace BlockTechMVC.Models
         public int Id { get; set; }
 
         [DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Data { get; set; }
 
         [Column(TypeName = "decimal(20,2)")]
         public double Valor { get; set; }
-        public virtual Criptomoeda Criptomoeda { get; set; }            ///
+
+        public virtual Criptomoeda Criptomoeda { get; set; }  
+        
+        [Display(Name ="Criptomoeda")]
         public int CriptomoedaId { get; set; }
 
         public CriptomoedaHoje()

@@ -20,7 +20,6 @@ namespace BlockTechMVC.Models
         [StringLength(20, ErrorMessage = "Essa Criptomoeda não existe.")]
         [Display(Name ="Data de Cadastro")]
 
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Cadastro { get; set; }
@@ -30,11 +29,11 @@ namespace BlockTechMVC.Models
 
         }
 
-        public Criptomoeda(string nome, string simbolo)
+        public Criptomoeda(string nome, string simbolo, DateTime cadastro)
         {
             Nome = nome;
             Simbolo = simbolo;
-            Cadastro = DateTime.Now;
+            Cadastro = cadastro;
         }
     }
 }

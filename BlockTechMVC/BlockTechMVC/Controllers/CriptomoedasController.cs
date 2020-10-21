@@ -68,6 +68,8 @@ namespace BlockTechMVC.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Nome,Simbolo,Cadastro")] Criptomoeda criptomoeda)
         {
+            //ViewBag.Date = DateTime.Now.Date;
+
             if (ModelState.IsValid)
             {
                 _context.Add(criptomoeda);

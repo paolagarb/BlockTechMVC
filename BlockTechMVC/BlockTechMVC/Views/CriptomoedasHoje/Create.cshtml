@@ -17,19 +17,9 @@
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Criptomoeda.Simbolo" class="control-label"></label>
-                <select asp-for="Criptomoeda.Simbolo" class="form-control" asp-items="ViewBag.CriptomoedaIdSimb"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Criptomoeda.Nome" class="control-label"></label>
-                <select asp-for="Criptomoeda.Nome" class="form-control" asp-items="ViewBag.CriptomoedaId"></select>
-            </div>
-
-            @*<div class="form-group">
                 <label asp-for="CriptomoedaId" class="control-label"></label>
-                <select asp-for="CriptomoedaId" class="form-control" asp-items="ViewBag.IDCriptomoeda"></select>
-            </div>*@
-
+                <select asp-for="CriptomoedaId" class="form-control" asp-items="ViewBag.CriptomoedaId"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="Valor" class="control-label"></label>
                 <input asp-for="Valor" class="form-control" />
