@@ -10,10 +10,10 @@ namespace BlockTechMVC.Models
     {
         public int Id { get; set; }
 
-        [Display(Name ="Nome da Criptomoeda")]
+        [Display(Name ="Nome")]
         public string Nome { get; set; }
 
-        [Display(Name = "Símbolo da Criptomoeda")]
+        [Display(Name = "Símbolo")]
         [StringLength(5, ErrorMessage = "Esse símbolo não existe.")]
         public string Simbolo { get; set; }
 
@@ -22,7 +22,7 @@ namespace BlockTechMVC.Models
 
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Cadastro { get; set; }
 
         public Criptomoeda()
