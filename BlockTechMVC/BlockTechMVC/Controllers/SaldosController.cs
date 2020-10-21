@@ -24,7 +24,11 @@ namespace BlockTechMVC.Controllers
         // GET: Saldos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Saldo.ToListAsync());
+
+            var saldos = _context.Saldo
+                .Include(c => c.Transacao);
+
+            return View(await saldos.ToListAsync());
         }
 
         // GET: Saldos/Details/5

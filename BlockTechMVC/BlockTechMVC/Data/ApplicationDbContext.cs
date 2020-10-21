@@ -21,5 +21,6 @@ namespace BlockTechMVC.Data
         public DbSet<BlockTechMVC.Models.Conta> Conta { get; set; }
         public DbSet<BlockTechMVC.Models.ContaCliente> ContaCliente { get; set; }
         public DbSet<BlockTechMVC.Models.Saldo> Saldo { get; set; }
+        public DbSet<BlockTechMVC.Models.CriptoSaldo> CriptoSaldo { get; set; }
     }
 }

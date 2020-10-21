@@ -39,26 +39,6 @@ namespace BlockTechMVC
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddScoped<SeedingService>();
-
-
-            //services.AddAuthorization(options =>
-            //{
-            //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-            //        .RequireAuthenticatedUser()
-            //        .Build();
-            //    options.AddPolicy("Administrador", policy => policy.RequireClaim("UserName", "Administrador"));
-            //});
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("Administrador", policy => policy.RequireClaim("UserName", "Administrador"));
-
-            //});
-
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("Administrador",
-            //         policy => policy.RequireRole("Administrador"));
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
