@@ -10,6 +10,8 @@
     <a asp-action="Create" class="btn btn-light">Adicionar</a>
 </p>
 
+<br />
+
 <form asp-controller="Criptomoedas" asp-action="Index" method="get">
     <p>
         Nome: <input type="text" name="SearchString">
@@ -33,23 +35,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Simbolo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cadastro)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-dark">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-dark">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Simbolo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cadastro)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-dark">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-dark">Deletar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
