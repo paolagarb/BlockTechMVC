@@ -178,7 +178,7 @@ namespace BlockTechMVC.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Criptomoeda")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Quantidade")
                         .HasColumnType("decimal(20,2)");

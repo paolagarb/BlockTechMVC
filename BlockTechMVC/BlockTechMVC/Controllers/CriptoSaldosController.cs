@@ -7,32 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC.Controllers
 {
-    [Authorize]
-    public class SaldosController : Controller
+    public class CriptoSaldosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public SaldosController(ApplicationDbContext context)
+        public CriptoSaldosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Saldos
+        // GET: CriptoSaldos
         public async Task<IActionResult> Index()
         {
-
-            var saldos = _context.Saldo
-                .Include(c => c.CriptoSaldo)
-                .Include(c => c.Transacao);
-
-            return View(await saldos.ToListAsync());
+            return View(await _context.CriptoSaldo.ToListAsync());
         }
 
-        // GET: Saldos/Details/5
+        // GET: CriptoSaldos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,42 +33,39 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
 
-            var saldo = await _context.Saldo
+            var criptoSaldo = await _context.CriptoSaldo
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (saldo == null)
+            if (criptoSaldo == null)
             {
                 return NotFound();
             }
 
-            return View(saldo);
+            return View(criptoSaldo);
         }
 
-        // GET: Saldos/Create
-        [Authorize(Roles = "Admin")]
+        // GET: CriptoSaldos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Saldos/Create
+        // POST: CriptoSaldos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,TransacaoId,SaldoAtualRS,quantidadeCripo")] Saldo saldo)
+        public async Task<IActionResult> Create([Bind("Id,Criptomoeda,Quantidade")] CriptoSaldo criptoSaldo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(saldo);
+                _context.Add(criptoSaldo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(saldo);
+            return View(criptoSaldo);
         }
 
-        // GET: Saldos/Edit/5
-        [Authorize(Roles = "Admin")]
+        // GET: CriptoSaldos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,23 +73,22 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
 
-            var saldo = await _context.Saldo.FindAsync(id);
-            if (saldo == null)
+            var criptoSaldo = await _context.CriptoSaldo.FindAsync(id);
+            if (criptoSaldo == null)
             {
                 return NotFound();
             }
-            return View(saldo);
+            return View(criptoSaldo);
         }
 
-        // POST: Saldos/Edit/5
+        // POST: CriptoSaldos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TransacaoId,SaldoAtualRS,quantidadeCripo")] Saldo saldo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Criptomoeda,Quantidade")] CriptoSaldo criptoSaldo)
         {
-            if (id != saldo.Id)
+            if (id != criptoSaldo.Id)
             {
                 return NotFound();
             }
@@ -108,12 +97,12 @@ namespace BlockTechMVC.Controllers
             {
                 try
                 {
-                    _context.Update(saldo);
+                    _context.Update(criptoSaldo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SaldoExists(saldo.Id))
+                    if (!CriptoSaldoExists(criptoSaldo.Id))
                     {
                         return NotFound();
                     }
@@ -124,11 +113,10 @@ namespace BlockTechMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(saldo);
+            return View(criptoSaldo);
         }
 
-        // GET: Saldos/Delete/5
-        [Authorize(Roles = "Admin")]
+        // GET: CriptoSaldos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,31 +124,30 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
 
-            var saldo = await _context.Saldo
+            var criptoSaldo = await _context.CriptoSaldo
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (saldo == null)
+            if (criptoSaldo == null)
             {
                 return NotFound();
             }
 
-            return View(saldo);
+            return View(criptoSaldo);
         }
 
-        // POST: Saldos/Delete/5
+        // POST: CriptoSaldos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var saldo = await _context.Saldo.FindAsync(id);
-            _context.Saldo.Remove(saldo);
+            var criptoSaldo = await _context.CriptoSaldo.FindAsync(id);
+            _context.CriptoSaldo.Remove(criptoSaldo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SaldoExists(int id)
+        private bool CriptoSaldoExists(int id)
         {
-            return _context.Saldo.Any(e => e.Id == id);
+            return _context.CriptoSaldo.Any(e => e.Id == id);
         }
     }
 }
