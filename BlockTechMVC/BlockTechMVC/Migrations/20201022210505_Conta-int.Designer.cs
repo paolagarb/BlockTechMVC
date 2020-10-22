@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlockTechMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201022181921_ContaCliente-Users")]
-    partial class ContaClienteUsers
+    [Migration("20201022210505_Conta-int")]
+    partial class Containt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -149,10 +149,7 @@ namespace BlockTechMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ApplicationUserID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("ApplicationUserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ContaId")
@@ -161,12 +158,12 @@ namespace BlockTechMVC.Migrations
                     b.Property<DateTime>("DataAbertura")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("NumeroConta")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NumeroConta")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("ApplicationUserID");
 
                     b.HasIndex("ContaId");
 
@@ -434,7 +431,7 @@ namespace BlockTechMVC.Migrations
                 {
                     b.HasOne("BlockTechMVC.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserID");
 
                     b.HasOne("BlockTechMVC.Models.Conta", "Conta")
                         .WithMany()

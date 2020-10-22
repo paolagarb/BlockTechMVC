@@ -24,7 +24,8 @@ namespace BlockTechMVC.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Transacao.Include(t => t.CriptomoedaHoje);
+            var applicationDbContext = _context.Transacao
+                .Include(t => t.CriptomoedaHoje);
             return View(await applicationDbContext.ToListAsync());
         }
 

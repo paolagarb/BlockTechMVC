@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class ContaClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,10 +22,14 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: ContaClientes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() 
         {
-            var applicationDbContext = _context.ContaCliente.Include(c => c.Conta);
-            return View(await applicationDbContext.ToListAsync());
+            var contas = _context.ContaCliente;
+        //    var applicationDbContext = _context.ContaCliente
+        //        .Include(c => c.Conta);
+        //    return View(await applicationDbContext.ToListAsync());
+
+            return View(contas.ToList());
         }
 
         // GET: ContaClientes/Details/5

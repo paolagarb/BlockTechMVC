@@ -10,17 +10,21 @@ namespace BlockTechMVC.Models
     public class ContaCliente
     {
         public int Id { get; set; }
-        
+
+
+        [Required(ErrorMessage = "Insira o número da conta!", AllowEmptyStrings = false)]
         [Display(Name="Número da Conta")]
-        public string NumeroConta { get; set; } //IDENTITY
+        //[DisplayFormat(DataFormatString = "{{{0:###-##}}}")]
+        [DisplayFormat(DataFormatString = "{0:###-##}")]
+        public int NumeroConta { get; set; } //IDENTITY
 
         [Display(Name ="Data de Abertura")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataAbertura { get; set; }
         
-        public ApplicationUser ApplicationUser { get; set; }
-        public int ApplicationUserID { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string ApplicationUserID { get; set; }
 
         public virtual Conta Conta { get; set; }
         public int ContaId { get; set; }

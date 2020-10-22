@@ -4,14 +4,16 @@ using BlockTechMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlockTechMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201022185953_FK_user_conta")]
+    partial class FK_user_conta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,8 +158,8 @@ namespace BlockTechMVC.Migrations
                     b.Property<DateTime>("DataAbertura")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NumeroConta")
-                        .HasColumnType("int");
+                    b.Property<string>("NumeroConta")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
