@@ -22,10 +22,29 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Criptomoedas
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome_desc" : ""; 
+            ViewBag.DateSortParm = sortOrder == "Data" ? "Data_desc" : "Data";
+
             var criptomoedas = from c in _context.Criptomoeda
                                select c;
+
+            switch (sortOrder)
+            {
+                case "Nome_desc":
+                    criptomoedas = criptomoedas.OrderByDescending(s => s.Nome);
+                    break;                                        
+                case "Data":
+                    criptomoedas = criptomoedas.OrderBy(s => s.Cadastro);
+                    break;
+                case "Data_desc":
+                    criptomoedas = criptomoedas.OrderByDescending(s => s.Cadastro);
+                    break;
+                default:
+                    criptomoedas = criptomoedas.OrderBy(s => s.Nome);
+                    break;
+            }
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -34,6 +53,35 @@ namespace BlockTechMVC.Controllers
 
             return View(await criptomoedas.ToListAsync());
         }
+
+     
+        public IActionResult OrderName(string sortOrder)
+        {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Data" ? "Data_desc" : "Data";
+
+            var nome = from c in _context.Criptomoeda
+                           select c;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    nome = nome.OrderByDescending(s => s.Nome);
+                    break;
+                case "Date":
+                    nome = nome.OrderBy(s => s.Cadastro);
+                    break;
+                case "date_desc":
+                    nome = nome.OrderByDescending(s => s.Cadastro);
+                    break;
+                default:
+                    nome = nome.OrderBy(s => s.Nome);
+                    break;
+            }
+            return View(nome.ToList());
+        }
+
+
 
         // GET: Criptomoedas/Details/5
         public async Task<IActionResult> Details(int? id)

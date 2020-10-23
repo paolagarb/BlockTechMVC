@@ -27,7 +27,7 @@
         <thead>
             <tr class="bg-dark text-white">
                 <th>
-                    @Html.DisplayNameFor(model => model.Nome)
+                    @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class="text-white"})
                 </th>
                 <th></th>
                 <th>
@@ -35,7 +35,8 @@
                 </th>
                 <th></th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Cadastro)
+
+                    @Html.ActionLink("Cadastro", "Index", new { sortOrder = ViewBag.DateSortParm }, new { @class = "text-white" })
                 </th>
                 <th></th>
                 <th style="white-space: nowrap"></th>

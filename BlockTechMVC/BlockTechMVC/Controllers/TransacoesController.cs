@@ -28,6 +28,8 @@ namespace BlockTechMVC.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        
+
         // GET: Transacoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
