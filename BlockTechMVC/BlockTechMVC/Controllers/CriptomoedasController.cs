@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CriptomoedasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -54,7 +54,6 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Criptomoedas/Create
-        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -65,7 +64,6 @@ namespace BlockTechMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Nome,Simbolo,Cadastro")] Criptomoeda criptomoeda)
         {
             if (_context.Criptomoeda.Any(c => c.Nome == criptomoeda.Nome))
@@ -83,7 +81,6 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Criptomoedas/Edit/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -104,7 +101,6 @@ namespace BlockTechMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Simbolo,Cadastro")] Criptomoeda criptomoeda)
         {
             if (id != criptomoeda.Id)
@@ -136,7 +132,6 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Criptomoedas/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -157,7 +152,6 @@ namespace BlockTechMVC.Controllers
         // POST: Criptomoedas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var criptomoeda = await _context.Criptomoeda.FindAsync(id);
