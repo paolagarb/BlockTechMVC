@@ -14,7 +14,6 @@ namespace BlockTechMVC.Models
 
         [Required(ErrorMessage = "Insira o número da conta!", AllowEmptyStrings = false)]
         [Display(Name="Número da Conta")]
-        //[DisplayFormat(DataFormatString = "{{{0:###-##}}}")]
         [DisplayFormat(DataFormatString = "{0:###-##}")]
         public int NumeroConta { get; set; } //IDENTITY
 

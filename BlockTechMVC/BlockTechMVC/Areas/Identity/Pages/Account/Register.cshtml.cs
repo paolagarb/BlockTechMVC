@@ -57,6 +57,7 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
+            [DisplayFormat(DataFormatString = "{0:#####-###}")]
             public string Email { get; set; }
 
             [Required]
@@ -112,7 +113,7 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Nome = Input.Nome, Documento = Input.Documento, Cep = Input.Cep, Uf = Input.Uf, Cidade = Input.Cidade, Rua = Input.Rua, Numero = Input.Numero, Telefone = Input.Telefone };
+                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email, Nome = Input.Nome, Documento = Input.Documento, Cep = Input.Cep, Uf = Input.Uf, Cidade = Input.Cidade, Rua = Input.Rua, Numero = Input.Numero, Telefone = Input.Telefone };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

@@ -1,29 +1,24 @@
 ﻿@model IEnumerable<BlockTechMVC.Models.ContaCliente>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Conta";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NumeroConta)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.DataAbertura)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUserID)
+                @Html.DisplayNameFor(model => model.ApplicationUser.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Conta.NumeroConta)
+                @Html.DisplayNameFor(model => model.NumeroConta)
             </th>
+            <th>
             <th></th>
         </tr>
     </thead>
@@ -31,16 +26,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NumeroConta)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.DataAbertura)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUserID)
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Conta.NumeroConta)
+                @Html.DisplayFor(modelItem => item.NumeroConta)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
