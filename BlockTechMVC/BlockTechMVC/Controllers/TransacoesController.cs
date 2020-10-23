@@ -24,9 +24,17 @@ namespace BlockTechMVC.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-            //if (User.Identity.Name != "Administrador") { }
             var applicationDbContext = _context.Transacao
                 .Include(t => t.CriptomoedaHoje);
+
+
+            //if (User.Identity.Name != "Administrador") {
+            //    var user = User.Identity.Name;
+            //    applicationDbContext = _context.Transacao
+            //        .Where(c => c.ContaCliente.ApplicationUser.Nome.Equals(user))
+            //        .Include(t => t.CriptomoedaHoje);
+            //}
+            
             return View(await applicationDbContext.ToListAsync());
         }
 
