@@ -23,10 +23,14 @@ namespace BlockTechMVC.Models
         public DateTime DataAbertura { get; set; }
         
         public virtual ApplicationUser ApplicationUser { get; set; }
+        [Display(Name = "Nome/Razão Social")]
+
         public string ApplicationUserID { get; set; }
 
         [Display(Name = "Conta Vinculada")]
         public virtual Conta Conta { get; set; }
+
+        [Display(Name = "Conta Associada")]
         public int ContaId { get; set; }
 
         public ContaCliente()

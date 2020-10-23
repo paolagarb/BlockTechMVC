@@ -41,6 +41,7 @@ namespace BlockTechMVC.Controllers
 
             var contaCliente = await _context.ContaCliente
                 .Include(c => c.Conta)
+                .Include(c=>c.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contaCliente == null)
             {
@@ -56,6 +57,8 @@ namespace BlockTechMVC.Controllers
         public IActionResult Create()
         {
             ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "Id");
+
+           
             return View();
         }
 
@@ -92,8 +95,10 @@ namespace BlockTechMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "Id", contaCliente.ContaId);
+            ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "NumeroConta", contaCliente.ContaId);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Nome", contaCliente.ApplicationUserID);
             return View(contaCliente);
+
         }
 
         // POST: ContaClientes/Edit/5
