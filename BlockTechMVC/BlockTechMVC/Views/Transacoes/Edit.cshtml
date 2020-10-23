@@ -1,10 +1,10 @@
 ﻿@model BlockTechMVC.Models.Transacao
 
 @{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Edit</h1>
 
 <h4>Transacao</h4>
 <hr />
@@ -14,24 +14,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContaCliente.ApplicationUser.Nome" class="control-label"></label>
-                <select asp-for="ContaCliente.ApplicationUser.Nome" class="form-control" asp-items="ViewBag.ContaCliente"></select>
-                <span asp-validation-for="ContaCliente.ApplicationUser.Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Tipo" class="control-label"></label>
                 <select asp-for="Tipo" class="form-control"></select>
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CriptomoedaHoje.Criptomoeda.Nome" class="control-label"></label>
-                <select asp-for="CriptomoedaHoje.Criptomoeda.Nome" class="form-control" asp-items="ViewBag.CriptomoedaHoje"></select>
-                <span asp-validation-for="CriptomoedaHoje.Criptomoeda.Nome" class="text-danger"></span>
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Valor" class="control-label"></label>
@@ -39,14 +29,34 @@
                 <span asp-validation-for="Valor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <label asp-for="CriptomoedaHojeId" class="control-label"></label>
+                <select asp-for="CriptomoedaHojeId" class="form-control" asp-items="ViewBag.CriptomoedaHojeId"></select>
+                <span asp-validation-for="CriptomoedaHojeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContaClienteId" class="control-label"></label>
+                <select asp-for="ContaClienteId" class="form-control" asp-items="ViewBag.ContaClienteId"></select>
+                <span asp-validation-for="ContaClienteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CriptoSaldoId" class="control-label"></label>
+                <select asp-for="CriptoSaldoId" class="form-control" asp-items="ViewBag.CriptoSaldoId"></select>
+                <span asp-validation-for="CriptoSaldoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SaldoId" class="control-label"></label>
+                <select asp-for="SaldoId" class="form-control" asp-items="ViewBag.SaldoId"></select>
+                <span asp-validation-for="SaldoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Voltar</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

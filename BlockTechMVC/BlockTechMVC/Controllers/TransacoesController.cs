@@ -24,17 +24,7 @@ namespace BlockTechMVC.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Transacao
-                .Include(t => t.CriptomoedaHoje);
-
-
-            //if (User.Identity.Name != "Administrador") {
-            //    var user = User.Identity.Name;
-            //    applicationDbContext = _context.Transacao
-            //        .Where(c => c.ContaCliente.ApplicationUser.Nome.Equals(user))
-            //        .Include(t => t.CriptomoedaHoje);
-            //}
-            
+            var applicationDbContext = _context.Transacao.Include(t => t.ContaCliente).Include(t => t.CriptoSaldo).Include(t => t.CriptomoedaHoje).Include(t => t.Saldo);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -48,7 +38,9 @@ namespace BlockTechMVC.Controllers
 
             var transacao = await _context.Transacao
                 .Include(t => t.ContaCliente)
+                .Include(t => t.CriptoSaldo)
                 .Include(t => t.CriptomoedaHoje)
+                .Include(t => t.Saldo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transacao == null)
             {
@@ -59,12 +51,12 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Transacoes/Create
-        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id");
-            ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "Id");
+            ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id");
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id");
+            ViewData["SaldoId"] = new SelectList(_context.Saldo, "Id", "Id");
             return View();
         }
 
@@ -74,7 +66,7 @@ namespace BlockTechMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Tipo,Data,Valor,CriptomoedaHojeId,ContaClienteId,ContaId")] Transacao transacao)
+        public async Task<IActionResult> Create([Bind("Id,Tipo,Data,Valor,CriptomoedaHojeId,ContaClienteId,CriptoSaldoId,SaldoId")] Transacao transacao)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +75,9 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
+            ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id", transacao.CriptoSaldoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
+            ViewData["SaldoId"] = new SelectList(_context.Saldo, "Id", "Id", transacao.SaldoId);
             return View(transacao);
         }
 
@@ -102,7 +96,9 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
+            ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id", transacao.CriptoSaldoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
+            ViewData["SaldoId"] = new SelectList(_context.Saldo, "Id", "Id", transacao.SaldoId);
             return View(transacao);
         }
 
@@ -112,7 +108,7 @@ namespace BlockTechMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Data,Valor,CriptomoedaHojeId,ContaClienteId,ContaId")] Transacao transacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Data,Valor,CriptomoedaHojeId,ContaClienteId,CriptoSaldoId,SaldoId")] Transacao transacao)
         {
             if (id != transacao.Id)
             {
@@ -140,7 +136,9 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
+            ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id", transacao.CriptoSaldoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
+            ViewData["SaldoId"] = new SelectList(_context.Saldo, "Id", "Id", transacao.SaldoId);
             return View(transacao);
         }
 
@@ -155,7 +153,9 @@ namespace BlockTechMVC.Controllers
 
             var transacao = await _context.Transacao
                 .Include(t => t.ContaCliente)
+                .Include(t => t.CriptoSaldo)
                 .Include(t => t.CriptomoedaHoje)
+                .Include(t => t.Saldo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transacao == null)
             {
@@ -181,5 +181,10 @@ namespace BlockTechMVC.Controllers
         {
             return _context.Transacao.Any(e => e.Id == id);
         }
+
+        //public async Task<IActionResult> Relatorios()
+        //{
+
+        //}
     }
 }
