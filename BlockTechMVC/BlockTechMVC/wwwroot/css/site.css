@@ -80,3 +80,10 @@ body {
     line-height: 160%;
     max-width: 80%;
 }
+
+.imgOrder {
+    background-image: url('../images/ordenar.png');
+    background-repeat: no-repeat;
+    background-size: 15px;
+    padding-left: 22px;
+}

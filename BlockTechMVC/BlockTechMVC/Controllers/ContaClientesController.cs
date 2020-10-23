@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC.Controllers
 {
-    [Authorize(Roles ="Admin")]
     public class ContaClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,12 +21,12 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: ContaClientes
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index()
         {
-            var contas = _context.ContaCliente;
-        //    var applicationDbContext = _context.ContaCliente
-        //        .Include(c => c.Conta);
-        //    return View(await applicationDbContext.ToListAsync());
+            var contas = _context.ContaCliente
+                .Include(c => c.Conta)
+                .Include(c => c.ApplicationUser);
+
 
             return View(contas.ToList());
         }
@@ -52,6 +51,8 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: ContaClientes/Create
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "Id");
@@ -63,6 +64,8 @@ namespace BlockTechMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,NumeroConta,DataAbertura,ApplicationUserID,ContaId")] ContaCliente contaCliente)
         {
             if (ModelState.IsValid)
@@ -76,6 +79,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: ContaClientes/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,6 +101,7 @@ namespace BlockTechMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NumeroConta,DataAbertura,ApplicationUserID,ContaId")] ContaCliente contaCliente)
         {
             if (id != contaCliente.Id)
@@ -129,6 +134,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: ContaClientes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,6 +156,7 @@ namespace BlockTechMVC.Controllers
         // POST: ContaClientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var contaCliente = await _context.ContaCliente.FindAsync(id);

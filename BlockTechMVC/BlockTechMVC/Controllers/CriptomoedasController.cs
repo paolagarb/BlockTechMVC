@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC.Controllers
 {
+    //Controller apenas para ADM adicionar, remover e alterar Criptomoedas (nome e símbolo)
+
     [Authorize(Roles = "Admin")]
     public class CriptomoedasController : Controller
     {
@@ -53,36 +55,7 @@ namespace BlockTechMVC.Controllers
 
             return View(await criptomoedas.ToListAsync());
         }
-
      
-        public IActionResult OrderName(string sortOrder)
-        {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Data" ? "Data_desc" : "Data";
-
-            var nome = from c in _context.Criptomoeda
-                           select c;
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    nome = nome.OrderByDescending(s => s.Nome);
-                    break;
-                case "Date":
-                    nome = nome.OrderBy(s => s.Cadastro);
-                    break;
-                case "date_desc":
-                    nome = nome.OrderByDescending(s => s.Cadastro);
-                    break;
-                default:
-                    nome = nome.OrderBy(s => s.Nome);
-                    break;
-            }
-            return View(nome.ToList());
-        }
-
-
-
         // GET: Criptomoedas/Details/5
         public async Task<IActionResult> Details(int? id)
         {

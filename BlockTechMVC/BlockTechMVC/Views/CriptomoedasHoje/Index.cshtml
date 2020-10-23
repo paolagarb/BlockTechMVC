@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<BlockTechMVC.Models.CriptomoedaHoje>
 
 @{
-    ViewData["Title"] = "Criptomoedas em Tempo Real";
+    ViewData["Title"] = "Criptomoedas";
 }
 <h1>@ViewData["Title"]</h1>
 
-        @*CONSUMIR DE UMA API**@
+@*CONSUMIR DE UMA API**@
 @if (User.IsInRole("Admin"))
 {
     <p>
@@ -22,48 +22,49 @@
 </form>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Data)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Criptomoeda.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Data)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Criptomoeda.Nome)
-                </td>
-                <td>
-                    R$ @Html.DisplayFor(modelItem => item.Valor)
-                </td>
-
-                <td>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-dark">Editar</a>
-                    }
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-dark">Deletar</a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <caption>Lista de Criptomoedas e seus valores</caption> 
+        <thead>
+            <tr class="bg-dark text-white">
+                <th>
+                    @Html.DisplayNameFor(model => model.Data)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Criptomoeda.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Valor)
+                </th>
+                <th></th>
+            </trclass="bg-dark>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Criptomoeda.Nome)
+                    </td>
+                    <td>
+                        R$ @Html.DisplayFor(modelItem => item.Valor)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-dark">Editar</a>
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-dark">Deletar</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

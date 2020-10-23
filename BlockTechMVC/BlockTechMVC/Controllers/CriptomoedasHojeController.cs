@@ -9,6 +9,8 @@ using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace BlockTechMVC.Controllers
 {
@@ -23,7 +25,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: CriptomoedasHoje
-        public async Task<IActionResult> Index(DateTime searchDate)
+        public async Task<IActionResult> Index(DateTime searchDate, string sortOrder)
         {
             var criptomoedas = _context.CriptomoedaHoje
                 .Where(c => c.Data.Equals(DateTime.Now.Date))
@@ -35,6 +37,27 @@ namespace BlockTechMVC.Controllers
                 .Where(c => c.Data.Equals(searchDate))
                 .Include(c => c.Criptomoeda);
             }
+
+            //ViewBag.PriceSortParm = sortOrder == "Valor" ? "Valor_desc" : "";
+
+            //switch (sortOrder)
+            //{
+            //    case "Valor":
+            //        criptomoedas = criptomoedas
+            //            .OrderBy(c => c.Nome);
+
+            //        //criptomoedas = criptomoedas
+            //        //    .OrderBy(s => s.Valor)
+            //        //    .ToList();
+            //        break;
+            //        //case "Valor_desc":
+            //        //    criptomoedas = criptomoedas.OrderByDescending(s => s.Valor);
+            //        //    break;
+            //        //default:
+            //        //    criptomoedas = criptomoedas.OrderBy(s => s.Nome);
+            //        //    break;
+            //}
+
 
             return View(await criptomoedas.ToListAsync());
         }

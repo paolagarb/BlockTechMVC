@@ -25,6 +25,7 @@ namespace BlockTechMVC.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
         public string ApplicationUserID { get; set; }
 
+        [Display(Name = "Conta Vinculada")]
         public virtual Conta Conta { get; set; }
         public int ContaId { get; set; }
 

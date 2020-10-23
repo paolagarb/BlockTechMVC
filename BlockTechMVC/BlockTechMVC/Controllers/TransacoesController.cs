@@ -24,11 +24,17 @@ namespace BlockTechMVC.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
+            //if (User.Identity.Name != "Administrador") {
+            //    var user = User.Identity.Name;
+            //    applicationDbContext = _context.Transacao
+            //        .Where(c => c.ContaCliente.ApplicationUser.Nome.Equals(user))
+            //        .Include(t => t.CriptomoedaHoje);
+            //}
             var applicationDbContext = _context.Transacao.Include(t => t.ContaCliente).Include(t => t.CriptoSaldo).Include(t => t.CriptomoedaHoje).Include(t => t.Saldo);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        
+
 
         // GET: Transacoes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -184,9 +190,11 @@ namespace BlockTechMVC.Controllers
             return _context.Transacao.Any(e => e.Id == id);
         }
 
-        //public async Task<IActionResult> Relatorios()
-        //{
+        public async Task<IActionResult> Relatorios()
+        {
+            var temporario = _context.Transacao;
 
-        //}
+            return View(temporario.ToListAsync());
+        }
     }
 }
