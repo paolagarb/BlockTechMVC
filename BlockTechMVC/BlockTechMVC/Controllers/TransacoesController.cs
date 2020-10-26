@@ -36,12 +36,16 @@ namespace BlockTechMVC.Controllers
             //if (user != null)
             //{
             //    return View(await user.)
-            //}
+            ////}
+            //Transacao t1 = new Transacao();
+            //t1.Quantidade();
 
             var applicationDbContext = _context.Transacao
                 .Include(t => t.ContaCliente)
                 .Include(t => t.CriptoSaldo)
                 .Include(t => t.CriptomoedaHoje)
+                .Include(t => t.ContaCliente.ApplicationUser)
+                .Include(t=> t.CriptomoedaHoje.Criptomoeda)
                 .Include(t => t.Saldo);
             return View(await applicationDbContext.ToListAsync());
         }

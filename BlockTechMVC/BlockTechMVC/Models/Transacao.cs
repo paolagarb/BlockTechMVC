@@ -12,26 +12,26 @@ namespace BlockTechMVC.Models
     {
         public int Id { get; set; }
 
-        [Display(Name ="Tipo de Transação")]
+        [Display(Name ="Transação")]
         public TipoTransacao Tipo { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Data { get; set; }
 
-        [Column(TypeName = "decimal(20,2)")]
+        //[Column(TypeName = "decimal(20,2)")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
         public double Valor { get; set; }
 
         [Display(Name = "Criptomoeda")]
         public int CriptomoedaHojeId { get; set; }
-        public virtual CriptomoedaHoje CriptomoedaHoje { get; set; }
+        public CriptomoedaHoje CriptomoedaHoje { get; set; }
 
         [Display(Name = "Conta")]
         public int ContaClienteId { get; set; }
-        public virtual ContaCliente ContaCliente { get; set; }
+        public ContaCliente ContaCliente { get; set; }
 
-        //[Display(Name = "Saldo Criptomoeda")]
+        [Display(Name = "Saldo")]
         public CriptoSaldo CriptoSaldo { get; set; }
         public int CriptoSaldoId { get; set; }
 
@@ -42,17 +42,14 @@ namespace BlockTechMVC.Models
         public Transacao()
         {
 
-            CriptoSaldo.Criptomoeda = CriptomoedaHoje.Criptomoeda.Nome;
-            Quantidade();
         }
 
-        public Transacao(TipoTransacao tipo, DateTime data, double valor, CriptomoedaHoje criptomoedaHoje, ContaCliente contaCliente)
+        public Transacao(TipoTransacao tipo, DateTime data, double valor, CriptomoedaHoje criptomoedaHoje)
         {
             Tipo = tipo;
             Data = data;
             Valor = valor;
             CriptomoedaHoje = criptomoedaHoje;
-            ContaCliente = contaCliente;
 
             CriptoSaldo.Criptomoeda = CriptomoedaHoje.Criptomoeda.Nome;
             Quantidade();

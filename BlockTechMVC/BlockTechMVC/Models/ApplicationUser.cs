@@ -9,7 +9,7 @@ namespace BlockTechMVC.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        [Display(Name = "Nome ou Razão Social")]
+        [Display(Name = "Nome/Razão Social")]
         [StringLength(60)]
         public string Nome { get; set; } //Razão Social ou Nome
 
