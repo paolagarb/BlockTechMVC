@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BlockTechMVC.Controllers
 {
@@ -96,7 +97,8 @@ namespace BlockTechMVC.Controllers
                 return NotFound();
             }
             ViewData["ContaId"] = new SelectList(_context.Conta, "Id", "NumeroConta", contaCliente.ContaId);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Nome", contaCliente.ApplicationUserID);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Nome", contaCliente.ApplicationUserID); 
+                                    //Where id = id
             return View(contaCliente);
 
         }

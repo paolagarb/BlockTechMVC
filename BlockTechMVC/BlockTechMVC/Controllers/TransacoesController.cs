@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlockTechMVC.Controllers
 {
@@ -30,11 +31,20 @@ namespace BlockTechMVC.Controllers
             //        .Where(c => c.ContaCliente.ApplicationUser.Nome.Equals(user))
             //        .Include(t => t.CriptomoedaHoje);
             //}
-            var applicationDbContext = _context.Transacao.Include(t => t.ContaCliente).Include(t => t.CriptoSaldo).Include(t => t.CriptomoedaHoje).Include(t => t.Saldo);
+
+            //var user = _context.ApplicationUser.FirstOrDefault(c => c.Nome == User.Identity.Name);
+            //if (user != null)
+            //{
+            //    return View(await user.)
+            //}
+
+            var applicationDbContext = _context.Transacao
+                .Include(t => t.ContaCliente)
+                .Include(t => t.CriptoSaldo)
+                .Include(t => t.CriptomoedaHoje)
+                .Include(t => t.Saldo);
             return View(await applicationDbContext.ToListAsync());
         }
-
-
 
         // GET: Transacoes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -59,8 +69,10 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: Transacoes/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id");
             ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id");
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id");
@@ -82,6 +94,11 @@ namespace BlockTechMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+
+            //Transacao t1 = new Transacao(/*)*/
+            
+
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
             ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id", transacao.CriptoSaldoId);
             ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
