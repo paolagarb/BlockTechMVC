@@ -13,6 +13,7 @@ namespace BlockTechMVC.Models
 
         [Display(Name = "Saldo Atual")]
         [Column(TypeName = "decimal(20,2)")]
+        [DisplayFormat(DataFormatString = "{0:F2}")]
         public double SaldoAtualRS { get; set; } = 0;
 
         public ContaCliente ContaCliente { get; set; }

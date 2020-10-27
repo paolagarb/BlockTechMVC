@@ -217,5 +217,7 @@ namespace BlockTechMVC.Controllers
 
             return View(temporario.ToListAsync());
         }
+
+
     }
 }

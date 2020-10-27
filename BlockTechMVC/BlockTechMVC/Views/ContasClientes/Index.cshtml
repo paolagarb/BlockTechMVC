@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BlockTechMVC.Models.Transacao>
+
+@{
+    ViewData["Title"] = "Conta";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<br />
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        @if (User.IsInRole("Admin"))
+        {
+            <caption>Informações das Contas</caption>
+        }
+        else
+        {
+            <caption>Informações da Conta</caption>
+        }
+
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ContaCliente.DataAbertura)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ContaCliente.NumeroConta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Saldo.SaldoAtualRS)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContaCliente.DataAbertura)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContaCliente.NumeroConta)
+                    </td>
+                    <td>
+                        R$ @Html.DisplayFor(modelItem => item.Saldo.SaldoAtualRS)
+                    </td>
+                   
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -13,12 +13,14 @@ namespace BlockTechMVC.Models
         public string Banco { get; set; }
 
         [StringLength(4, ErrorMessage = "Número Inválido.")]
+
+        [Display(Name = "Agência")]
         public string Agencia { get; set; }
 
         [Display(Name ="Número da Conta")]
         public string NumeroConta { get; set; }
 
-        [Display(Name ="Tipo de Conta")]
+        [Display(Name ="Tipo")]
         public TipoConta TipoConta { get; set; }
 
         public Conta()
