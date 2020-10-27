@@ -24,9 +24,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ContaCliente.DataAbertura)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
-                </th>
+                @*@if (User.IsInRole("Admin"))
+                {*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+                    </th>
+                @* } *@
                 <th>
                     @Html.DisplayNameFor(model => model.ContaCliente.NumeroConta)
                 </th>

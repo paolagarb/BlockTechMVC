@@ -19,6 +19,7 @@ namespace BlockTechMVC.Models
         public ContaCliente ContaCliente { get; set; }
         public int ContaClienteId { get; set; }
 
+
         public Saldo()
         {
 

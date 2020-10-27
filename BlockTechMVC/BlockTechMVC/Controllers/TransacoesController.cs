@@ -25,13 +25,35 @@ namespace BlockTechMVC.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-            //if (User.Identity.Name != "Administrador") {
-            //    var user = User.Identity.Name;
-            //    applicationDbContext = _context.Transacao
-            //        .Where(c => c.ContaCliente.ApplicationUser.Nome.Equals(user))
-            //        .Include(t => t.CriptomoedaHoje);
-            //}
 
+            var user = User.Identity.Name;
+
+            if (user == "Administrador")
+            {
+                var applicationDbContext = _context.Transacao
+                    .Include(t => t.ContaCliente)
+                    .Include(t => t.CriptoSaldo)
+                    .Include(t => t.CriptomoedaHoje)
+                    .Include(t => t.ContaCliente.ApplicationUser)
+                    .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                    .Include(t => t.Saldo);
+
+                return View(await applicationDbContext.ToListAsync());
+            } 
+            else
+            {
+                var applicationDbContext = _context.Transacao;
+
+                return View(await applicationDbContext.ToListAsync());
+            }
+
+            //if (user != "paolareg@hotmail.com")
+            //{
+            //    //applicationDbContext = _context.Transacao
+            //    //     .Where(c => c.ContaCliente.ApplicationUser.Nome.Equals(user))
+            //    //     .Include(t => t.CriptomoedaHoje);
+            //}
+            //return View(await applicationDbContext.ToListAsync());
             //var user = _context.ApplicationUser.FirstOrDefault(c => c.Nome == User.Identity.Name);
             //if (user != null)
             //{
@@ -40,14 +62,8 @@ namespace BlockTechMVC.Controllers
             //Transacao t1 = new Transacao();
             //t1.Quantidade();
 
-            var applicationDbContext = _context.Transacao
-                .Include(t => t.ContaCliente)
-                .Include(t => t.CriptoSaldo)
-                .Include(t => t.CriptomoedaHoje)
-                .Include(t => t.ContaCliente.ApplicationUser)
-                .Include(t=> t.CriptomoedaHoje.Criptomoeda)
-                .Include(t => t.Saldo);
-            return View(await applicationDbContext.ToListAsync());
+
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Transacoes/Details/5

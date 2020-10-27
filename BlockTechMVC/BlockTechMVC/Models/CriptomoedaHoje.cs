@@ -24,6 +24,8 @@ namespace BlockTechMVC.Models
         [Display(Name ="Criptomoeda")]
         public int CriptomoedaId { get; set; }
 
+
+
         public CriptomoedaHoje()
         {
 
