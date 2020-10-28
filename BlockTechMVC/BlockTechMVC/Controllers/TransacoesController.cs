@@ -55,14 +55,6 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.Saldo)
                     .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
 
-                //var usuario = from T1 in _context.Transacao
-                //              join CS in _context.CriptoSaldo on T1.CriptoSaldoId equals CS.Id
-                //              join CH in _context.CriptomoedaHoje on T1.CriptomoedaHojeId equals CH.Id
-                //              join CC in _context.ContaCliente on T1.ContaClienteId equals CC.Id
-                //              join SA in _context.Saldo on T1.SaldoId equals SA.Id
-                //              join AU in _context.ApplicationUser on CC.ApplicationUserID equals AU.Id
-                //              where AU.UserName == user
-                //              select T1;
 
 
                 return View(await usuario.ToListAsync());

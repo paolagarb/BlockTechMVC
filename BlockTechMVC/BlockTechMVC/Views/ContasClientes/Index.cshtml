@@ -24,12 +24,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ContaCliente.DataAbertura)
                 </th>
-                @*@if (User.IsInRole("Admin"))
-                {*@
+                @if (User.IsInRole("Admin"))
+                {
                     <th>
                         @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
                     </th>
-                @* } *@
+                }
                 <th>
                     @Html.DisplayNameFor(model => model.ContaCliente.NumeroConta)
                 </th>
@@ -42,24 +42,27 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ContaCliente.DataAbertura)
-                    </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContaCliente.DataAbertura)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
                     <td>
                         @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ContaCliente.NumeroConta)
-                    </td>
-                    <td>
-                        R$ @Html.DisplayFor(modelItem => item.Saldo.SaldoAtualRS)
-                    </td>
-                   
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>
-                    </td>
-                </tr>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContaCliente.NumeroConta)
+                </td>
+                <td>
+                    R$ @Html.DisplayFor(modelItem => item.Saldo.SaldoAtualRS)
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
