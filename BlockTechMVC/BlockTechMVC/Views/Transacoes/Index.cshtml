@@ -6,19 +6,18 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@*<p>
-    <a asp-action="Create">Adicionar</a>
-</p>*@
-
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Data)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
-            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Tipo)
             </th>
@@ -43,9 +42,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Data)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
-            </td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Tipo)
             </td>
@@ -62,9 +64,7 @@
             R$ @Html.DisplayFor(modelItem => item.Saldo.SaldoAtualRS)
         </td>*@
             <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Editar</a>*@
                 <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                @*<a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>*@
             </td>
         </tr>
 }

@@ -39,12 +39,33 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.Saldo);
 
                 return View(await applicationDbContext.ToListAsync());
-            } 
+            }
             else
             {
-                var applicationDbContext = _context.Transacao;
+                //var usuario = _context.Transacao
+                //    .Where(t => t.ContaCliente.ApplicationUser.Nome == user)
+                //    .Include(t => t.ContaCliente)
+                //    .Where(t => t.ContaCliente.ApplicationUser.Nome == user)
+                //    .Include(t => t.CriptoSaldo)
+                //    .Where(t => t.CriptoSaldo.ContaCliente.ApplicationUser.Nome == user)
+                //    .Include(t => t.CriptomoedaHoje)
+                //    .Include(t => t.ContaCliente.ApplicationUser)
+                //    .Where(t => t.ContaCliente.ApplicationUser.Nome == user)
+                //    .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                //    .Include(t => t.Saldo)
+                //    .Where(t => t.Saldo.ContaCliente.ApplicationUser.Nome == user);
 
-                return View(await applicationDbContext.ToListAsync());
+                var usuario = from T1 in _context.Transacao
+                              join CS in _context.CriptoSaldo on T1.CriptoSaldoId equals CS.Id
+                              join CH in _context.CriptomoedaHoje on T1.CriptomoedaHojeId equals CH.Id
+                              join CC in _context.ContaCliente on T1.ContaClienteId equals CC.Id
+                              join SA in _context.Saldo on T1.SaldoId equals SA.Id
+                              join AU in _context.ApplicationUser on CC.ApplicationUserID equals AU.Id
+                              where AU.UserName == user
+                              select T1;
+
+
+                return View(await usuario.ToListAsync());
             }
 
             //if (user != "paolareg@hotmail.com")
@@ -117,7 +138,7 @@ namespace BlockTechMVC.Controllers
 
 
             //Transacao t1 = new Transacao(/*)*/
-            
+
 
             ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
             ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id", transacao.CriptoSaldoId);
