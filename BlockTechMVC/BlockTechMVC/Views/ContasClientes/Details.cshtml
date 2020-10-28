@@ -33,7 +33,9 @@
         <dd class="col-sm-10">
             R$ @Html.DisplayFor(model => model.Saldo.SaldoAtualRS)
         </dd>
-        Conta Vinculada <br />
+        <div style="white-space:pre-line; font-weight: bold; font-size:larger" class="col-sm-12">
+            @ViewBag.ContaVinculada
+        </div>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ContaCliente.Conta.Banco)
         </dt>
