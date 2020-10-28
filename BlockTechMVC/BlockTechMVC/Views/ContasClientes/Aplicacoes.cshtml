@@ -9,9 +9,12 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
-            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.CriptoSaldo.Criptomoeda)
             </th>
@@ -27,9 +30,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
-            </td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.CriptoSaldo.Criptomoeda)
             </td>
@@ -38,9 +44,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> 
             </td>
         </tr>
 }

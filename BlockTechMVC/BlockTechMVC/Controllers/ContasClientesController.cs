@@ -88,13 +88,38 @@ namespace BlockTechMVC.Controllers
 
         public async Task<IActionResult> Aplicacoes(int? id)
         {
-            var applicationDbContext = _context.Transacao
-                .Include(t => t.ContaCliente)
-                .Include(t => t.CriptoSaldo)
-                .Include(t => t.CriptomoedaHoje)
-                .Include(t => t.ContaCliente.ApplicationUser)
-                .Include(t => t.Saldo);
-            return View(await applicationDbContext.ToListAsync());
+
+            var user = User.Identity.Name;
+
+            if (user == "Administrador")
+            {
+                var applicationDbContext = _context.Transacao
+                    .Include(t => t.ContaCliente)
+                    .Include(t => t.CriptoSaldo)
+                    .Include(t => t.CriptomoedaHoje)
+                    .Include(t => t.ContaCliente.ApplicationUser)
+                    .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                    .Include(t => t.Saldo);
+
+                return View(await applicationDbContext.ToListAsync());
+            }
+            else
+            {
+                var usuario = _context.Transacao
+                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
+                    .Include(t => t.ContaCliente)
+                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
+                    .Include(t => t.CriptoSaldo)
+                    .Where(t => t.CriptoSaldo.ContaCliente.ApplicationUser.UserName == user)
+                    .Include(t => t.CriptomoedaHoje)
+                    .Include(t => t.ContaCliente.ApplicationUser)
+                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
+                    .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                    .Include(t => t.Saldo)
+                    .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
+
+                return View(await usuario.ToListAsync());
+            }
         }
     }
 }
