@@ -9,6 +9,7 @@ using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Web.Helpers;
 
 namespace BlockTechMVC.Controllers
 {
@@ -58,23 +59,6 @@ namespace BlockTechMVC.Controllers
                 return View(await usuario.ToListAsync());
             }
 
-            //if (user != "paolareg@hotmail.com")
-            //{
-            //    //applicationDbContext = _context.Transacao
-            //    //     .Where(c => c.ContaCliente.ApplicationUser.Nome.Equals(user))
-            //    //     .Include(t => t.CriptomoedaHoje);
-            //}
-            //return View(await applicationDbContext.ToListAsync());
-            //var user = _context.ApplicationUser.FirstOrDefault(c => c.Nome == User.Identity.Name);
-            //if (user != null)
-            //{
-            //    return View(await user.)
-            ////}
-            //Transacao t1 = new Transacao();
-            //t1.Quantidade();
-
-
-            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Transacoes/Details/5
@@ -241,10 +225,20 @@ namespace BlockTechMVC.Controllers
         public async Task<IActionResult> Relatorios()
         {
             var temporario = _context.Transacao;
-
             return View(temporario.ToListAsync());
         }
 
+        //public ActionResult Relatorios()
+        //{
+        //    var myChart = new Chart(width: 600, height: 400, theme: ChartTheme.Green)
+        //   .AddTitle("Bitcoin")
+        //   .AddSeries(chartType: "column",
+        //       name: "Criptomoeda",
+        //       xValue: new[] { "24/10", "25/10", "26/10", "27/10", "28/10" }, xField: "Data",
+        //       yValues: new[] { "70000", "68000", "62000", "67000", "73200" }, yFields: "Valor")
+        //   .Write();
 
+        //    return null;
+        //}
     }
 }
