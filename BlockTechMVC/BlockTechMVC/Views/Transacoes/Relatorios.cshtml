@@ -4,6 +4,11 @@
     ViewData["Data"] = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
 
     var bitcoin = ViewBag.Bitcoin;
+    var ethereum = ViewBag.Ethereum;
+    var bitcoinCash = ViewBag.BitcoinCash;
+    var xrp = ViewBag.XRP;
+    var paxGold = ViewBag.PaxGold;
+    var litecoin = ViewBag.Litecoin;
 
 }
 
@@ -30,7 +35,7 @@
                     data: {
                         labels: ['Bitcoin', 'Ethereum', 'Bitcoin Cash', 'XRP', 'PAX Gold', 'Litecoin'],
                         datasets: [{
-                            data: [@bitcoin, 2224, 1538, 1, 10892, 314],
+                            data: [@bitcoin, @ethereum, @bitcoinCash, @xrp, @paxGold, @litecoin],
                             backgroundColor: [
                                 'rgba(250, 150, 26, 0.2)',
                                 'rgba(107, 108, 109, 0.2)',
