@@ -15,72 +15,75 @@
 @*<h1>@ViewData["Title"]</h1>*@
 
 <div class="flex-row">
-    <a asp-action="Index" class="btn btn-outline-dark">Todas as Criptomoedas</a>
-    <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
-    <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
-    <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
-    <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
-    <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-    <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+    @*<a asp-action="Index" class="btn btn-outline-dark">Todas as Criptomoedas</a>
+        <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+        <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
+        <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
+        <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
+        <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
+        <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>*@
 
-</div>
-<br />
-<h4 class="text-center">Valor Por Criptomoeda @ViewData["Data"]</h4>
-<canvas id="graficoCriptomoedas" width="400" height="150">
-</canvas>
+    <a asp-action="Index" class="btn btn-outline-dark">Hoje</a>
+    <a asp-action="Semanal" class="btn btn-outline-dark">Últimos 7 dias</a>
+
+        </div>
+        <br />
+        <h4 class="text-center">Valor Por Criptomoeda @ViewData["Data"]</h4>
+        <canvas id="graficoCriptomoedas" width="400" height="150">
+        </canvas>
 
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        @section Scripts {
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
-    <script>
-        $(document)
-            .ready(function () {
+            <script>
+                $(document)
+                    .ready(function () {
 
-                var ctx = document.getElementById('graficoCriptomoedas').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Bitcoin', 'Ethereum', 'Bitcoin Cash', 'XRP', 'PAX Gold', 'Litecoin'],
-                        datasets: [{
-                            data: [@bitcoin, @ethereum, @bitcoinCash, @xrp, @paxGold, @litecoin],
-                            backgroundColor: [
-                                'rgba(250, 150, 26, 0.2)',
-                                'rgba(107, 108, 109, 0.2)',
-                                'rgba(141, 195, 81, 0.2)',
-                                'rgba(35, 41, 47, 0.2)',
-                                'rgba(250, 244, 15, 0.2)',
-                                'rgba(52, 92, 157, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(250, 150, 26, 1)',
-                                'rgba(107, 108, 109, 1)',
-                                'rgba(141, 195, 81, 1)',
-                                'rgba(35, 41, 47, 1)',
-                                'rgba(250, 244, 15, 1)',
-                                'rgba(52, 92, 157, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
+                        var ctx = document.getElementById('graficoCriptomoedas').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Bitcoin', 'Ethereum', 'Bitcoin Cash', 'XRP', 'PAX Gold', 'Litecoin'],
+                                datasets: [{
+                                    data: [@bitcoin, @ethereum, @bitcoinCash, @xrp, @paxGold, @litecoin],
+                                    backgroundColor: [
+                                        'rgba(250, 150, 26, 0.2)',
+                                        'rgba(107, 108, 109, 0.2)',
+                                        'rgba(141, 195, 81, 0.2)',
+                                        'rgba(35, 41, 47, 0.2)',
+                                        'rgba(250, 244, 15, 0.2)',
+                                        'rgba(52, 92, 157, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(250, 150, 26, 1)',
+                                        'rgba(107, 108, 109, 1)',
+                                        'rgba(141, 195, 81, 1)',
+                                        'rgba(35, 41, 47, 1)',
+                                        'rgba(250, 244, 15, 1)',
+                                        'rgba(52, 92, 157, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: false
+                                        }
+                                    }]
                                 }
-                            }]
-                        }
-                    }
-                });
+                            }
+                        });
 
-            });
-    </script>
+                    });
+            </script>
 
-}
+        }
 
 
 

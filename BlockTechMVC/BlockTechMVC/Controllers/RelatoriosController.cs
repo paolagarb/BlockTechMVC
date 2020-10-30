@@ -125,6 +125,52 @@ namespace BlockTechMVC.Controllers
             return valorList;
         }
 
+        public IActionResult Semanal()
+        {
+            ViewBag.Dias = Ultimos7Dias();
+            ViewBag.Bitcoin = Porcentagem("Bitcoin");
+            ViewBag.Ethereum = Porcentagem("Ethereum");
+            ViewBag.BitcoinCash = Porcentagem("Bitcoin Cash");
+            ViewBag.XRP = Porcentagem("XRP");
+            ViewBag.PaxGold = Porcentagem("PAX Gold");
+            ViewBag.Litecoin = Porcentagem("Litecoin");
+            return View();
+        }
+
+        public List<double> Porcentagem(string nome)
+        {
+            var dia = DateTime.Now.Day - 7;
+            DateTime dateSeteDias = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dia);
+
+            var valor = (from coin in _context.Criptomoeda
+                         join criptohoje in _context.CriptomoedaHoje
+                         on coin.Id equals criptohoje.CriptomoedaId
+                         where coin.Nome == nome && criptohoje.Data.Equals(dateSeteDias)
+                         select criptohoje.Valor).Single();
+
+            var calculo = 100.0; //inicia com 100%
+            var porcentagem = new List<double>();
+
+            porcentagem.Add(100);
+
+            for (int i = 1; i < 7; i++)
+            {
+                var data = dia + i;
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
+
+                var valorDia = (from coin in _context.Criptomoeda
+                             join criptohoje in _context.CriptomoedaHoje
+                             on coin.Id equals criptohoje.CriptomoedaId
+                             where coin.Nome == nome && criptohoje.Data.Equals(date)
+                             select criptohoje.Valor).Single();
+                var regra3 = ((valorDia * calculo) / valor).ToString("F2");
+                calculo = Convert.ToDouble(regra3);
+                porcentagem.Add(calculo-100);
+            }
+
+            return porcentagem;
+        }
+
       
 
     }
