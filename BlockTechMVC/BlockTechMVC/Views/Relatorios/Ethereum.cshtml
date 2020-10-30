@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Bitcoin";
+    ViewData["Title"] = "Ethereum";
     var diasList = ViewBag.Dias;
     var valoresList = ViewBag.Valores;
     var dias = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(diasList));
@@ -38,8 +38,8 @@
                         labels: @dias,
                         datasets: [{
                             data: @valores,
-                            backgroundColor: 'rgba(250, 150, 26, 0.0)',
-                            borderColor: 'rgba(250, 150, 26, 1)',
+                            backgroundColor: 'rgba(107, 108, 109, 0.0)',
+                            borderColor: 'rgba(107, 108, 109, 1)',
                             borderWidth: 1
                         }]
                     },

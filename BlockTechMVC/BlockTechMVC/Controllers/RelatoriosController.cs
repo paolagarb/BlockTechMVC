@@ -45,35 +45,87 @@ namespace BlockTechMVC.Controllers
 
         public ActionResult Bitcoin()
         {
-            var dias = 7;
+            ViewBag.Dias = Ultimos7Dias();
+            ViewBag.Valores = Valores7Dias("Bitcoin");
 
+            return View();
+        }
+
+        public ActionResult Ethereum()
+        {
+            ViewBag.Dias = Ultimos7Dias();
+            ViewBag.Valores = Valores7Dias("Ethereum");
+
+            return View();
+        }
+
+        public ActionResult BitcoinCash()
+        {
+            ViewBag.Dias = Ultimos7Dias();
+            ViewBag.Valores = Valores7Dias("Bitcoin Cash");
+
+            return View();
+        }
+
+        public ActionResult Xrp()
+        {
+            ViewBag.Dias = Ultimos7Dias();
+            ViewBag.Valores = Valores7Dias("XRP");
+
+            return View();
+        }
+
+        public ActionResult PaxGold()
+        {
+            ViewBag.Dias = Ultimos7Dias();
+            ViewBag.Valores = Valores7Dias("PAX Gold");
+
+            return View();
+        }
+
+        public ActionResult Litecoin()
+        {
+            ViewBag.Dias = Ultimos7Dias();
+            ViewBag.Valores = Valores7Dias("Litecoin");
+
+            return View();
+        }
+
+        public List<int> Ultimos7Dias()
+        {
+            var dias = 7;
             var diasList = new List<int>();
+
             for (int i = 0; i < dias; i++)
             {
                 diasList.Add(DateTime.Now.Day - i);
             }
 
-            ViewBag.Dias = diasList;
+            return diasList;
+        }
 
+        public List<double> Valores7Dias(string nome)
+        {
+            var dias = 7;
             var valorList = new List<double>();
+
             for (int i = 0; i < dias; i++)
             {
                 var data = DateTime.Now.Day - i;
-
                 DateTime dia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
 
                 var valor = (from coin in _context.Criptomoeda
-                                   join criptohoje in _context.CriptomoedaHoje
-                                   on coin.Id equals criptohoje.CriptomoedaId
-                                   where coin.Nome == "Bitcoin" && criptohoje.Data.Equals(dia)
-                                   select criptohoje.Valor).Single();
+                             join criptohoje in _context.CriptomoedaHoje
+                             on coin.Id equals criptohoje.CriptomoedaId
+                             where coin.Nome == nome && criptohoje.Data.Equals(dia)
+                             select criptohoje.Valor).Single();
                 valorList.Add(valor);
             }
 
-            ViewBag.Valores = valorList;
-
-            return View();
+            return valorList;
         }
+
+      
 
     }
 }
