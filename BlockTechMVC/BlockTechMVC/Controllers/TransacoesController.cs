@@ -224,6 +224,17 @@ namespace BlockTechMVC.Controllers
 
         public async Task<IActionResult> Relatorios()
         {
+
+            var bitcoin = from coin in _context.Criptomoeda
+                          join criptohoje in _context.CriptomoedaHoje
+                          on coin.Id equals criptohoje.CriptomoedaId
+                          where coin.Nome == "Bitcoin" && criptohoje.Data == DateTime.Now
+                          select criptohoje.Valor;
+
+            ViewData["Bitcoin"] = bitcoin;
+
+
+
             var temporario = _context.Transacao;
             return View(temporario.ToListAsync());
         }
