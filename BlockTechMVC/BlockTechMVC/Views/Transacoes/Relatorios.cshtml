@@ -3,15 +3,16 @@
     ViewData["Title"] = "Relatórios";
     ViewData["Data"] = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
 
+    var bitcoin = ViewBag.Bitcoin;
+
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <div>
-
 </div>
 <br />
-<h4 class="text-center">Criptomoedas @ViewData["Data"]</h4>
+<h4 class="text-center">Valor Por Criptomoeda @ViewData["Data"]</h4>
 <canvas id="graficoCriptomoedas" width="400" height="150">
 </canvas>
 
@@ -29,7 +30,7 @@
                     data: {
                         labels: ['Bitcoin', 'Ethereum', 'Bitcoin Cash', 'XRP', 'PAX Gold', 'Litecoin'],
                         datasets: [{
-                            data: [78459.21, 2224, 1538, 1, 10892, 314],
+                            data: [@bitcoin, 2224, 1538, 1, 10892, 314],
                             backgroundColor: [
                                 'rgba(250, 150, 26, 0.2)',
                                 'rgba(107, 108, 109, 0.2)',
