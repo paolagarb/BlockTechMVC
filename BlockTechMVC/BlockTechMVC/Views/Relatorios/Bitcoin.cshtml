@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Bitcoin";
+    var diasList = ViewBag.Dias;
+    var valoresList = ViewBag.Valores;
+    var dias = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(diasList));
+    var valores = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(valoresList));
+}
+
+<div class="flex-row">
+
+    <a asp-action="Index" class="btn btn-outline-dark">Todas as Criptomoedas</a>
+    <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+
+</div>
+<br />
+<h1>@ViewData["Title"]</h1>
+<h4 class="text-center">Últimos 7 Dias</h4>
+<canvas id="graficoBitcoin" width="400" height="150">
+</canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script>
+        $(document)
+            .ready(function () {
+
+                var ctx = document.getElementById('graficoBitcoin').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @dias,
+                        datasets: [{
+                            data: @valores,
+                            backgroundColor: 'rgba(250, 150, 26, 0.0)',
+                            borderColor: 'rgba(250, 150, 26, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            });
+    </script>
+
+}
+
+

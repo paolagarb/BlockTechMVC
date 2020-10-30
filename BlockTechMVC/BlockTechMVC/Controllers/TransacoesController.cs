@@ -221,46 +221,5 @@ namespace BlockTechMVC.Controllers
         {
             return _context.Transacao.Any(e => e.Id == id);
         }
-
-        //public async Task<IActionResult> Relatorios()
-        //{
-
-        //    var bitcoin = from coin in _context.Criptomoeda
-        //                  join criptohoje in _context.CriptomoedaHoje
-        //                  on coin.Id equals criptohoje.CriptomoedaId
-        //                  where coin.Nome == "Bitcoin" && criptohoje.Data == DateTime.Today
-        //                  select criptohoje.Valor;
-
-        //    ViewData["Bitcoin"] = bitcoin;
-
-
-
-        //    var temporario = _context.Transacao;
-        //    return View(await temporario.ToListAsync());
-        //}
-
-        public ActionResult Relatorios()
-        {
-
-            ViewBag.Bitcoin = CriptomoedaHoje("Bitcoin");
-            ViewBag.Ethereum = CriptomoedaHoje("Ethereum");
-            ViewBag.BitcoinCash = CriptomoedaHoje("Bitcoin Cash");
-            ViewBag.XRP = CriptomoedaHoje("XRP");
-            ViewBag.PaxGold = CriptomoedaHoje("PAX Gold");
-            ViewBag.Litecoin = CriptomoedaHoje("Litecoin");
-
-            return View();
-        }
-
-        public double CriptomoedaHoje(string nome)
-        {
-            var criptomoeda = (from coin in _context.Criptomoeda
-                            join criptohoje in _context.CriptomoedaHoje
-                            on coin.Id equals criptohoje.CriptomoedaId
-                            where coin.Nome == nome && criptohoje.Data == DateTime.Today
-                            select criptohoje.Valor).Single();
-
-            return criptomoeda;
-        }
     }
 }
