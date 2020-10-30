@@ -227,18 +227,5 @@ namespace BlockTechMVC.Controllers
             var temporario = _context.Transacao;
             return View(temporario.ToListAsync());
         }
-
-        //public ActionResult Relatorios()
-        //{
-        //    var myChart = new Chart(width: 600, height: 400, theme: ChartTheme.Green)
-        //   .AddTitle("Bitcoin")
-        //   .AddSeries(chartType: "column",
-        //       name: "Criptomoeda",
-        //       xValue: new[] { "24/10", "25/10", "26/10", "27/10", "28/10" }, xField: "Data",
-        //       yValues: new[] { "70000", "68000", "62000", "67000", "73200" }, yFields: "Valor")
-        //   .Write();
-
-        //    return null;
-        //}
     }
 }
