@@ -1,22 +1,21 @@
 ﻿
 @{
-    ViewData["Title"] = "Bitcoin Cash";
+    ViewData["Title"] = "PAX Gold";
 
-    var bitcoinCashQuantidade = ViewBag.QuantidadaTotalBitcoinCash;
-    var bitcoinCashValorReal = ViewBag.QuantidadaEmRealBitcoinCash;
-    var bitcoinCashInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoinCash);
+    var paxGoldQuantidade = ViewBag.QuantidadaTotalPaxGold;
+    var paxGoldValorReal = ViewBag.QuantidadaEmRealPaxGold;
+    var paxGoldInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoPaxGold);
     var lucroOuPerda = Convert.ToDouble(ViewBag.LucroOuPerda);
 
     var diasList = ViewBag.Ultimos7Dias;
     var dias = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(diasList));
-    var valores7Dias = ViewBag.ValorBitcoinCash7Dias;
+    var valores7Dias = ViewBag.ValorPaxGold7Dias;
     var valores = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(valores7Dias));
-
 
     var bitcoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoin);
     var ethereumInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoEthereum);
     var xrpInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoXrp);
-    var paxGoldInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoPaxGold);
+    var bitcoinCashInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoinCash);
     var litecoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoLitecoin);
 }
 
@@ -53,9 +52,9 @@
 
 <hr />
 
-<h5>Quantidade de Bitcoin Cash: @bitcoinCashQuantidade</h5>
-<h5>Valor Investido - Bitcoin Cash: R$ @bitcoinCashInvestimento</h5>
-<h5>Valor Atual - Bitcoin Cash: R$ @bitcoinCashValorReal</h5>
+<h5>Quantidade de PAX Gold: @paxGoldQuantidade</h5>
+<h5>Valor Investido - PAX Gold: R$ @paxGoldInvestimento</h5>
+<h5>Valor Atual - PAX Gold: R$ @paxGoldValorReal</h5>
 
 @if (lucroOuPerda > 0)
 {
@@ -68,7 +67,7 @@ else
 
 <br />
 
-<canvas id="graficoBitcoinCash" width="400" height="150">
+<canvas id="graficoPaxGold" width="400" height="150">
 </canvas>
 
 @section Scripts {
@@ -78,15 +77,15 @@ else
         $(document)
             .ready(function () {
 
-                var ctx = document.getElementById('graficoBitcoinCash').getContext('2d');
+                var ctx = document.getElementById('graficoPaxGold').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: @dias,
                         datasets: [{
                             data: @valores,
-                            backgroundColor: 'rgba(141, 195, 81, 0.0)',
-                            borderColor:  'rgba(141, 195, 81, 1)',
+                            backgroundColor: 'rgba(250, 244, 15,  0.0)',
+                            borderColor: 'rgba(250, 244, 15, 1)',
                             borderWidth: 1
                         }]
                     },
