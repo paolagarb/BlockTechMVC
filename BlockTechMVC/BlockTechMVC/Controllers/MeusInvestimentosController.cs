@@ -289,9 +289,9 @@ namespace BlockTechMVC.Controllers
                              where coin.Nome == nome && criptohoje.Data.Equals(dia)
                              select criptohoje.Valor).Single();
 
-                var totalDia = quantidadeTotalCriptomoeda * valor;
+                var totalDia = (quantidadeTotalCriptomoeda * valor).ToString("F2");
 
-                valorList.Add(totalDia);
+                valorList.Add(Convert.ToDouble(totalDia));
             }
 
             return valorList;
