@@ -232,6 +232,67 @@ namespace BlockTechMVC.Controllers
         //    return investimentos;
         //}
 
+        public ActionResult Bitcoin()
+        {
+            var user = User.Identity.Name;
+
+            double bitcoin = QuantidadeTotalCriptomoeda("Bitcoin", user);
+            ViewBag.QuantidadaTotalBitcoin = bitcoin.ToString("F6");
+
+            double saldoTotalBitcoin = CalcularSaldoAtual(bitcoin, "Bitcoin");
+            ViewBag.QuantidadaEmRealBitcoin = saldoTotalBitcoin.ToString("F2");
+
+            double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
+            ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
+
+
+            ViewBag.LucroOuPerda = (saldoTotalBitcoin - valorInvestidoBitcoin).ToString("F2");
+
+
+            ViewBag.Ultimos7Dias = Ultimos7Dias(); //gráfico
+
+            return View();
+        }
+
+        //public double CalcularLucro(string criptomoeda, string user, double valorInvestido)
+        //{
+        //    valorInvestido = 100;
+
+        //}
+
+        public List<int> Ultimos7Dias()
+        {
+            var diasList = new List<int>();
+
+            for (int i = 1; i <= 7; i++)
+            {
+                diasList.Add((DateTime.Now.Day - 7) + i);
+            }
+
+            return diasList;
+        }
+
+        public List<double> Valores7Dias(string nome)
+        {
+
+            var valorList = new List<double>();
+
+            for (int i = 1; i <= 7; i++)
+            {
+                var data = (DateTime.Now.Day - 7) + i;
+                DateTime dia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
+
+                var valor = (from coin in _context.Criptomoeda
+                             join criptohoje in _context.CriptomoedaHoje
+                             on coin.Id equals criptohoje.CriptomoedaId
+                             where coin.Nome == nome && criptohoje.Data.Equals(dia)
+                             select criptohoje.Valor).Single();
+                valorList.Add(valor);
+            }
+
+            return valorList;
+        }
+
         private bool TransacaoExists(int id)
         {
             return _context.Transacao.Any(e => e.Id == id);

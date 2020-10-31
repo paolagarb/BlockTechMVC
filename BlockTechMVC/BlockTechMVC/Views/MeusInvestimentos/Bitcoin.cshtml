@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Bitcoin";
+
+    var bitcoinQuantidade = ViewBag.QuantidadaTotalBitcoin;
+    var bitcoinValorReal = ViewBag.QuantidadaEmRealBitcoin;
+    var bitcoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoin);
+    var lucroOuPerda = Convert.ToDouble(ViewBag.LucroOuPerda);
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<hr />
+<h3>Quantidade de Bitcoin: @bitcoinQuantidade</h3>
+<h3>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h3>
+<h3>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h3>
+@if (lucroOuPerda > 0)
+{
+    <h3>Lucro: R$ @lucroOuPerda</h3>
+}
+else
+{
+    <h3>Perda: R$ @lucroOuPerda</h3>
+}
