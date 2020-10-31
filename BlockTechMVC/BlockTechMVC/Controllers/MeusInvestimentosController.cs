@@ -250,16 +250,64 @@ namespace BlockTechMVC.Controllers
 
            
             ViewBag.ValorBitcoin7Dias = Valores7Dias("Bitcoin", bitcoin);
-            ViewBag.Ultimos7Dias = Ultimos7Dias(); 
+            ViewBag.Ultimos7Dias = Ultimos7Dias();
+
+
+          
+
+            double valorInvestidoEthereum = ValorInvestido("Ethereum", user);
+            ViewBag.ValorInvestidoEthereum = valorInvestidoEthereum.ToString("F2");
+
+            double valorInvestidoBitcoinCash = ValorInvestido("Bitcoin Cash", user);
+            ViewBag.ValorInvestidoBitcoinCash = valorInvestidoBitcoinCash.ToString("F2");
+
+            double valorInvestidoXrp = ValorInvestido("XRP", user);
+            ViewBag.ValorInvestidoXrp = valorInvestidoXrp.ToString("F2");
+
+            double valorInvestidoPaxGold = ValorInvestido("PAX Gold", user);
+            ViewBag.ValorInvestidoPaxGold = valorInvestidoPaxGold.ToString("F2");
+
+            double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
+            ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
+
 
             return View();
         }
+        public ActionResult Ethereum()
+        {
+            var user = User.Identity.Name;
 
-        //public double CalcularLucro(string criptomoeda, string user, double valorInvestido)
-        //{
-        //    valorInvestido = 100;
+            double ethereum = QuantidadeTotalCriptomoeda("Ethereum", user);
+            ViewBag.QuantidadaTotalEthereum = ethereum.ToString("F6");
 
-        //}
+            double saldoTotalEthereum = CalcularSaldoAtual(ethereum, "Ethereum");
+            ViewBag.QuantidadaEmRealEthereum = saldoTotalEthereum.ToString("F2");
+
+            double valorInvestidoEthereum = ValorInvestido("Ethereum", user);
+            ViewBag.ValorInvestidoEthereum = valorInvestidoEthereum.ToString("F2");
+
+            ViewBag.LucroOuPerda = (saldoTotalEthereum - valorInvestidoEthereum).ToString("F2");
+           
+            ViewBag.ValorEthereum7Dias = Valores7Dias("Ethereum", ethereum);
+            ViewBag.Ultimos7Dias = Ultimos7Dias();
+
+            double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
+            ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
+
+            double valorInvestidoBitcoinCash = ValorInvestido("Bitcoin Cash", user);
+            ViewBag.ValorInvestidoBitcoinCash = valorInvestidoBitcoinCash.ToString("F2");
+
+            double valorInvestidoXrp = ValorInvestido("XRP", user);
+            ViewBag.ValorInvestidoXrp = valorInvestidoXrp.ToString("F2");
+
+            double valorInvestidoPaxGold = ValorInvestido("PAX Gold", user);
+            ViewBag.ValorInvestidoPaxGold = valorInvestidoPaxGold.ToString("F2");
+
+            double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
+            ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
+
+            return View();
+        }
 
         public List<int> Ultimos7Dias()
         {

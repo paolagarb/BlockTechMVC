@@ -1,19 +1,19 @@
 ﻿
 @{
-    ViewData["Title"] = "Bitcoin";
+    ViewData["Title"] = "Ethereum";
 
-    var bitcoinQuantidade = ViewBag.QuantidadaTotalBitcoin;
-    var bitcoinValorReal = ViewBag.QuantidadaEmRealBitcoin;
-    var bitcoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoin);
+    var ethereumQuantidade = ViewBag.QuantidadaTotalEthereum;
+    var ethereumValorReal = ViewBag.QuantidadaEmRealEthereum;
+    var ethereumInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoEthereum);
     var lucroOuPerda = Convert.ToDouble(ViewBag.LucroOuPerda);
 
     var diasList = ViewBag.Ultimos7Dias;
     var dias = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(diasList));
-    var valores7Dias = ViewBag.ValorBitcoin7Dias;
+    var valores7Dias = ViewBag.ValorEthereum7Dias;
     var valores = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(valores7Dias));
 
 
-    var ethereumInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoEthereum);
+    var bitcoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoin);
     var bitcoinCashInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoinCash);
     var xrpInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoXrp);
     var paxGoldInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoPaxGold);
@@ -53,9 +53,9 @@
 
 <hr />
 
-<h5>Quantidade de Bitcoin: @bitcoinQuantidade</h5>
-<h5>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h5>
-<h5>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h5>
+<h5>Quantidade de Ethereum: @ethereumQuantidade</h5>
+<h5>Valor Investido - Ethereum: R$ @ethereumInvestimento</h5>
+<h5>Valor Atual - Ethereum: R$ @ethereumValorReal</h5>
 
 @if (lucroOuPerda > 0)
 {
@@ -68,7 +68,7 @@ else
 
 <br />
 
-<canvas id="graficoBitcoin" width="400" height="150">
+<canvas id="graficoEthereum" width="400" height="150">
 </canvas>
 
 @section Scripts {
@@ -78,15 +78,15 @@ else
         $(document)
             .ready(function () {
 
-                var ctx = document.getElementById('graficoBitcoin').getContext('2d');
+                var ctx = document.getElementById('graficoEthereum').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: @dias,
                         datasets: [{
                             data: @valores,
-                            backgroundColor: 'rgba(250, 150, 26, 0.0)',
-                            borderColor: 'rgba(250, 150, 26, 1)',
+                            backgroundColor: 'rgba(107, 108, 109, 0.0)',
+                            borderColor:  'rgba(107, 108, 109, 1)',
                             borderWidth: 1
                         }]
                     },
@@ -108,4 +108,4 @@ else
     </script>
 
 
-    }
+}
