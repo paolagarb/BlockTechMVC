@@ -340,6 +340,42 @@ namespace BlockTechMVC.Controllers
 
             return View();
         }
+        
+        public ActionResult Xrp()
+        {
+            var user = User.Identity.Name;
+
+            double xrp = QuantidadeTotalCriptomoeda("XRP", user);
+            ViewBag.QuantidadaTotalXrp = xrp.ToString("F6");
+
+            double saldoTotalXrp = CalcularSaldoAtual(xrp, "XRP");
+            ViewBag.QuantidadaEmRealXrp = saldoTotalXrp.ToString("F2");
+
+            double valorInvestidoXrp = ValorInvestido("XRP", user);
+            ViewBag.ValorInvestidoXrp = valorInvestidoXrp.ToString("F2");
+
+            ViewBag.LucroOuPerda = (saldoTotalXrp - valorInvestidoXrp).ToString("F2");
+           
+            ViewBag.ValorXrp7Dias = Valores7Dias("XRP", xrp);
+            ViewBag.Ultimos7Dias = Ultimos7Dias();
+
+            double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
+            ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
+
+            double valorInvestidoEthereum = ValorInvestido("Ethereum", user);
+            ViewBag.ValorInvestidoEthereum = valorInvestidoEthereum.ToString("F2");
+
+            double valorInvestidoBitcoinCash = ValorInvestido("Bitcoin Cash", user);
+            ViewBag.ValorInvestidoBitcoinCash = valorInvestidoBitcoinCash.ToString("F2");
+
+            double valorInvestidoPaxGold = ValorInvestido("PAX Gold", user);
+            ViewBag.ValorInvestidoPaxGold = valorInvestidoPaxGold.ToString("F2");
+
+            double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
+            ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
+
+            return View();
+        }
 
         public List<int> Ultimos7Dias()
         {

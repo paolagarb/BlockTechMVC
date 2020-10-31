@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "XRP";
+
+    var xrpQuantidade = ViewBag.QuantidadaTotalXrp;
+    var xrpValorReal = ViewBag.QuantidadaEmRealXrp;
+    var xrpInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoXrp);
+    var lucroOuPerda = Convert.ToDouble(ViewBag.LucroOuPerda);
+
+    var diasList = ViewBag.Ultimos7Dias;
+    var dias = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(diasList));
+    var valores7Dias = ViewBag.ValorXrp7Dias;
+    var valores = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(valores7Dias));
+
+    var bitcoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoin);
+    var ethereumInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoEthereum);
+    var paxGoldInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoPaxGold);
+    var bitcoinCashInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoinCash);
+    var litecoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoLitecoin);
+}
+
+<div class="flex-row">
+
+    <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
+    @if (bitcoinInvestimento > 0)
+    {
+        <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+    }
+    @if (ethereumInvestimento > 0)
+    {
+        <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
+    }
+    @if (bitcoinCashInvestimento > 0)
+    {
+        <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
+    }
+    @if (xrpInvestimento > 0)
+    {
+        <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
+    }
+    @if (paxGoldInvestimento > 0)
+    {
+        <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
+    }
+    @if (litecoinInvestimento > 0)
+    {
+        <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+    }
+</div>
+<br />
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<hr />
+
+<h5>Quantidade de XRP @xrpQuantidade</h5>
+<h5>Valor Investido - XRP: R$ @xrpInvestimento</h5>
+<h5>Valor Atual - XRP: R$ @xrpValorReal</h5>
+
+@if (lucroOuPerda > 0)
+{
+    <h5>Lucro: R$ @lucroOuPerda</h5>
+}
+else
+{
+    <h5>Perda: R$ @lucroOuPerda</h5>
+}
+
+<br />
+
+<canvas id="graficoXrp" width="400" height="150">
+</canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script>
+        $(document)
+            .ready(function () {
+
+                var ctx = document.getElementById('graficoXrp').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @dias,
+                        datasets: [{
+                            data: @valores,
+                            backgroundColor: 'rgba(35, 41, 47, 0.0)',
+                            borderColor: 'rgba(35, 41, 47, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            });
+    </script>
+
+
+}
