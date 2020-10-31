@@ -2,30 +2,30 @@
 @{
     var bitcoinQuantidade = ViewBag.QuantidadaTotalBitcoin;
     var bitcoinValorReal = ViewBag.QuantidadaEmRealBitcoin;
-    var bitcoinInvestimento = ViewBag.ValorInvestidoBitcoin;
+    var bitcoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoin);
 
     var ethereumQuantidade = ViewBag.QuantidadaTotalEthereum;
     var ethereumValorReal = ViewBag.QuantidadaEmRealEthereum;
-    var ethereumInvestimento = ViewBag.ValorInvestidoEthereum;
+    var ethereumInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoEthereum);
 
     var bitcoinCashQuantidade = ViewBag.QuantidadaTotalBitcoinCash;
     var bitcoinCashValorReal = ViewBag.QuantidadaEmRealBitcoinCash;
-    var bitcoinCashInvestimento = ViewBag.ValorInvestidoBitcoinCash;
+    var bitcoinCashInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoinCash);
 
     var xrpQuantidade = ViewBag.QuantidadaTotalBitcoinCash;
     var xrpValorReal = ViewBag.QuantidadaEmRealXrp;
-    var xrpInvestimento = ViewBag.ValorInvestidoXrp;
+    var xrpInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoXrp);
 
     var paxGoldQuantidade = ViewBag.QuantidadaTotalPaxGold;
     var paxGoldValorReal = ViewBag.QuantidadaEmRealPaxGold;
-    var paxGoldInvestimento = ViewBag.ValorInvestidoPaxGold;
+    var paxGoldInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoPaxGold);
 
     var litecoinQuantidade = ViewBag.QuantidadaTotalLitecoin;
     var litecoinValorReal = ViewBag.QuantidadaEmRealLitecoin;
-    var litecoinInvestimento = ViewBag.ValorInvestidoLitecoin;
+    var litecoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoLitecoin);
 
     var saldoSemInvestimento = ViewBag.SaldoSemInvestimento;
-    var dinheiroTotalContaRS = ViewBag.DinheiroTotalContaRS;
+    var dinheiroTotalContaRS = Convert.ToDouble(ViewBag.DinheiroTotalContaRS);
 }
 
 @if (User.IsInRole("Admin"))
@@ -37,6 +37,7 @@
     <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
     <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
     <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+    <br />
 }
 
 @if (!User.IsInRole("Admin"))
@@ -68,51 +69,51 @@
         {
             <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
         }
-
+        <br />
     </div>
 
     <h2>Não investido: R$ @saldoSemInvestimento</h2>
-    <h2>Saldo Total na Conta: R$ @dinheiroTotalContaRS</h2>
-
+    <h2>Saldo Total na Conta: R$ @dinheiroTotalContaRS</h2><br />
+    <h2>Investimento Atual:</h2><br />
     if (bitcoinInvestimento > 0)
     {
         <hr />
-        <h2>Quantidade de Bitcoin: @bitcoinQuantidade</h2>
+        <h3>Quantidade de Bitcoin: @bitcoinQuantidade</h3>
         <h3>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h3>
         <h3>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h3>
     }
     @if (ethereumInvestimento > 0)
     {
         <hr />
-        <h2>Quantidade de Ethereum: @ethereumQuantidade</h2>
+        <h3>Quantidade de Ethereum: @ethereumQuantidade</h3>
         <h3>Valor Investido - Ethereum: R$ @ethereumInvestimento</h3>
         <h3>Valor Atual - Ethereum: R$ @ethereumValorReal</h3>
     }
     @if (bitcoinCashInvestimento > 0)
     {
         <hr />
-        <h2>Quantidade de Bitcoin Cash: @bitcoinCashQuantidade</h2>
+        <h3>Quantidade de Bitcoin Cash: @bitcoinCashQuantidade</h3>
         <h3>Valor Investido - Bitcoin Cash: R$ @bitcoinCashInvestimento</h3>
         <h3>Valor Atual - Bitcoin Cash: R$ @bitcoinCashValorReal</h3>
     }
     @if (xrpInvestimento > 0)
     {
         <hr />
-        <h2>Quantidade de XRP: @xrpQuantidade</h2>
+        <h3>Quantidade de XRP: @xrpQuantidade</h3>
         <h3>Valor Investido - XRP: R$ @xrpInvestimento</h3>
         <h3>Valor Atual - XRP: R$ @xrpValorReal</h3>
     }
     @if (paxGoldInvestimento > 0)
     {
         <hr />
-        <h2>Quantidade de PAX Gold: @paxGoldQuantidade</h2>
+        <h3>Quantidade de PAX Gold: @paxGoldQuantidade</h3>
         <h3>Valor Investido - PAX Gold: R$ @paxGoldInvestimento</h3>
         <h3>Valor Atual - PAX Gold: R$ @paxGoldValorReal</h3>
     }
     @if (litecoinInvestimento > 0)
     {
         <hr />
-        <h2>Quantidade de Litecoin: @litecoinQuantidade</h2>
+        <h3>Quantidade de Litecoin: @litecoinQuantidade</h3>
         <h3>Valor Investido - Litecoin: R$ @litecoinInvestimento</h3>
         <h3>Valor Atual - Litecoin: R$ @litecoinValorReal</h3>
     }
