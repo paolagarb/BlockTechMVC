@@ -7,15 +7,18 @@
     var valores = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(valoresList));
 }
 
+<br />
+
 <div class="flex-row">
 
-    <a asp-action="Index" class="btn btn-outline-dark">Todas as Criptomoedas</a>
+    <a asp-action="Index" class="btn btn-outline-dark">Hoje</a>
+    <a asp-action="Semanal" class="btn btn-outline-dark">Todas as Criptomoedas</a>
     <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
     <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
     <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
     <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
     <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-    <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+    <a asp-action="Litecoin" class="btn btn-dark text-white">Litecoin</a>
 
 </div>
 <br />

@@ -93,7 +93,6 @@ namespace BlockTechMVC.Controllers
 
         public List<int> Ultimos7Dias()
         {
-            
             var diasList = new List<int>();
 
             for (int i = 1; i <= 7; i++)
@@ -106,12 +105,12 @@ namespace BlockTechMVC.Controllers
 
         public List<double> Valores7Dias(string nome)
         {
-            var dias = 7;
+         
             var valorList = new List<double>();
 
-            for (int i = 0; i < dias; i++)
+            for (int i = 1; i <= 7; i++)
             {
-                var data = DateTime.Now.Day - i;
+                var data = (DateTime.Now.Day - 7) + i;
                 DateTime dia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
 
                 var valor = (from coin in _context.Criptomoeda

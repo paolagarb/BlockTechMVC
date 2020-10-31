@@ -12,31 +12,24 @@
 
 }
 
-@*<h1>@ViewData["Title"]</h1>*@
+<br />
 
 <div class="flex-row">
-    @*<a asp-action="Index" class="btn btn-outline-dark">Todas as Criptomoedas</a>
-        <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
-        <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
-        <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
-        <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
-        <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-        <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>*@
 
-    <a asp-action="Index" class="btn btn-outline-dark">Hoje</a>
+    <a asp-action="Index" class="btn btn-dark text-white">Hoje</a>
     <a asp-action="Semanal" class="btn btn-outline-dark">Últimos 7 dias</a>
 
-        </div>
-        <br />
-        <h4 class="text-center">Valor Por Criptomoeda @ViewData["Data"]</h4>
-        <canvas id="graficoCriptomoedas" width="400" height="150">
-        </canvas>
+</div>
+<br />
+<h4 class="text-center">Valor Por Criptomoeda @ViewData["Data"]</h4>
+<canvas id="graficoCriptomoedas" width="400" height="150">
+</canvas>
 
 
-        @section Scripts {
-            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
-            <script>
+    <script>
                 $(document)
                     .ready(function () {
 
@@ -81,9 +74,9 @@
                         });
 
                     });
-            </script>
+    </script>
 
-        }
+}
 
 
 
