@@ -248,8 +248,9 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerda = (saldoTotalBitcoin - valorInvestidoBitcoin).ToString("F2");
 
-
-            ViewBag.Ultimos7Dias = Ultimos7Dias(); //gráfico
+           
+            ViewBag.ValorBitcoin7Dias = Valores7Dias("Bitcoin", bitcoin);
+            ViewBag.Ultimos7Dias = Ultimos7Dias(); 
 
             return View();
         }
@@ -272,7 +273,7 @@ namespace BlockTechMVC.Controllers
             return diasList;
         }
 
-        public List<double> Valores7Dias(string nome)
+        public List<double> Valores7Dias(string nome, double quantidadeTotalCriptomoeda)
         {
 
             var valorList = new List<double>();
@@ -287,7 +288,10 @@ namespace BlockTechMVC.Controllers
                              on coin.Id equals criptohoje.CriptomoedaId
                              where coin.Nome == nome && criptohoje.Data.Equals(dia)
                              select criptohoje.Valor).Single();
-                valorList.Add(valor);
+
+                var totalDia = quantidadeTotalCriptomoeda * valor;
+
+                valorList.Add(totalDia);
             }
 
             return valorList;
