@@ -3,30 +3,118 @@
     var bitcoinQuantidade = ViewBag.QuantidadaTotalBitcoin;
     var bitcoinValorReal = ViewBag.QuantidadaEmRealBitcoin;
     var bitcoinInvestimento = ViewBag.ValorInvestidoBitcoin;
+
+    var ethereumQuantidade = ViewBag.QuantidadaTotalEthereum;
+    var ethereumValorReal = ViewBag.QuantidadaEmRealEthereum;
+    var ethereumInvestimento = ViewBag.ValorInvestidoEthereum;
+
+    var bitcoinCashQuantidade = ViewBag.QuantidadaTotalBitcoinCash;
+    var bitcoinCashValorReal = ViewBag.QuantidadaEmRealBitcoinCash;
+    var bitcoinCashInvestimento = ViewBag.ValorInvestidoBitcoinCash;
+
+    var xrpQuantidade = ViewBag.QuantidadaTotalBitcoinCash;
+    var xrpValorReal = ViewBag.QuantidadaEmRealXrp;
+    var xrpInvestimento = ViewBag.ValorInvestidoXrp;
+
+    var paxGoldQuantidade = ViewBag.QuantidadaTotalPaxGold;
+    var paxGoldValorReal = ViewBag.QuantidadaEmRealPaxGold;
+    var paxGoldInvestimento = ViewBag.ValorInvestidoPaxGold;
+
+    var litecoinQuantidade = ViewBag.QuantidadaTotalLitecoin;
+    var litecoinValorReal = ViewBag.QuantidadaEmRealLitecoin;
+    var litecoinInvestimento = ViewBag.ValorInvestidoLitecoin;
+
     var saldoSemInvestimento = ViewBag.SaldoSemInvestimento;
     var dinheiroTotalContaRS = ViewBag.DinheiroTotalContaRS;
 }
 
-
-<a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
-<a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
-<a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
-<a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
-<a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
-<a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-<a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
+    <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+    <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
+    <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
+    <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
+    <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
+    <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+}
 
 @if (!User.IsInRole("Admin"))
 {
+    <div class="flex-row">
+
+        <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
+        @if (bitcoinInvestimento > 0)
+        {
+            <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+        }
+        @if (ethereumInvestimento > 0)
+        {
+            <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
+        }
+        @if (bitcoinCashInvestimento > 0)
+        {
+            <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
+        }
+        @if (xrpInvestimento > 0)
+        {
+            <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
+        }
+        @if (paxGoldInvestimento > 0)
+        {
+            <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
+        }
+        @if (litecoinInvestimento > 0)
+        {
+            <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+        }
+
+    </div>
+
     <h2>Não investido: R$ @saldoSemInvestimento</h2>
     <h2>Saldo Total na Conta: R$ @dinheiroTotalContaRS</h2>
 
     if (bitcoinInvestimento > 0)
     {
+        <hr />
         <h2>Quantidade de Bitcoin: @bitcoinQuantidade</h2>
-        <h2>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h2>
-        <h2>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h2>
+        <h3>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h3>
+        <h3>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h3>
     }
-
+    @if (ethereumInvestimento > 0)
+    {
+        <hr />
+        <h2>Quantidade de Ethereum: @ethereumQuantidade</h2>
+        <h3>Valor Investido - Ethereum: R$ @ethereumInvestimento</h3>
+        <h3>Valor Atual - Ethereum: R$ @ethereumValorReal</h3>
+    }
+    @if (bitcoinCashInvestimento > 0)
+    {
+        <hr />
+        <h2>Quantidade de Bitcoin Cash: @bitcoinCashQuantidade</h2>
+        <h3>Valor Investido - Bitcoin Cash: R$ @bitcoinCashInvestimento</h3>
+        <h3>Valor Atual - Bitcoin Cash: R$ @bitcoinCashValorReal</h3>
+    }
+    @if (xrpInvestimento > 0)
+    {
+        <hr />
+        <h2>Quantidade de XRP: @xrpQuantidade</h2>
+        <h3>Valor Investido - XRP: R$ @xrpInvestimento</h3>
+        <h3>Valor Atual - XRP: R$ @xrpValorReal</h3>
+    }
+    @if (paxGoldInvestimento > 0)
+    {
+        <hr />
+        <h2>Quantidade de PAX Gold: @paxGoldQuantidade</h2>
+        <h3>Valor Investido - PAX Gold: R$ @paxGoldInvestimento</h3>
+        <h3>Valor Atual - PAX Gold: R$ @paxGoldValorReal</h3>
+    }
+    @if (litecoinInvestimento > 0)
+    {
+        <hr />
+        <h2>Quantidade de Litecoin: @litecoinQuantidade</h2>
+        <h3>Valor Investido - Litecoin: R$ @litecoinInvestimento</h3>
+        <h3>Valor Atual - Litecoin: R$ @litecoinValorReal</h3>
+    }
 
 }

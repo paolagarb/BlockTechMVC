@@ -40,10 +40,61 @@ namespace BlockTechMVC.Controllers
                 double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
                 ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
 
+
+                double ethereum = QuantidadeTotalCriptomoeda("Ethereum", user);
+                ViewBag.QuantidadaTotalEthereum = ethereum.ToString("F6");
+
+                double saldoTotalEthereum = CalcularSaldoAtual(ethereum, "Ethereum");
+                ViewBag.QuantidadaEmRealEthereum = saldoTotalEthereum.ToString("F2");
+
+                double valorInvestidoEthereum = ValorInvestido("Ethereum", user);
+                ViewBag.ValorInvestidoEthereum = valorInvestidoEthereum.ToString("F2");
+
+                
+                double bitcoinCash = QuantidadeTotalCriptomoeda("Bitcoin Cash", user);
+                ViewBag.QuantidadaTotalBitcoinCash = bitcoinCash.ToString("F6");
+
+                double saldoTotalBitcoinCash = CalcularSaldoAtual(bitcoinCash, "Bitcoin Cash");
+                ViewBag.QuantidadaEmRealBitcoinCash = saldoTotalBitcoinCash.ToString("F2");
+
+                double valorInvestidoBitcoinCash = ValorInvestido("Bitcoin Cash", user);
+                ViewBag.ValorInvestidoBitcoinCash = valorInvestidoBitcoinCash.ToString("F2");
+
+                
+                double xrp = QuantidadeTotalCriptomoeda("XRP", user);
+                ViewBag.QuantidadaTotalBitcoinCash = xrp.ToString("F6");
+
+                double saldoTotalXrp = CalcularSaldoAtual(xrp, "XRP");
+                ViewBag.QuantidadaEmRealXrp = saldoTotalXrp.ToString("F2");
+
+                double valorInvestidoXrp = ValorInvestido("XRP", user);
+                ViewBag.ValorInvestidoXrp = valorInvestidoXrp.ToString("F2");
+                
+
+                double paxGold = QuantidadeTotalCriptomoeda("PAX Gold", user);
+                ViewBag.QuantidadaTotalPaxGold = paxGold.ToString("F6");
+
+                double saldoTotalPaxGold = CalcularSaldoAtual(paxGold, "PAX Gold");
+                ViewBag.QuantidadaEmRealPaxGold = saldoTotalPaxGold.ToString("F2");
+
+                double valorInvestidoPaxGold = ValorInvestido("PAX Gold", user);
+                ViewBag.ValorInvestidoPaxGold = valorInvestidoPaxGold.ToString("F2");
+
+                
+                double litecoin = QuantidadeTotalCriptomoeda("Litecoin", user);
+                ViewBag.QuantidadaTotalLitecoin = litecoin.ToString("F6");
+
+                double saldoTotalLitecoin = CalcularSaldoAtual(litecoin, "Litecoin");
+                ViewBag.QuantidadaEmRealLitecoin = saldoTotalLitecoin.ToString("F2");
+
+                double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
+                ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
+
+
                 double saldoSemInvestimento = SaldoSemInvestimento(user);
                 ViewBag.SaldoSemInvestimento = saldoSemInvestimento.ToString("F2");
 
-                double dinheiroTotalConta = saldoSemInvestimento + saldoTotalBitcoin; //adicionar todas criptomoedas
+                double dinheiroTotalConta = saldoSemInvestimento + saldoTotalBitcoin + saldoTotalEthereum + saldoTotalBitcoinCash + saldoTotalXrp + saldoTotalPaxGold + saldoTotalLitecoin; 
                 ViewBag.DinheiroTotalContaRS = dinheiroTotalConta.ToString("F2");
 
                 return View();
