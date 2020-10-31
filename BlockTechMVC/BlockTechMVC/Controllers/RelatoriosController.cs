@@ -93,12 +93,12 @@ namespace BlockTechMVC.Controllers
 
         public List<int> Ultimos7Dias()
         {
-            var dias = 7;
+            
             var diasList = new List<int>();
 
-            for (int i = 0; i < dias; i++)
+            for (int i = 1; i <= 7; i++)
             {
-                diasList.Add(DateTime.Now.Day - i);
+                diasList.Add((DateTime.Now.Day - 7)+i);
             }
 
             return diasList;
@@ -151,7 +151,7 @@ namespace BlockTechMVC.Controllers
             var calculo = 100.0; //inicia com 100%
             var porcentagem = new List<double>();
 
-            porcentagem.Add(100);
+            porcentagem.Add(0);
 
             for (int i = 1; i < 7; i++)
             {
