@@ -22,11 +22,11 @@ namespace BlockTechMVC.Controllers
         // GET: Relatorios
         public ActionResult Index()
         {
-            ViewBag.Bitcoin = CriptomoedaHoje("Bitcoin");
-            ViewBag.Ethereum = CriptomoedaHoje("Ethereum");
-            ViewBag.BitcoinCash = CriptomoedaHoje("Bitcoin Cash");
-            ViewBag.XRP = CriptomoedaHoje("XRP");
-            ViewBag.PaxGold = CriptomoedaHoje("PAX Gold");
+            ViewBag.Bitcoin = CriptomoedaHoje("Bitcoin").ToString("F4");
+            ViewBag.Ethereum = CriptomoedaHoje("Ethereum").ToString("F4");
+            ViewBag.BitcoinCash = CriptomoedaHoje("Bitcoin Cash").ToString("F4");
+            ViewBag.XRP = CriptomoedaHoje("XRP").ToString("F4");
+            ViewBag.PaxGold = CriptomoedaHoje("PAX Gold").ToString("F4");
             ViewBag.Litecoin = CriptomoedaHoje("Litecoin");
 
             return View();
