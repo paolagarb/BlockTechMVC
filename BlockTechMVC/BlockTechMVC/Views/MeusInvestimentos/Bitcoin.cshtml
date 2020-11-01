@@ -27,41 +27,41 @@
     var BitcoinInvestido = ViewBag.BitcoinInvestido;
 }
 
-<div class="flex-row">
-
-    <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
-    @if (bitcoinInvestimento > 0)
-    {
-        <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
-    }
-    @if (ethereumInvestimento > 0)
-    {
-        <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
-    }
-    @if (bitcoinCashInvestimento > 0)
-    {
-        <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
-    }
-    @if (xrpInvestimento > 0)
-    {
-        <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
-    }
-    @if (paxGoldInvestimento > 0)
-    {
-        <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-    }
-    @if (litecoinInvestimento > 0)
-    {
-        <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
-    }
-</div>
-<br />
-<h1 class="text-center">@ViewData["Title"]</h1>
-
-<hr />
-
 @if (!User.IsInRole("Admin"))
 {
+    <div class="flex-row">
+
+        <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
+        @if (bitcoinInvestimento > 0)
+        {
+            <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+        }
+        @if (ethereumInvestimento > 0)
+        {
+            <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
+        }
+        @if (bitcoinCashInvestimento > 0)
+        {
+            <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
+        }
+        @if (xrpInvestimento > 0)
+        {
+            <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
+        }
+        @if (paxGoldInvestimento > 0)
+        {
+            <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
+        }
+        @if (litecoinInvestimento > 0)
+        {
+            <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+        }
+    </div>
+    <br />
+    <h1 class="text-center">@ViewData["Title"]</h1>
+
+    <hr />
+
     <h5>Quantidade de Bitcoin: @bitcoinQuantidade</h5>
     <h5>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h5>
     <h5>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h5>
@@ -120,6 +120,18 @@
 }
 else
 {
+    <div class="flex-row">
+        <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
+        <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+        <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
+        <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
+        <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
+        <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
+        <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+    </div>
+    <br />
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <br />
     <h5>Quantidade de Bitcoin: @admBitcoinTotal</h5>
     <h5>Valor Investido - Bitcoin: R$ @BitcoinInvestido</h5>
     <h5>Valor Atual - Bitcoin: R$ @BitcoinValorRS</h5>

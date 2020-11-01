@@ -294,6 +294,13 @@ namespace BlockTechMVC.Controllers
             double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
             ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
 
+
+            var Ethereum = QuantidadeTotalCriptomoedaAdm("Ethereum");
+            ViewBag.Ethereum = Ethereum;
+            ViewBag.EthereumValorRS = ValorTotalCriptomoedaAdm("Ethereum", Ethereum).ToString("F2");
+            ViewBag.Ultimos7DiasAdm = Valores7DiasAdm("Ethereum", Ethereum);
+            ViewBag.EthereumInvestido = ValorInvestidoAdm("Ethereum");
+
             return View();
         }
         
