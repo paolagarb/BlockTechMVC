@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
+using System.ComponentModel;
 
 namespace BlockTechMVC.Controllers
 {
@@ -95,9 +96,13 @@ namespace BlockTechMVC.Controllers
         {
             var diasList = new List<int>();
 
-            for (int i = 1; i <= 7; i++)
+            DateTime diasSete = DateTime.Today;
+            diasSete = diasSete.AddDays(-7);
+
+            for (int i = 0; i < 7; i++)
             {
-                diasList.Add((DateTime.Now.Day - 7)+i);
+                diasList.Add((diasSete.Day) + i);
+                //diasList.Add((DateTime.Now.Day - 7)+i);
             }
 
             return diasList;
@@ -138,13 +143,17 @@ namespace BlockTechMVC.Controllers
 
         public List<double> Porcentagem(string nome)
         {
-            var dia = DateTime.Now.Day - 7;
-            DateTime dateSeteDias = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dia);
+            //var dia = DateTime.Now.Day - 7;
+            //DateTime dateSeteDias = new DateTime(DateTime.Now.Year, DateTime.Now.Month, dia);
+
+            var dia = DateTime.Today;
+            dia = dia.AddDays(-7);
+            DateTime dateSeteDias = dia;
 
             var valor = (from coin in _context.Criptomoeda
                          join criptohoje in _context.CriptomoedaHoje
                          on coin.Id equals criptohoje.CriptomoedaId
-                         where coin.Nome == nome && criptohoje.Data.Equals(dateSeteDias)
+                         where coin.Nome == nome && criptohoje.Data.Date.Equals(dateSeteDias.Date)
                          select criptohoje.Valor).Single();
 
             var calculo = 100.0; //inicia com 100%
@@ -154,13 +163,15 @@ namespace BlockTechMVC.Controllers
 
             for (int i = 1; i < 7; i++)
             {
-                var data = dia + i;
-                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
+                //var data = dia + i;
+                DateTime data = dia.AddDays(i);
+                //DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
+                DateTime date = data;
 
                 var valorDia = (from coin in _context.Criptomoeda
                              join criptohoje in _context.CriptomoedaHoje
                              on coin.Id equals criptohoje.CriptomoedaId
-                             where coin.Nome == nome && criptohoje.Data.Equals(date)
+                             where coin.Nome == nome && criptohoje.Data.Date.Equals(date.Date)
                              select criptohoje.Valor).Single();
                 var regra3 = ((valorDia * calculo) / valor).ToString("F2");
                 calculo = Convert.ToDouble(regra3);
