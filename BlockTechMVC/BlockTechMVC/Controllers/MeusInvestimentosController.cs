@@ -337,6 +337,13 @@ namespace BlockTechMVC.Controllers
             double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
             ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
 
+
+            var BitcoinCash = QuantidadeTotalCriptomoedaAdm("Bitcoin Cash");
+            ViewBag.BitcoinCash = BitcoinCash;
+            ViewBag.BitcoinCashValorRS = ValorTotalCriptomoedaAdm("Bitcoin Cash", BitcoinCash).ToString("F2");
+            ViewBag.Ultimos7DiasAdm = Valores7DiasAdm("BitcoinCash", BitcoinCash);
+            ViewBag.BitcoinCashInvestido = ValorInvestidoAdm("BitcoinCash");
+
             return View();
         }
         
@@ -372,6 +379,13 @@ namespace BlockTechMVC.Controllers
 
             double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
             ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
+
+
+            var Xrp = QuantidadeTotalCriptomoedaAdm("XRP");
+            ViewBag.Xrp = Xrp;
+            ViewBag.XrpValorRS = ValorTotalCriptomoedaAdm("XRP", Xrp).ToString("F2");
+            ViewBag.Ultimos7DiasAdm = Valores7DiasAdm("XRP", Xrp);
+            ViewBag.XrpInvestido = ValorInvestidoAdm("XRP");
 
             return View();
         }
@@ -409,6 +423,13 @@ namespace BlockTechMVC.Controllers
             double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
             ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
 
+
+            var PaxGold = QuantidadeTotalCriptomoedaAdm("PAX Gold");
+            ViewBag.PaxGold = PaxGold;
+            ViewBag.PaxGoldValorRS = ValorTotalCriptomoedaAdm("PAX Gold", PaxGold).ToString("F2");
+            ViewBag.Ultimos7DiasAdm = Valores7DiasAdm("PAX Gold", PaxGold);
+            ViewBag.PaxGoldInvestido = ValorInvestidoAdm("PAX Gold");
+
             return View();
         }
         
@@ -445,6 +466,12 @@ namespace BlockTechMVC.Controllers
             double valorInvestidoPaxGold = ValorInvestido("PAX Gold", user);
             ViewBag.ValorInvestidoPaxGold = valorInvestidoPaxGold.ToString("F2");
 
+
+            var Litecoin = QuantidadeTotalCriptomoedaAdm("Litecoin");
+            ViewBag.Litecoin = Litecoin;
+            ViewBag.LitecoinValorRS = ValorTotalCriptomoedaAdm("Litecoin", Litecoin).ToString("F2");
+            ViewBag.Ultimos7DiasAdm = Valores7DiasAdm("Litecoin", Litecoin);
+            ViewBag.LitecoinInvestido = ValorInvestidoAdm("Litecoin");
 
             return View();
         }

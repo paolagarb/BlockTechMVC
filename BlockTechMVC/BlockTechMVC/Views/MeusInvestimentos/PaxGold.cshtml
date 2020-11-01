@@ -17,63 +17,71 @@
     var xrpInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoXrp);
     var bitcoinCashInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoinCash);
     var litecoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoLitecoin);
+
+    var paxGoldTotal = ViewBag.Ultimos7DiasAdm;
+    var paxGoldTotalAdm = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(paxGoldTotal));
+    var admPaxGoldTotal = ViewBag.PaxGold;
+    var PaxGoldValorRS = ViewBag.PaxGoldValorRS;
+    var PaxGoldInvestido = ViewBag.PaxGoldInvestido;
 }
 
-<div class="flex-row">
-
-    <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
-    @if (bitcoinInvestimento > 0)
-    {
-        <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
-    }
-    @if (ethereumInvestimento > 0)
-    {
-        <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
-    }
-    @if (bitcoinCashInvestimento > 0)
-    {
-        <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
-    }
-    @if (xrpInvestimento > 0)
-    {
-        <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
-    }
-    @if (paxGoldInvestimento > 0)
-    {
-        <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-    }
-    @if (litecoinInvestimento > 0)
-    {
-        <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
-    }
-</div>
-<br />
-<h1 class="text-center">@ViewData["Title"]</h1>
-
-<hr />
-
-<h5>Quantidade de PAX Gold: @paxGoldQuantidade</h5>
-<h5>Valor Investido - PAX Gold: R$ @paxGoldInvestimento</h5>
-<h5>Valor Atual - PAX Gold: R$ @paxGoldValorReal</h5>
-
-@if (lucroOuPerda > 0)
+@if (!User.IsInRole("Admin"))
 {
-    <h5>Lucro: R$ @lucroOuPerda</h5>
-}
-else
-{
-    <h5>Perda: R$ @lucroOuPerda</h5>
-}
+    <div class="flex-row">
 
-<br />
+        <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
+        @if (bitcoinInvestimento > 0)
+        {
+            <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+        }
+        @if (ethereumInvestimento > 0)
+        {
+            <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
+        }
+        @if (bitcoinCashInvestimento > 0)
+        {
+            <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
+        }
+        @if (xrpInvestimento > 0)
+        {
+            <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
+        }
+        @if (paxGoldInvestimento > 0)
+        {
+            <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
+        }
+        @if (litecoinInvestimento > 0)
+        {
+            <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+        }
+    </div>
+    <br />
+    <h1 class="text-center">@ViewData["Title"]</h1>
 
-<canvas id="graficoPaxGold" width="400" height="150">
-</canvas>
+    <hr />
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <h5>Quantidade de PAX Gold: @paxGoldQuantidade</h5>
+    <h5>Valor Investido - PAX Gold: R$ @paxGoldInvestimento</h5>
+    <h5>Valor Atual - PAX Gold: R$ @paxGoldValorReal</h5>
 
-    <script>
+    @if (lucroOuPerda > 0)
+    {
+        <h5>Lucro: R$ @lucroOuPerda</h5>
+    }
+    else
+    {
+        <h5>Perda: R$ @lucroOuPerda</h5>
+    }
+
+    <br />
+
+    <canvas id="graficoPaxGold" width="400" height="150">
+    </canvas>
+
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+        <script>
         $(document)
             .ready(function () {
 
@@ -104,7 +112,67 @@ else
                 });
 
             });
-    </script>
+        </script>
+    }
+}
+else
+{
+    <div class="flex-row">
+        <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
+        <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
+        <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
+        <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
+        <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
+        <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
+        <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+    </div>
+    <br />
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <br />
+    <h5>Quantidade de PAX Gold: @admPaxGoldTotal</h5>
+    <h5>Valor Investido - PAX Gold: R$ @PaxGoldInvestido</h5>
+    <h5>Valor Atual - PAX Gold: R$ @PaxGoldValorRS</h5>
 
+    <br />
 
+    <canvas id="graficoPaxGold" width="400" height="150">
+    </canvas>
+
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+        <script>
+        $(document)
+            .ready(function () {
+
+                var ctx = document.getElementById('graficoPaxGold').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @dias,
+                        datasets: [{
+                            data: @paxGoldTotalAdm,
+                            backgroundColor: 'rgba(250, 150, 26, 0.0)',
+                            borderColor: 'rgba(250, 150, 26, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            });
+        </script>
+
+    }
 }
