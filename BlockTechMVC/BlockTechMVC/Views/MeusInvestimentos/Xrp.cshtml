@@ -23,6 +23,9 @@
     var admXrpTotal = ViewBag.Xrp;
     var XrpValorRS = ViewBag.XrpValorRS;
     var XrpInvestido = ViewBag.XrpInvestido;
+
+    var lucroOuPerdaAdm = Convert.ToDouble(ViewBag.LucroOuPerdaAdm);
+  
 }
 
 @if (!User.IsInRole("Admin"))
@@ -133,6 +136,18 @@ else
     <h5>Valor Investido - XRP: R$ @XrpInvestido</h5>
     <h5>Valor Atual - XRP: R$ @XrpValorRS</h5>
 
+    @if (lucroOuPerdaAdm > 0)
+    {
+        <h5>Lucro: R$ @lucroOuPerdaAdm</h5>
+    }
+    else
+    {
+        if (lucroOuPerdaAdm < 0)
+        {
+            lucroOuPerdaAdm = lucroOuPerdaAdm * (-1);
+        }
+        <h5>Perda: R$ @lucroOuPerdaAdm</h5>
+    }
     <br />
 
     <canvas id="graficoXrp" width="400" height="150">

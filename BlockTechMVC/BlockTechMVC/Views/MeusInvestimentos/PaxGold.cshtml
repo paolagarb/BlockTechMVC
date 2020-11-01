@@ -23,6 +23,9 @@
     var admPaxGoldTotal = ViewBag.PaxGold;
     var PaxGoldValorRS = ViewBag.PaxGoldValorRS;
     var PaxGoldInvestido = ViewBag.PaxGoldInvestido;
+
+    var lucroOuPerdaAdm = Convert.ToDouble(ViewBag.LucroOuPerdaAdm);
+
 }
 
 @if (!User.IsInRole("Admin"))
@@ -133,6 +136,18 @@ else
     <h5>Valor Investido - PAX Gold: R$ @PaxGoldInvestido</h5>
     <h5>Valor Atual - PAX Gold: R$ @PaxGoldValorRS</h5>
 
+    @if (lucroOuPerdaAdm > 0)
+    {
+        <h5>Lucro: R$ @lucroOuPerdaAdm</h5>
+    }
+    else
+    {
+        if (lucroOuPerdaAdm < 0)
+        {
+            lucroOuPerdaAdm = lucroOuPerdaAdm * (-1);
+        }
+        <h5>Perda: R$ @lucroOuPerdaAdm</h5>
+    }
     <br />
 
     <canvas id="graficoPaxGold" width="400" height="150">

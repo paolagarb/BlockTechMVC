@@ -25,6 +25,8 @@
     var admBitcoinTotal = ViewBag.Bitcoin;
     var BitcoinValorRS = ViewBag.BitcoinValorRS;
     var BitcoinInvestido = ViewBag.BitcoinInvestido;
+
+    var lucroOuPerdaAdm = Convert.ToDouble(ViewBag.LucroOuPerdaAdm);
 }
 
 @if (!User.IsInRole("Admin"))
@@ -135,16 +137,29 @@ else
     <h5>Quantidade de Bitcoin: @admBitcoinTotal</h5>
     <h5>Valor Investido - Bitcoin: R$ @BitcoinInvestido</h5>
     <h5>Valor Atual - Bitcoin: R$ @BitcoinValorRS</h5>
+    @if (lucroOuPerdaAdm > 0)
+    {
+        <h5>Lucro: R$ @lucroOuPerdaAdm</h5>
+    }
+    else
+    {
+        if (lucroOuPerdaAdm < 0)
+        {
+            lucroOuPerdaAdm = lucroOuPerdaAdm * (-1);
+        }
+        <h5>Perda: R$ @lucroOuPerdaAdm</h5>
+    }
 
-    <br />
+    
+<br />
 
-    <canvas id="graficoBitcoin" width="400" height="150">
-    </canvas>
+<canvas id="graficoBitcoin" width="400" height="150">
+</canvas>
 
-    @section Scripts {
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
-        <script>
+    <script>
         $(document)
             .ready(function () {
 
@@ -175,7 +190,7 @@ else
                 });
 
             });
-        </script>
+    </script>
 
-    }
+}
 }

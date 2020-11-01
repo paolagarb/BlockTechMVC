@@ -23,6 +23,8 @@
     var admLitecoinTotal = ViewBag.Litecoin;
     var LitecoinValorRS = ViewBag.LitecoinValorRS;
     var LitecoinInvestido = ViewBag.LitecoinInvestido;
+
+    var lucroOuPerdaAdm = Convert.ToDouble(ViewBag.LucroOuPerdaAdm);
 }
 
 @if (!User.IsInRole("Admin"))
@@ -132,7 +134,18 @@ else
     <h5>Quantidade de Litecoin: @admLitecoinTotal</h5>
     <h5>Valor Investido - Litecoin: R$ @LitecoinInvestido</h5>
     <h5>Valor Atual - Litecoin: R$ @LitecoinValorRS</h5>
-
+    @if (lucroOuPerdaAdm > 0)
+    {
+        <h5>Lucro: R$ @lucroOuPerdaAdm</h5>
+    }
+    else
+    {
+        if (lucroOuPerdaAdm < 0)
+        {
+            lucroOuPerdaAdm = lucroOuPerdaAdm * (-1);
+        }
+        <h5>Perda: R$ @lucroOuPerdaAdm</h5>
+    }
     <br />
 
     <canvas id="graficoLitecoin" width="400" height="150">
