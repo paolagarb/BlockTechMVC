@@ -26,6 +26,25 @@
 
     var saldoSemInvestimento = ViewBag.SaldoSemInvestimento;
     var dinheiroTotalContaRS = Convert.ToDouble(ViewBag.DinheiroTotalContaRS);
+
+    //Adm
+    var Bitcoin = Convert.ToDouble(ViewBag.Bitcoin);
+    var BitcoinRS = ViewBag.BitcoinValorRS;
+
+    var Ethereum = Convert.ToDouble(ViewBag.Ethereum);
+    var EthereumRS = ViewBag.EthereumValorRS;
+
+    var BitcoinCash = Convert.ToDouble(ViewBag.BitcoinCash);
+    var BitcoinCashRS = ViewBag.BitcoinCashValorRS;
+
+    var Litecoin = Convert.ToDouble(ViewBag.Litecoin);
+    var LitecoinRS = ViewBag.LitecoinValorRS;
+
+    var PaxGold = Convert.ToDouble(ViewBag.PaxGold);
+    var PaxGoldRS = ViewBag.PaxGoldValorRS;
+
+    var Xrp = Convert.ToDouble(ViewBag.Xrp);
+    var XrpRS = ViewBag.XrpValorRS;
 }
 
 @if (User.IsInRole("Admin"))
@@ -38,6 +57,61 @@
     <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
     <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
     <br />
+    <br />
+    <h3 class="text-center">Investimento Total</h3>
+    <br />
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h4>Bitcoin</h4>
+                <h5>Quantidade Bitcoin: @Bitcoin</h5>
+                <h5>Valor Investido: R$ @BitcoinRS</h5>
+                <br />
+            </div>
+            <div class="col-6">
+                <h4>Ethereum</h4>
+                <h5>Quantidade Ethereum: @Ethereum</h5>
+                <h5>Valor Investido: R$ @EthereumRS</h5>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h4>Bitcoin Cash</h4>
+                <h5>Quantidade Bitcoin Cash: @BitcoinCash</h5>
+                <h5>Valor Investido: R$ @BitcoinCashRS</h5>
+                <br />
+            </div>
+            <br />
+            <div class="col-6">
+                <h4>Litecoin</h4>
+                <h5>Quantidade Litecoin: @Litecoin</h5>
+                <h5>Valor Investido: R$ @LitecoinRS</h5>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h4>PAX Gold</h4>
+                <h5>Quantidade PAX Gold: @PaxGold</h5>
+                <h5>Valor Investido: R$ @PaxGoldRS</h5>
+                <br />
+            </div>
+            <br />
+            <div class="col-6">
+                <h4>XRP</h4>
+                <h5>Quantidade XRP: @Xrp</h5>
+                <h5>Valor Investido: R$ @XrpRS</h5>
+                <br />
+            </div>
+        </div>
+    </div>
+    
 }
 
 @if (!User.IsInRole("Admin"))
@@ -72,7 +146,8 @@
     </div>
     <br />
     <h2>Não investido: R$ @saldoSemInvestimento</h2>
-    <h2>Saldo Total na Conta: R$ @dinheiroTotalContaRS</h2><br />
+    <h2>Saldo Total na Conta: R$ @dinheiroTotalContaRS</h2>
+    <br />
     <h2>Investimento Atual</h2>
     if (bitcoinInvestimento > 0)
     {

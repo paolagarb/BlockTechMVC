@@ -27,6 +27,30 @@ namespace BlockTechMVC.Controllers
 
             if (user == "Administrador")
             {
+                var Bitcoin = QuantidadeTotalCriptomoedaAdm("Bitcoin");
+                ViewBag.Bitcoin = Bitcoin;
+                ViewBag.BitcoinValorRS = ValorTotalCriptomoedaAdm("Bitcoin", Bitcoin).ToString("F2");
+                
+                var Ethereum = QuantidadeTotalCriptomoedaAdm("Ethereum");
+                ViewBag.Ethereum = Ethereum;
+                ViewBag.EthereumValorRS = ValorTotalCriptomoedaAdm("Ethereum", Ethereum).ToString("F2");
+
+                var BitcoinCash = QuantidadeTotalCriptomoedaAdm("Bitcoin Cash");
+                ViewBag.BitcoinCash = BitcoinCash;
+                ViewBag.BitcoinCashValorRS = ValorTotalCriptomoedaAdm("Bitcoin Cash", BitcoinCash).ToString("F2");
+
+                var Litecoin = QuantidadeTotalCriptomoedaAdm("Litecoin");
+                ViewBag.Litecoin = Litecoin;
+                ViewBag.LitecoinValorRS = ValorTotalCriptomoedaAdm("Litecoin", Litecoin).ToString("F2");
+
+                var PaxGold = QuantidadeTotalCriptomoedaAdm("PAX Gold");
+                ViewBag.PaxGold = PaxGold;
+                ViewBag.PaxGoldValorRS = ValorTotalCriptomoedaAdm("PAX Gold", PaxGold).ToString("F2");
+
+                var Xrp = QuantidadeTotalCriptomoedaAdm("XRP");
+                ViewBag.Xrp = Xrp;
+                ViewBag.XrpValorRS = ValorTotalCriptomoedaAdm("XRP", Xrp).ToString("F2");
+
                 return View();
             }
             else
@@ -130,8 +154,6 @@ namespace BlockTechMVC.Controllers
                               criptohoje.Data == DateTime.Today
                               select criptohoje.Valor).Single();
                               //FirstOrDefault();
-            //Single();
-
 
             return quantidadeCriptomoeda * valorAtual;
         }
@@ -157,6 +179,24 @@ namespace BlockTechMVC.Controllers
             return investimentos;
         }
 
+        public double ValorInvestidoAdm(string criptomoeda)
+        {
+            var investimentos = (from transacoes in _context.Transacao
+                                 join conta in _context.ContaCliente
+                                 on transacoes.ContaClienteId equals conta.Id
+                                 join criptomoedahoje in _context.CriptomoedaHoje
+                                 on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
+                                 join criptomoedas in _context.Criptomoeda
+                                 on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
+                                 join criptosaldo in _context.CriptoSaldo
+                                 on transacoes.CriptoSaldoId equals criptosaldo.Id
+                                 where criptomoedas.Nome == criptomoeda &&
+                                 transacoes.Tipo.Equals(TipoTransacao.Compra)
+                                 select transacoes.Valor).Sum();
+            //Single();
+            return investimentos;
+        }
+
         public double SaldoSemInvestimento(string user)
         {
             var saldoNaoInvestido = (from transacoes in _context.Transacao
@@ -175,65 +215,7 @@ namespace BlockTechMVC.Controllers
                                  where usuario.UserName == user 
                                  select saldo.SaldoAtualRS).FirstOrDefault();
             return saldoNaoInvestido;
-          
         }
-
-        //public double CriptomoedaTotalCompra(string criptomoeda, string user)
-        //{
-        //    var investimentos = (from transacoes in _context.Transacao
-        //                         join conta in _context.ContaCliente
-        //                         on transacoes.ContaClienteId equals conta.Id
-        //                         join usuario in _context.ApplicationUser
-        //                         on conta.ApplicationUserID equals usuario.Id
-        //                         join criptomoedahoje in _context.CriptomoedaHoje
-        //                         on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
-        //                         join criptomoedas in _context.Criptomoeda
-        //                         on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
-        //                         join criptosaldo in _context.CriptoSaldo
-        //                         on transacoes.CriptoSaldoId equals criptosaldo.Id
-        //                         where criptomoedas.Nome == criptomoeda &&
-        //                         usuario.UserName == user &&
-        //                         transacoes.Tipo.Equals(TipoTransacao.Compra)
-        //                         select transacoes.Valor).Single();
-        //    return investimentos;
-        //}
-
-        //public object CriptomoedaTotalVenda(string criptomoeda, string user)
-        //{
-        //    var investimentos = (from transacoes in _context.Transacao
-        //                         join conta in _context.ContaCliente
-        //                         on transacoes.ContaClienteId equals conta.Id
-        //                         join usuario in _context.ApplicationUser
-        //                         on conta.ApplicationUserID equals usuario.Id
-        //                         join criptomoedahoje in _context.CriptomoedaHoje
-        //                         on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
-        //                         join criptomoedas in _context.Criptomoeda
-        //                         on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
-        //                         where criptomoedas.Nome == criptomoeda &&
-        //                         usuario.UserName == user &&
-        //                         transacoes.Tipo.Equals(TipoTransacao.Venda)
-        //                         select transacoes.Valor).Sum();
-        //    return investimentos;
-        //}
-
-        //public double CriptomoedaTotalTransferencia(string criptomoeda, string user)
-        //{
-        //    var investimentos = (from transacoes in _context.Transacao
-        //                         join conta in _context.ContaCliente
-        //                         on transacoes.ContaClienteId equals conta.Id
-        //                         join usuario in _context.ApplicationUser
-        //                         on conta.ApplicationUserID equals usuario.Id
-        //                         join criptomoedahoje in _context.CriptomoedaHoje
-        //                         on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
-        //                         join criptomoedas in _context.Criptomoeda
-        //                         on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
-        //                         where criptomoedas.Nome == criptomoeda &&
-        //                         transacoes.Tipo.Equals(TipoTransacao.Transferencia) &&
-        //                         usuario.UserName == user &&
-        //                         transacoes.Tipo.Equals(TipoTransacao.Transferencia)
-        //                         select transacoes.Valor).Sum();
-        //    return investimentos;
-        //}
 
         public ActionResult Bitcoin()
         {
@@ -268,6 +250,13 @@ namespace BlockTechMVC.Controllers
 
             double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
             ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
+
+
+            var Bitcoin = QuantidadeTotalCriptomoedaAdm("Bitcoin");
+            ViewBag.Bitcoin = Bitcoin;
+            ViewBag.BitcoinValorRS = ValorTotalCriptomoedaAdm("Bitcoin", Bitcoin).ToString("F2");
+            ViewBag.Ultimos7DiasAdm = Valores7DiasAdm("Bitcoin", Bitcoin);
+            ViewBag.BitcoinInvestido = ValorInvestidoAdm("Bitcoin");
 
             return View();
         }
@@ -449,6 +438,7 @@ namespace BlockTechMVC.Controllers
             double valorInvestidoPaxGold = ValorInvestido("PAX Gold", user);
             ViewBag.ValorInvestidoPaxGold = valorInvestidoPaxGold.ToString("F2");
 
+
             return View();
         }
 
@@ -486,6 +476,64 @@ namespace BlockTechMVC.Controllers
             }
 
             return valorList;
+        }
+        public List<double> Valores7DiasAdm(string nome, double quantidadeTotalCriptomoeda)
+        {
+
+            var valorList = new List<double>();
+
+            for (int i = 1; i <= 7; i++)
+            {
+                var data = (DateTime.Now.Day - 7) + i;
+                DateTime dia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
+
+                var valor = (from coin in _context.Criptomoeda
+                             join criptohoje in _context.CriptomoedaHoje
+                             on coin.Id equals criptohoje.CriptomoedaId
+                             where coin.Nome == nome && criptohoje.Data.Equals(dia)
+                             select criptohoje.Valor).Sum();
+
+                var totalDia = (quantidadeTotalCriptomoeda * valor).ToString("F2");
+
+                valorList.Add(Convert.ToDouble(totalDia));
+            }
+
+            return valorList;
+        }
+
+        public double QuantidadeTotalCriptomoedaAdm(string criptomoeda)
+        {
+            var cripto = (from transacoes in _context.Transacao
+                                 join conta in _context.ContaCliente
+                                 on transacoes.ContaClienteId equals conta.Id
+                                 join criptomoedahoje in _context.CriptomoedaHoje
+                                 on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
+                                 join criptomoedas in _context.Criptomoeda
+                                 on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
+                                 join criptosaldo in _context.CriptoSaldo
+                                 on transacoes.CriptoSaldoId equals criptosaldo.Id
+                                 where criptomoedas.Nome == criptomoeda &&
+                                 transacoes.Tipo.Equals(TipoTransacao.Compra)
+                                 select criptosaldo.Quantidade).Sum();
+            return cripto;
+        }
+
+        public double ValorTotalCriptomoedaAdm(string criptomoeda, double quantidadeCripto)
+        {
+            var cripto = (from transacoes in _context.Transacao
+                                 join conta in _context.ContaCliente
+                                 on transacoes.ContaClienteId equals conta.Id
+                                 join criptomoedahoje in _context.CriptomoedaHoje
+                                 on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
+                                 join criptomoedas in _context.Criptomoeda
+                                 on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
+                                 join criptosaldo in _context.CriptoSaldo
+                                 on transacoes.CriptoSaldoId equals criptosaldo.Id
+                                 where criptomoedas.Nome == criptomoeda &&
+                                 transacoes.Tipo.Equals(TipoTransacao.Compra)
+                                 select criptomoedahoje.Valor).FirstOrDefault();
+
+            return cripto * quantidadeCripto;
         }
 
         private bool TransacaoExists(int id)
