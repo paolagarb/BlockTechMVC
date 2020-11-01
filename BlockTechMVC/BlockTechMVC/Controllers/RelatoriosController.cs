@@ -102,7 +102,6 @@ namespace BlockTechMVC.Controllers
             for (int i = 0; i < 7; i++)
             {
                 diasList.Add((diasSete.Day) + i);
-                //diasList.Add((DateTime.Now.Day - 7)+i);
             }
 
             return diasList;
@@ -112,16 +111,17 @@ namespace BlockTechMVC.Controllers
         {
          
             var valorList = new List<double>();
-
+          
             for (int i = 1; i <= 7; i++)
             {
-                var data = (DateTime.Now.Day - 7) + i;
-                DateTime dia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
+                DateTime diasSete = DateTime.Today;
+                diasSete = diasSete.AddDays(-7);
+                DateTime data = diasSete.AddDays(i);
 
                 var valor = (from coin in _context.Criptomoeda
                              join criptohoje in _context.CriptomoedaHoje
                              on coin.Id equals criptohoje.CriptomoedaId
-                             where coin.Nome == nome && criptohoje.Data.Equals(dia)
+                             where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
                              select criptohoje.Valor).Single();
                 valorList.Add(valor);
             }
