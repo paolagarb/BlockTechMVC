@@ -28,7 +28,7 @@ namespace BlockTechMVC.Controllers
             ViewBag.BitcoinCash = CriptomoedaHoje("Bitcoin Cash").ToString("F4");
             ViewBag.XRP = CriptomoedaHoje("XRP").ToString("F4");
             ViewBag.PaxGold = CriptomoedaHoje("PAX Gold").ToString("F4");
-            ViewBag.Litecoin = CriptomoedaHoje("Litecoin");
+            ViewBag.Litecoin = CriptomoedaHoje("Litecoin").ToString("F4");
 
             return View();
         }
@@ -99,12 +99,27 @@ namespace BlockTechMVC.Controllers
             DateTime diasSete = DateTime.Today;
             diasSete = diasSete.AddDays(-7);
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 1; i <= 7; i++)
             {
+
                 diasList.Add((diasSete.Day) + i);
             }
 
             return diasList;
+
+            //var diasList = new List<int>();
+
+            //DateTime diasSete = DateTime.Now;
+            //diasSete = diasSete.AddDays(-7);
+
+            //for (int i = 1; i <= 7; i++)
+            //{
+            //    diasSete = diasSete.AddDays(i);
+            //    diasList.Add(diasSete.Day);
+            //}
+
+            //return diasList;
+
         }
 
         public List<double> Valores7Dias(string nome)
@@ -163,9 +178,7 @@ namespace BlockTechMVC.Controllers
 
             for (int i = 1; i < 7; i++)
             {
-                //var data = dia + i;
                 DateTime data = dia.AddDays(i);
-                //DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, data);
                 DateTime date = data;
 
                 var valorDia = (from coin in _context.Criptomoeda
@@ -175,13 +188,12 @@ namespace BlockTechMVC.Controllers
                              select criptohoje.Valor).Single();
                 var regra3 = ((valorDia * calculo) / valor).ToString("F2");
                 calculo = Convert.ToDouble(regra3);
-                porcentagem.Add(calculo-100);
+               valor = calculo;
+                var resultado = calculo - 100;
+                porcentagem.Add(resultado);
             }
 
             return porcentagem;
         }
-
-      
-
     }
 }
