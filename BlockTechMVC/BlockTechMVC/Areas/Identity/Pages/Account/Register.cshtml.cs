@@ -46,55 +46,63 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use apenas caracteres alfabéticos.")]
+            [Required(ErrorMessage = "O campo 'Nome/Razão Social' está vazio.")]
             [Display(Name = "Nome/Razão Social")]
             public string Nome { get; set; }
 
-            [Required]
+            [StringLength(14, ErrorMessage = "CNPJ Inexistente.")]
             [Display(Name = "CPF/CNPJ")]
+            [Required(ErrorMessage = "O campo 'Documento' está vazio.")]
             public string Documento { get; set; }
 
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessage = "O campo 'E-mail' está vazio.")]
+            [EmailAddress(ErrorMessage = "E-mail inválido.")]
+            [Display(Name = "E-mail")]
             [DisplayFormat(DataFormatString = "{0:#####-###}")]
             public string Email { get; set; }
 
-            [Required]
+            [StringLength(9, ErrorMessage = "CEP Inválido.")]
+            [Required(ErrorMessage = "O campo 'CEP' está vazio.")]
             [Display(Name = "CEP")]
             public string Cep { get; set; }
 
-            [Required]
+            [StringLength(2, ErrorMessage = "UF Inválida.")]
+            [Required(ErrorMessage = "O campo 'UF' está vazio.")]
             [Display(Name = "UF")]
             public string Uf { get; set; }
 
-            [Required]
+            [StringLength(58, ErrorMessage = "Essa cidade não existe.")] //O maior nome de cidade possui 58 caracteres
+            [Required(ErrorMessage = "O campo 'Cidade' está vazio.")]
             [Display(Name = "Cidade")]
             public string Cidade { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "O campo 'Rua' está vazio.")]
             [Display(Name = "Rua")]
             public string Rua { get; set; }
 
-            [Required]
+            [StringLength(10)]
+            [Required(ErrorMessage = "O campo 'Número' está vazio.")]
             [Display(Name = "Número")]
             public string Numero { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "O campo 'Telefone' está vazio.")]
+            [StringLength(15, ErrorMessage = "Telefone inválido.")]
             [Display(Name = "Telefone")]
             public string Telefone { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "O campo 'Nome de Usuário' está vazio.")]
             [Display(Name = "Nome de Usuário")]
             public string UserName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage="O campo 'Senha' está vazio")]
             [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
+            [Required(ErrorMessage = "O campo 'Confirmar senha' está vazio")]
             [Display(Name = "Confirmar senha")]
             [Compare("Password", ErrorMessage = "A senha e a confirmação não correspondem.")]
             public string ConfirmPassword { get; set; }

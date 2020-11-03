@@ -141,7 +141,7 @@ namespace BlockTechMVC.Controllers
                                  usuario.UserName == user &&
                                  transacoes.Tipo.Equals(TipoTransacao.Compra)
                                  select criptosaldo.Quantidade).FirstOrDefault();
-            //Single();
+
             return investimentos;
         }
 
@@ -153,7 +153,6 @@ namespace BlockTechMVC.Controllers
                               where cripto.Nome == criptomoeda &&
                               criptohoje.Data == DateTime.Today
                               select criptohoje.Valor).Single();
-            //FirstOrDefault();
 
             return quantidadeCriptomoeda * valorAtual;
         }
@@ -175,7 +174,7 @@ namespace BlockTechMVC.Controllers
                                  usuario.UserName == user &&
                                  transacoes.Tipo.Equals(TipoTransacao.Compra)
                                  select transacoes.Valor).FirstOrDefault();
-            //Single();
+
             return investimentos;
         }
 
@@ -193,7 +192,7 @@ namespace BlockTechMVC.Controllers
                                  where criptomoedas.Nome == criptomoeda &&
                                  transacoes.Tipo.Equals(TipoTransacao.Compra)
                                  select transacoes.Valor).Sum();
-            //Single();
+
             return investimentos;
         }
 
@@ -262,7 +261,6 @@ namespace BlockTechMVC.Controllers
             var BitcoinInvestido = Convert.ToDouble(BitcoinInvestidoString);
             ViewBag.BitcoinInvestido = BitcoinInvestido;
 
-            //var LucroOuPerdaAdm = (BitcoinValorRS - BitcoinInvestido);
             ViewBag.LucroOuPerdaAdm = (BitcoinValorRS - BitcoinInvestido).ToString("F2");
 
             return View();
@@ -524,12 +522,13 @@ namespace BlockTechMVC.Controllers
         {
             var diasList = new List<int>();
 
-            DateTime dias = DateTime.Today;
-            dias = dias.AddDays(-7);
+            DateTime diasSete = DateTime.Today;
 
-            for (int i = 1; i <= 7; i++)
+            for (int i = 6; i >= 0; i--)
             {
-                diasList.Add((dias.Day) + i);
+                diasSete = DateTime.Today;
+                diasSete = diasSete.AddDays(-i);
+                diasList.Add(diasSete.Day);
             }
 
             return diasList;
@@ -540,12 +539,12 @@ namespace BlockTechMVC.Controllers
 
             var valorList = new List<double>();
 
-            for (int i = 1; i <= 7; i++)
+            for (int i = 6; i >= 0; i--)
             {
 
                 DateTime diasSete = DateTime.Today;
-                diasSete = diasSete.AddDays(-7);
-                DateTime data = diasSete.AddDays(i);
+                diasSete = diasSete.AddDays(-i);
+                DateTime data = diasSete;
 
                 var valor = (from coin in _context.Criptomoeda
                              join criptohoje in _context.CriptomoedaHoje
@@ -565,12 +564,12 @@ namespace BlockTechMVC.Controllers
 
             var valorList = new List<double>();
 
-            for (int i = 1; i <= 7; i++)
+            for (int i = 6; i >= 0; i--)
             {
 
-                DateTime dias = DateTime.Today;
-                dias = dias.AddDays(-7);
-                DateTime data = dias.AddDays(i);
+                DateTime diasSete = DateTime.Today;
+                diasSete = diasSete.AddDays(-i);
+                DateTime data = diasSete;
 
                 var valor = (from coin in _context.Criptomoeda
                              join criptohoje in _context.CriptomoedaHoje
