@@ -43,11 +43,12 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage ="Insira o Nome de Usuário")]
             [Display(Name = "Nome de Usuário")]
             public string UserName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Insira a Senha")]
+            [Display(Name = "Senha")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
