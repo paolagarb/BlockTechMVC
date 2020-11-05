@@ -49,69 +49,104 @@
 
 @if (User.IsInRole("Admin"))
 {
-    <a asp-action="Index" class="btn btn-outline-dark">Investimentos</a>
-    <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
-    <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
-    <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
-    <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
-    <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-    <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+    <a asp-action="Index" class="btn btn-outline-dark menu">Investimentos</a>
+    <a asp-action="Bitcoin" class="btn btn-outline-dark menu">Bitcoin</a>
+    <a asp-action="Ethereum" class="btn btn-outline-dark menu">Ethereum</a>
+    <a asp-action="BitcoinCash" class="btn btn-outline-dark menu">Bitcoin Cash</a>
+    <a asp-action="Xrp" class="btn btn-outline-dark menu">XRP</a>
+    <a asp-action="PaxGold" class="btn btn-outline-dark menu">PAX Gold</a>
+    <a asp-action="Litecoin" class="btn btn-outline-dark menu">Litecoin</a>
     <br />
     <br />
-    <h3 class="text-center">Investimento Total</h3>
+    <h1 class="text-center">Investimento Total</h1>
     <br />
     <br />
     <div class="container">
         <div class="row">
-            <div class="col-6">
-                <h4>Bitcoin</h4>
-                <h5>Quantidade Bitcoin: @Bitcoin</h5>
-                <h5>Valor Investido: R$ @BitcoinRS</h5>
-                <br />
+            <div class="col-12 col-md-6 criptomoedasImg">
+                <div class="simboloCripto">
+                    <img src="~/images/Bitcoin.png" alt="Símbolo da criptomoeda Bitcoin" />
+                </div>
+                <div>
+                    <h3>Bitcoin</h3>
+                    <h5>Quantidade: @Bitcoin</h5>
+                    <h5>Investido: R$ @BitcoinRS</h5>
+                </div>
             </div>
-            <div class="col-6">
-                <h4>Ethereum</h4>
-                <h5>Quantidade Ethereum: @Ethereum</h5>
-                <h5>Valor Investido: R$ @EthereumRS</h5>
-                <br />
+            <br />
+            <br />
+            <div class="col-12 col-md-6 criptomoedasImg">
+                <div class="simboloCripto">
+                    <img src="~/images/Ethereum.png" alt="Símbolo da criptomoeda Ethereum" />
+                </div>
+                <div>
+                    <h3>Ethereum</h3>
+                    <h5>Quantidade Ethereum: @Ethereum</h5>
+                    <h5>Valor Investido: R$ @EthereumRS</h5>
+                </div>
             </div>
         </div>
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-6">
-                <h4>Bitcoin Cash</h4>
-                <h5>Quantidade Bitcoin Cash: @BitcoinCash</h5>
-                <h5>Valor Investido: R$ @BitcoinCashRS</h5>
+            <br />
+            <br />
+            <div class="col-12 col-md-6 criptomoedasImg">
+                <div class="simboloCripto">
+                    <img src="~/images/BitcoinCash.png" alt="Símbolo da criptomoeda Bitcoin Cash" />
+                </div>
+                <div>
+                    <h3>Bitcoin Cash</h3>
+                    <h5>Quantidade Bitcoin Cash: @BitcoinCash</h5>
+                    <h5>Valor Investido: R$ @BitcoinCashRS</h5>
+                </div>
+                <br />
                 <br />
             </div>
             <br />
-            <div class="col-6">
-                <h4>Litecoin</h4>
-                <h5>Quantidade Litecoin: @Litecoin</h5>
-                <h5>Valor Investido: R$ @LitecoinRS</h5>
+            <div class="col-12 col-md-6 criptomoedasImg">
+                <div class="simboloCripto">
+                    <img src="~/images/Litecoin.png" alt="Símbolo da criptomoeda Litecoin" />
+                </div>
+                <div>
+                    <h3>Litecoin</h3>
+                    <h5>Quantidade Litecoin: @Litecoin</h5>
+                    <h5>Valor Investido: R$ @LitecoinRS</h5>
+                </div>
+                <br />
                 <br />
             </div>
         </div>
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-6">
-                <h4>PAX Gold</h4>
-                <h5>Quantidade PAX Gold: @PaxGold</h5>
-                <h5>Valor Investido: R$ @PaxGoldRS</h5>
+            <div class="col-12 col-md-6 criptomoedasImg">
+                <div class="simboloCripto">
+                    <img src="~/images/PaxGold.jpg" alt="Símbolo da criptomoeda PAX Gold" />
+                </div>
+                <div>
+                    <h3>PAX Gold</h3>
+                    <h5>Quantidade PAX Gold: @PaxGold</h5>
+                    <h5>Valor Investido: R$ @PaxGoldRS</h5>
+                </div>
                 <br />
             </div>
             <br />
-            <div class="col-6">
-                <h4>XRP</h4>
-                <h5>Quantidade XRP: @Xrp</h5>
-                <h5>Valor Investido: R$ @XrpRS</h5>
+            <br />
+            <div class="col-12 col-md-6 criptomoedasImg">
+                <div class="simboloCripto">
+                    <img src="~/images/Xrp.png" alt="Símbolo da criptomoeda XRP" />
+                </div>
+                <div>
+                    <h3>XRP</h3>
+                    <h5>Quantidade XRP: @Xrp</h5>
+                    <h5>Valor Investido: R$ @XrpRS</h5>
+                </div>
+                <br />
                 <br />
             </div>
         </div>
     </div>
-    
 }
 
 @if (!User.IsInRole("Admin"))

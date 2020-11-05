@@ -130,3 +130,16 @@ body {
 .menu {
     margin: 5px;
 }
+
+.criptomoedasImg {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 35px;
+}
+
+.simboloCripto {
+    display: flex;
+    justify-content: center;
+    margin-right: 15px;
+    max-width: 90%;
+}
