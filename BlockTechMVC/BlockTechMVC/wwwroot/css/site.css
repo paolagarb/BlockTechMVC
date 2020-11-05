@@ -87,3 +87,46 @@ body {
     background-size: 15px;
     padding-left: 22px;
 }
+
+#bitcoinLegenda, #ethereumLegenda, #bitcoinCashLegenda, #xrpLegenda, #paxGoldLegenda, #litecoinLegenda {
+    width: 40px;
+    height: 12px;
+    margin: 6px 5px 0px 0;
+}
+
+#bitcoinLegenda {
+    background-color: rgb(250, 150, 26);
+}
+
+#ethereumLegenda {
+    background-color: rgb(107, 108, 109);
+}
+
+#bitcoinCashLegenda {
+    background-color: rgb(141, 195, 81);
+}
+
+#xrpLegenda {
+    background-color: rgb(35, 41, 47);
+}
+
+#paxGoldLegenda {
+    background-color: rgb(250, 244, 15);
+}
+
+#litecoinLegenda {
+    background-color: rgb(52, 92, 157);
+}
+
+.textoLegenda {
+    margin: 0 5px;
+}
+
+.legendas {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.menu {
+    margin: 5px;
+}

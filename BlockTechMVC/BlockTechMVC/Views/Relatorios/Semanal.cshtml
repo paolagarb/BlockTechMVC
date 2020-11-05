@@ -22,20 +22,62 @@
 <br />
 
 <div>
-    <a asp-action="Index" class="btn btn-outline-dark">Hoje</a>
-    <a asp-action="Semanal" class="btn btn-dark text-white">Todas as Criptomoedas</a>
-    <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
-    <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
-    <a asp-action="BitcoinCash" class="btn btn-outline-dark">Bitcoin Cash</a>
-    <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
-    <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-    <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
+    <a asp-action="Index" class="btn btn-outline-dark menu">Hoje</a>
+    <a asp-action="Semanal" class="btn btn-dark text-white menu">Todas as Criptomoedas</a>
+    <a asp-action="Bitcoin" class="btn btn-outline-dark menu">Bitcoin</a>
+    <a asp-action="Ethereum" class="btn btn-outline-dark menu">Ethereum</a>
+    <a asp-action="BitcoinCash" class="btn btn-outline-dark menu">Bitcoin Cash</a>
+    <a asp-action="Xrp" class="btn btn-outline-dark menu">XRP</a>
+    <a asp-action="PaxGold" class="btn btn-outline-dark menu">PAX Gold</a>
+    <a asp-action="Litecoin" class="btn btn-outline-dark menu">Litecoin</a>
 </div>
 
 <br />
 <h4 class="text-center">Últimos 7 Dias - Taxa de Crescimento</h4>
-<canvas id="graficoCriptomoedas" width="400" height="150">
-</canvas>
+<br />
+<div class="container align-items-center">
+    <div class="row">
+        <div class="col-md-2 col-6 legendas">
+            <div id="bitcoinLegenda"></div>
+            <div class="textoLegenda">
+                Bitcoin
+            </div>
+        </div>
+        <div class="col-md-2 col-6 legendas">
+            <div id="ethereumLegenda"></div>
+            <div class="textoLegenda">
+                Ethereum
+            </div>
+        </div>
+        <div class="col-md-2 col-6 legendas">
+            <div id="bitcoinCashLegenda"></div>
+            <div class="textoLegenda">
+                Bitcoin Cash
+            </div>
+        </div>
+        <div class="col-md-2 col-6 legendas">
+            <div id="xrpLegenda"></div>
+            <div class="textoLegenda">
+                XRP
+            </div>
+        </div>
+        <div class="col-md-2 col-6 legendas">
+            <div id="paxGoldLegenda"></div>
+            <div class="textoLegenda">
+                PAX Gold
+            </div>
+        </div>
+        <div class="col-md-2 col-6 legendas">
+            <div id="litecoinLegenda"></div>
+            <div class="textoLegenda">
+                Litecoin
+            </div>
+        </div>
+    </div>
+    <br />
+</div>
+<canvas id="graficoCriptomoedas" width="400" height="150" style="min-height: 30vh;"></canvas>
+
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -93,7 +135,7 @@
                             },
                             options: {
                                 legend: {
-                                    display: true
+                                    display: false
                                 },
                                 scales: {
                                     yAxes: [{
