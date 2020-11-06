@@ -26,8 +26,7 @@ namespace BlockTechMVC.Controllers
         // GET: Criptomoedas
         public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome_desc" : ""; 
-            ViewBag.DateSortParm = sortOrder == "Data" ? "Data_desc" : "Data";
+            ViewBag.NameSortParm =  sortOrder == "Nome" ? "Nome_desc" : "Nome";
 
             var criptomoedas = from c in _context.Criptomoeda
                                select c;
@@ -36,13 +35,7 @@ namespace BlockTechMVC.Controllers
             {
                 case "Nome_desc":
                     criptomoedas = criptomoedas.OrderByDescending(s => s.Nome);
-                    break;                                        
-                case "Data":
-                    criptomoedas = criptomoedas.OrderBy(s => s.Cadastro);
-                    break;
-                case "Data_desc":
-                    criptomoedas = criptomoedas.OrderByDescending(s => s.Cadastro);
-                    break;
+                    break;    
                 default:
                     criptomoedas = criptomoedas.OrderBy(s => s.Nome);
                     break;

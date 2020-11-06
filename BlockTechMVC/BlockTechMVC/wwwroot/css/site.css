@@ -82,10 +82,11 @@ body {
 }
 
 .imgOrder {
-    background-image: url('../images/ordenar2.png');
+    background-image: url('../images/ordenar.png');
     background-repeat: no-repeat;
     background-size: 15px;
     padding-left: 18px;
+    color: black;
 }
 
 #bitcoinLegenda, #ethereumLegenda, #bitcoinCashLegenda, #xrpLegenda, #paxGoldLegenda, #litecoinLegenda {

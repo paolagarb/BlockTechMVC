@@ -22,12 +22,15 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: ContasClientes
-        public async Task<IActionResult> Index(string searchString, string sortOrder, string sortOrder2)
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
             var user = User.Identity.Name;
 
             if (user == "Administrador")
             {
+                ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome" : "";
+                ViewBag.ValueSortParm = sortOrder == "Valor" ? "Valor_desc" : "Valor";
+
                 var applicationDbContext = _context.Transacao
                     .Include(t => t.ContaCliente)
                     .Include(t => t.CriptoSaldo)
@@ -35,35 +38,29 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.ContaCliente.ApplicationUser)
                     .Include(t => t.CriptomoedaHoje.Criptomoeda)
                     .Include(t => t.Saldo);
-
-                ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome" : "";
-                ViewBag.ValueSortParm = String.IsNullOrEmpty(sortOrder2) ? "Valor" : "";
-
-
-                switch (sortOrder)
+                if (sortOrder != null)
                 {
-                    case "Nome":
-                        var usuario = applicationDbContext.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
-                        return View(await usuario.ToListAsync());
-                    default:
-                        usuario = applicationDbContext.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
-                        return View(await usuario.ToListAsync());
-                        break;
+                    var usuario = applicationDbContext.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
+
+                    switch (sortOrder)
+                    {
+                        case "Nome":
+                            usuario = applicationDbContext.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
+                            break;
+                        case "Valor_desc":
+                            usuario = applicationDbContext.OrderByDescending(c => c.Valor);
+                            break;
+                        case "Valor":
+                            usuario = applicationDbContext.OrderBy(c => c.Valor);
+                            break;
+                        default:
+                            usuario = applicationDbContext.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
+                            break;
+                    }
+
+                    return View(await usuario.ToListAsync());
+
                 }
-
-                switch (sortOrder2)
-                {
-
-                    case "Valor":
-                        var usuario = applicationDbContext.OrderBy(c => c.Valor);
-                        return View(await usuario.ToListAsync());
-                        break;
-                    default:
-                        usuario = applicationDbContext.OrderByDescending(c => c.Valor);
-                        return View(await usuario.ToListAsync());
-                        break;
-                }
-
 
 
                 if (!String.IsNullOrEmpty(searchString))
@@ -78,7 +75,6 @@ namespace BlockTechMVC.Controllers
                         .Where(t => t.ContaCliente.ApplicationUser.Nome.Contains(searchString));
 
                     return View(usuarioSelecionado.ToList());
-                    //applicationDbContext = applicationDbContext.Where(x => x.ContaCliente.ApplicationUser.Nome.Contains(searchString));
                 }
 
                 return View(await applicationDbContext.ToListAsync());

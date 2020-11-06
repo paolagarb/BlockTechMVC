@@ -31,6 +31,7 @@ namespace BlockTechMVC.Controllers
                 .Where(c => c.Data.Equals(DateTime.Now.Date))
                 .Include(c => c.Criptomoeda);
 
+        
             if (searchDate != DateTime.MinValue)
             {
                 criptomoedas = _context.CriptomoedaHoje
@@ -38,27 +39,34 @@ namespace BlockTechMVC.Controllers
                 .Include(c => c.Criptomoeda);
             }
 
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome_asc" : "";
-            ViewBag.ValueSortParm = String.IsNullOrEmpty(sortOrder) ? "Valor_desc" : "Valor_asc";
-            switch (sortOrder)
+            ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
+            ViewBag.ValueSortParm = sortOrder == "Valor" ? "Valor_desc" : "Valor";
+            
+            if (sortOrder != null)
             {
-                case "Nome_asc":
-                    var criptomoeda = criptomoedas.OrderBy(c => c.Criptomoeda.Nome);
-                    return View(await criptomoeda.ToListAsync());
-                    break;
-                case "Valor_desc":
-                    criptomoeda = criptomoedas.OrderByDescending(c => c.Valor);
-                    return View(await criptomoeda.ToListAsync());
-                    break;
-                case "Valor_asc":
-                    criptomoeda = criptomoedas.OrderBy(c => c.Valor);
-                    return View(await criptomoeda.ToListAsync());
-                    break;
-                default:
-                    criptomoeda = criptomoedas.OrderByDescending(c => c.Criptomoeda.Nome);
-                    return View(await criptomoeda.ToListAsync());
-                    break;
+
+                var criptomoeda = criptomoedas.OrderBy(c => c.Criptomoeda.Nome);
+                switch (sortOrder)
+                {
+                    case "Nome_desc":
+                        criptomoeda = criptomoedas.OrderByDescending(c => c.Criptomoeda.Nome);
+                        break;
+                    case "Valor_desc":
+                        criptomoeda = criptomoedas.OrderByDescending(c => c.Valor);
+                        break;
+                    case "Valor":
+                        criptomoeda = criptomoedas.OrderBy(c => c.Valor);
+                        break;
+                    case "Nome":
+                        criptomoeda = criptomoedas.OrderBy(c => c.Criptomoeda.Nome);
+                        break;
+                    default:
+                        criptomoeda = criptomoedas.OrderBy(c => c.Criptomoeda.Nome);
+                        break;
+                }
+                return View(await criptomoeda.ToListAsync());
             }
+
 
             return View(await criptomoedas.ToListAsync());
         }
