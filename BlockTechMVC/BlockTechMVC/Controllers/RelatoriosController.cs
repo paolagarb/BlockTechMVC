@@ -98,7 +98,7 @@ namespace BlockTechMVC.Controllers
 
             DateTime diasSete = DateTime.Today;
 
-            for (int i = 6; i >= 0; i--)
+            for (int i = 7; i >= 0; i--)
             {
                 diasSete = DateTime.Today;
                 diasSete = diasSete.AddDays(-i);
@@ -146,7 +146,7 @@ namespace BlockTechMVC.Controllers
         public List<double> Porcentagem(string nome)
         {
             var date = DateTime.Today;
-            date = date.AddDays(-7);
+            date = date.AddDays(-8);
 
             var valor = (from coin in _context.Criptomoeda
                          join criptohoje in _context.CriptomoedaHoje
@@ -154,12 +154,12 @@ namespace BlockTechMVC.Controllers
                          where coin.Nome == nome && criptohoje.Data.Date.Equals(date.Date)
                          select criptohoje.Valor).Single();
 
-            var calculo = 100.0; //inicia com 100%
+            var calculo = 100.0; 
             var porcentagem = new List<double>();
 
-            porcentagem.Add(0);
+            //porcentagem.Add(0);
 
-            for (int i = 6; i >= 0; i--)
+            for (int i = 7; i >= 0; i--)
             {
                 DateTime dia = DateTime.Today;
                 dia = dia.AddDays(-i);
@@ -171,9 +171,8 @@ namespace BlockTechMVC.Controllers
                              where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
                              select criptohoje.Valor).Single();
 
-                var regra3 = ((valorDia * calculo) / valor).ToString("F2");
-                calculo = Convert.ToDouble(regra3);
-                var resultado = calculo - 100;
+                var regra3 = ((valorDia * calculo) / valor);
+                var resultado = regra3 - 100;
                 valor = valorDia;
 
                 var duasCasas = resultado.ToString("F2");
