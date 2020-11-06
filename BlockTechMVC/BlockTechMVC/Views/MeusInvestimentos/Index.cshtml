@@ -1,5 +1,7 @@
 ﻿
 @{
+    ViewData["Title"] = "Investimentos";
+
     var bitcoinQuantidade = ViewBag.QuantidadaTotalBitcoin;
     var bitcoinValorReal = ViewBag.QuantidadaEmRealBitcoin;
     var bitcoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoin);
@@ -89,8 +91,6 @@
     </div>
     <div class="container">
         <div class="row">
-            <br />
-            <br />
             <div class="col-12 col-md-6 criptomoedasImg">
                 <div class="simboloCripto">
                     <img src="~/images/BitcoinCash.png" alt="Símbolo da criptomoeda Bitcoin Cash" />
@@ -100,8 +100,6 @@
                     <h5>Quantidade Bitcoin Cash: @BitcoinCash</h5>
                     <h5>Valor Investido: R$ @BitcoinCashRS</h5>
                 </div>
-                <br />
-                <br />
             </div>
             <br />
             <div class="col-12 col-md-6 criptomoedasImg">
@@ -113,8 +111,6 @@
                     <h5>Quantidade Litecoin: @Litecoin</h5>
                     <h5>Valor Investido: R$ @LitecoinRS</h5>
                 </div>
-                <br />
-                <br />
             </div>
         </div>
     </div>
@@ -129,7 +125,6 @@
                     <h5>Quantidade PAX Gold: @PaxGold</h5>
                     <h5>Valor Investido: R$ @PaxGoldRS</h5>
                 </div>
-                <br />
             </div>
             <br />
             <br />
@@ -142,8 +137,6 @@
                     <h5>Quantidade XRP: @Xrp</h5>
                     <h5>Valor Investido: R$ @XrpRS</h5>
                 </div>
-                <br />
-                <br />
             </div>
         </div>
     </div>
@@ -180,51 +173,92 @@
         }
     </div>
     <br />
-    <h2>Não investido: R$ @saldoSemInvestimento</h2>
-    <h2>Saldo Total na Conta: R$ @dinheiroTotalContaRS</h2>
+    <h2 class="text-center">Investimento Atual</h2>
     <br />
-    <h2>Investimento Atual</h2>
-    if (bitcoinInvestimento > 0)
-    {
-        <hr />
-        <h3>Quantidade de Bitcoin: @bitcoinQuantidade</h3>
-        <h3>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h3>
-        <h3>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h3>
-    }
-    @if (ethereumInvestimento > 0)
-    {
-        <hr />
-        <h3>Quantidade de Ethereum: @ethereumQuantidade</h3>
-        <h3>Valor Investido - Ethereum: R$ @ethereumInvestimento</h3>
-        <h3>Valor Atual - Ethereum: R$ @ethereumValorReal</h3>
-    }
-    @if (bitcoinCashInvestimento > 0)
-    {
-        <hr />
-        <h3>Quantidade de Bitcoin Cash: @bitcoinCashQuantidade</h3>
-        <h3>Valor Investido - Bitcoin Cash: R$ @bitcoinCashInvestimento</h3>
-        <h3>Valor Atual - Bitcoin Cash: R$ @bitcoinCashValorReal</h3>
-    }
-    @if (xrpInvestimento > 0)
-    {
-        <hr />
-        <h3>Quantidade de XRP: @xrpQuantidade</h3>
-        <h3>Valor Investido - XRP: R$ @xrpInvestimento</h3>
-        <h3>Valor Atual - XRP: R$ @xrpValorReal</h3>
-    }
-    @if (paxGoldInvestimento > 0)
-    {
-        <hr />
-        <h3>Quantidade de PAX Gold: @paxGoldQuantidade</h3>
-        <h3>Valor Investido - PAX Gold: R$ @paxGoldInvestimento</h3>
-        <h3>Valor Atual - PAX Gold: R$ @paxGoldValorReal</h3>
-    }
-    @if (litecoinInvestimento > 0)
-    {
-        <hr />
-        <h3>Quantidade de Litecoin: @litecoinQuantidade</h3>
-        <h3>Valor Investido - Litecoin: R$ @litecoinInvestimento</h3>
-        <h3>Valor Atual - Litecoin: R$ @litecoinValorReal</h3>
-    }
+    <h5>Não investido: R$ @saldoSemInvestimento</h5>
+    <h5>Saldo Total na Conta: R$ @dinheiroTotalContaRS</h5>
+    <br />
 
+    <div class="container">
+        <div class="row">
+            @if (bitcoinInvestimento > 0)
+            {
+                <div class="col-12 col-md-6 criptomoedasImg">
+                    <div class="simboloCripto">
+                        <img src="~/images/Bitcoin.png" alt="Símbolo da criptomoeda Bitcoin" />
+                    </div>
+                    <div>
+                        <h5>Quantidade de Bitcoin: @bitcoinQuantidade</h5>
+                        <h5>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h5>
+                        <h5>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h5>
+                    </div>
+                </div>
+            }
+            @if (ethereumInvestimento > 0)
+            {
+                <div class="col-12 col-md-6 criptomoedasImg">
+                    <div class="simboloCripto">
+                        <img src="~/images/Ethereum.png" alt="Símbolo da criptomoeda Ethereum" />
+                    </div>
+                    <div>
+                        <h5>Quantidade de Ethereum: @ethereumQuantidade</h5>
+                        <h5>Valor Investido - Ethereum: R$ @ethereumInvestimento</h5>
+                        <h5>Valor Atual - Ethereum: R$ @ethereumValorReal</h5>
+                    </div>
+                </div>
+            }
+            @if (bitcoinCashInvestimento > 0)
+            {
+                <div class="col-12 col-md-6 criptomoedasImg">
+                    <div class="simboloCripto">
+                        <img src="~/images/BitcoinCash.png" alt="Símbolo da criptomoeda Bitcoin Cash" />
+                    </div>
+                    <div>
+                        <h5>Quantidade de Bitcoin Cash: @bitcoinCashQuantidade</h5>
+                        <h5>Valor Investido - Bitcoin Cash: R$ @bitcoinCashInvestimento</h5>
+                        <h5>Valor Atual - Bitcoin Cash: R$ @bitcoinCashValorReal</h5>
+                    </div>
+                </div>
+            }
+            @if (xrpInvestimento > 0)
+            {
+                <div class="col-12 col-md-6 criptomoedasImg">
+                    <div class="simboloCripto">
+                        <img src="~/images/Xrp.png" alt="Símbolo da criptomoeda XRP" />
+                    </div>
+                    <div>
+                        <h5>Quantidade de XRP: @xrpQuantidade</h5>
+                        <h5>Valor Investido - XRP: R$ @xrpInvestimento</h5>
+                        <h5>Valor Atual - XRP: R$ @xrpValorReal</h5>
+                    </div>
+                </div>
+            }
+            @if (paxGoldInvestimento > 0)
+            {
+                <div class="col-12 col-md-6 criptomoedasImg">
+                    <div class="simboloCripto">
+                        <img src="~/images/PaxGold.jpg" alt="Símbolo da criptomoeda PAX Gold" />
+                    </div>
+                    <div>
+                        <h5>Quantidade de PAX Gold: @paxGoldQuantidade</h5>
+                        <h5>Valor Investido - PAX Gold: R$ @paxGoldInvestimento</h5>
+                        <h5>Valor Atual - PAX Gold: R$ @paxGoldValorReal</h5>
+                    </div>
+                </div>
+            }
+            @if (litecoinInvestimento > 0)
+            {
+                <div class="col-12 col-md-6 criptomoedasImg">
+                    <div class="simboloCripto">
+                        <img src="~/images/Litecoin.png" alt="Símbolo da criptomoeda Litecoin" />
+                    </div>
+                    <div>
+                        <h5>Quantidade de Litecoin: @litecoinQuantidade</h5>
+                        <h5>Valor Investido - Litecoin: R$ @litecoinInvestimento</h5>
+                        <h5>Valor Atual - Litecoin: R$ @litecoinValorReal</h5>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 }

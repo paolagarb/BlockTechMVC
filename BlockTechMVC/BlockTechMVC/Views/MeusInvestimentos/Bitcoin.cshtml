@@ -63,10 +63,9 @@
     <h1 class="text-center">@ViewData["Title"]</h1>
 
     <hr />
-
-    <h5>Quantidade de Bitcoin: @bitcoinQuantidade</h5>
-    <h5>Valor Investido - Bitcoin: R$ @bitcoinInvestimento</h5>
-    <h5>Valor Atual - Bitcoin: R$ @bitcoinValorReal</h5>
+    <h5>Quantidade: @bitcoinQuantidade</h5>
+    <h5>Valor Investido: R$ @bitcoinInvestimento</h5>
+    <h5>Valor Atual: R$ @bitcoinValorReal</h5>
 
     @if (lucroOuPerda > 0)
     {
@@ -138,9 +137,9 @@ else
     <br />
     <h1 class="text-center">@ViewData["Title"]</h1>
     <br />
-    <h5>Quantidade de Bitcoin: @admBitcoinTotal</h5>
-    <h5>Valor Investido - Bitcoin: R$ @BitcoinInvestido</h5>
-    <h5>Valor Atual - Bitcoin: R$ @BitcoinValorRS</h5>
+    <h5>Quantidade: @admBitcoinTotal</h5>
+    <h5>Valor Investido: R$ @BitcoinInvestido</h5>
+    <h5>Valor Atual: R$ @BitcoinValorRS</h5>
     @if (lucroOuPerdaAdm > 0)
     {
         <h5>Lucro: R$ @lucroOuPerdaAdm</h5>
@@ -154,16 +153,16 @@ else
         <h5>Perda: R$ @lucroOuPerdaAdm</h5>
     }
 
-    
-<br />
 
-<canvas id="graficoBitcoin" width="400" height="150">
-</canvas>
+    <br />
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <canvas id="graficoBitcoin" width="400" height="150">
+    </canvas>
 
-    <script>
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+        <script>
         $(document)
             .ready(function () {
 
@@ -194,7 +193,7 @@ else
                 });
 
             });
-    </script>
+        </script>
 
-}
+    }
 }

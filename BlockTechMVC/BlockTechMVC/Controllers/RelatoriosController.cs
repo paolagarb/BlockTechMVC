@@ -145,11 +145,8 @@ namespace BlockTechMVC.Controllers
 
         public List<double> Porcentagem(string nome)
         {
-
-
             var date = DateTime.Today;
             date = date.AddDays(-7);
-            //DateTime dateSeteDias = date;
 
             var valor = (from coin in _context.Criptomoeda
                          join criptohoje in _context.CriptomoedaHoje
@@ -178,7 +175,10 @@ namespace BlockTechMVC.Controllers
                 calculo = Convert.ToDouble(regra3);
                 var resultado = calculo - 100;
                 valor = valorDia;
-                porcentagem.Add(resultado);
+
+                var duasCasas = resultado.ToString("F2");
+                var duasCasasDouble = Convert.ToDouble(duasCasas);
+                porcentagem.Add(duasCasasDouble);
             }
 
             return porcentagem;

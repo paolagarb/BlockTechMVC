@@ -6,61 +6,64 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<table class="table table-responsive">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Data)
-            </th>
-            @if (User.IsInRole("Admin"))
-            {
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+                    @Html.DisplayNameFor(model => model.Data)
                 </th>
-            }
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CriptomoedaHoje.Criptomoeda.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CriptoSaldo.Quantidade)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+                    </th>
+                }
+                <th>
+                    @Html.DisplayNameFor(model => model.Tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Valor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CriptomoedaHoje.Criptomoeda.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CriptoSaldo.Quantidade)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
-                </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data)
+                    </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tipo)
+                    </td>
+                    <td>
+                        R$ @Html.DisplayFor(modelItem => item.Valor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CriptomoedaHoje.Criptomoeda.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CriptoSaldo.Quantidade)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    </td>
+                </tr>
             }
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                R$ @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CriptomoedaHoje.Criptomoeda.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CriptoSaldo.Quantidade)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
