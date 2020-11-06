@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC.Controllers
 {
+    [Authorize]
     public class RelatoriosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -104,14 +106,11 @@ namespace BlockTechMVC.Controllers
                 diasSete = diasSete.AddDays(-i);
                 diasList.Add(diasSete.Day);
             }
-
             return diasList;
-
         }
 
         public List<double> Valores7Dias(string nome)
         {
-         
             var valorList = new List<double>();
 
             for (int i = 6; i >= 0; i--)
@@ -156,8 +155,6 @@ namespace BlockTechMVC.Controllers
 
             var calculo = 100.0; 
             var porcentagem = new List<double>();
-
-            //porcentagem.Add(0);
 
             for (int i = 7; i >= 0; i--)
             {

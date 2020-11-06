@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using BlockTechMVC.Models.Enums;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlockTechMVC.Controllers
 {
+    [Authorize]
     public class MeusInvestimentosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -64,7 +67,6 @@ namespace BlockTechMVC.Controllers
                 double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
                 ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
 
-
                 double ethereum = QuantidadeTotalCriptomoeda("Ethereum", user);
                 ViewBag.QuantidadaTotalEthereum = ethereum.ToString("F6");
 
@@ -74,7 +76,6 @@ namespace BlockTechMVC.Controllers
                 double valorInvestidoEthereum = ValorInvestido("Ethereum", user);
                 ViewBag.ValorInvestidoEthereum = valorInvestidoEthereum.ToString("F2");
 
-
                 double bitcoinCash = QuantidadeTotalCriptomoeda("Bitcoin Cash", user);
                 ViewBag.QuantidadaTotalBitcoinCash = bitcoinCash.ToString("F6");
 
@@ -83,7 +84,6 @@ namespace BlockTechMVC.Controllers
 
                 double valorInvestidoBitcoinCash = ValorInvestido("Bitcoin Cash", user);
                 ViewBag.ValorInvestidoBitcoinCash = valorInvestidoBitcoinCash.ToString("F2");
-
 
                 double xrp = QuantidadeTotalCriptomoeda("XRP", user);
                 ViewBag.QuantidadaTotalXrp = xrp.ToString("F6");
@@ -104,7 +104,6 @@ namespace BlockTechMVC.Controllers
                 double valorInvestidoPaxGold = ValorInvestido("PAX Gold", user);
                 ViewBag.ValorInvestidoPaxGold = valorInvestidoPaxGold.ToString("F2");
 
-
                 double litecoin = QuantidadeTotalCriptomoeda("Litecoin", user);
                 ViewBag.QuantidadaTotalLitecoin = litecoin.ToString("F6");
 
@@ -113,7 +112,6 @@ namespace BlockTechMVC.Controllers
 
                 double valorInvestidoLitecoin = ValorInvestido("Litecoin", user);
                 ViewBag.ValorInvestidoLitecoin = valorInvestidoLitecoin.ToString("F2");
-
 
                 double saldoSemInvestimento = SaldoSemInvestimento(user);
                 ViewBag.SaldoSemInvestimento = saldoSemInvestimento.ToString("F2");
@@ -314,7 +312,6 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerdaAdm = (EthereumValorRS - EthereumInvestido).ToString("F2");
 
-
             return View();
         }
 
@@ -362,7 +359,6 @@ namespace BlockTechMVC.Controllers
             var BitcoinCashInvestidoString = ValorInvestidoAdm("Bitcoin Cash").ToString("F2");
             double BitcoinCashInvestido = Convert.ToDouble(BitcoinCashInvestidoString);
             ViewBag.BitcoinCashInvestido = BitcoinCashInvestido;
-
 
             ViewBag.LucroOuPerdaAdm = (BitcoinCashValorRS - BitcoinCashInvestido).ToString("F2");
             return View();
@@ -536,7 +532,6 @@ namespace BlockTechMVC.Controllers
 
         public List<double> Valores7Dias(string nome, double quantidadeTotalCriptomoeda)
         {
-
             var valorList = new List<double>();
 
             for (int i = 6; i >= 0; i--)

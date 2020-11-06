@@ -10,6 +10,7 @@ using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Web.Helpers;
+using System.Diagnostics;
 
 namespace BlockTechMVC.Controllers
 {
@@ -26,7 +27,6 @@ namespace BlockTechMVC.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-
             var user = User.Identity.Name;
 
             if (user == "Administrador")
@@ -58,7 +58,6 @@ namespace BlockTechMVC.Controllers
 
                 return View(await usuario.ToListAsync());
             }
-
         }
 
         // GET: Transacoes/Details/5
@@ -66,7 +65,7 @@ namespace BlockTechMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Transação não encontrada!" });
             }
 
             var transacao = await _context.Transacao
@@ -75,151 +74,28 @@ namespace BlockTechMVC.Controllers
                 .Include(t => t.CriptomoedaHoje)
                 .Include(t => t.Saldo)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (transacao == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Transação não encontrada!" });
             }
-
             return View(transacao);
-        }
-
-        // GET: Transacoes/Create
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create()
-        {
-
-            ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id");
-            ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id");
-            ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id");
-            ViewData["SaldoId"] = new SelectList(_context.Saldo, "Id", "Id");
-            return View();
-        }
-
-        // POST: Transacoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Tipo,Data,Valor,CriptomoedaHojeId,ContaClienteId,CriptoSaldoId,SaldoId")] Transacao transacao)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(transacao);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-
-            //Transacao t1 = new Transacao(/*)*/
-
-
-            ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id", transacao.CriptoSaldoId);
-            ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
-            ViewData["SaldoId"] = new SelectList(_context.Saldo, "Id", "Id", transacao.SaldoId);
-            return View(transacao);
-        }
-
-        // GET: Transacoes/Edit/5
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var transacao = await _context.Transacao.FindAsync(id);
-            if (transacao == null)
-            {
-                return NotFound();
-            }
-            ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id", transacao.CriptoSaldoId);
-            ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
-            ViewData["SaldoId"] = new SelectList(_context.Saldo, "Id", "Id", transacao.SaldoId);
-            return View(transacao);
-        }
-
-        // POST: Transacoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Data,Valor,CriptomoedaHojeId,ContaClienteId,CriptoSaldoId,SaldoId")] Transacao transacao)
-        {
-            if (id != transacao.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(transacao);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TransacaoExists(transacao.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ContaClienteId"] = new SelectList(_context.ContaCliente, "Id", "Id", transacao.ContaClienteId);
-            ViewData["CriptoSaldoId"] = new SelectList(_context.CriptoSaldo, "Id", "Id", transacao.CriptoSaldoId);
-            ViewData["CriptomoedaHojeId"] = new SelectList(_context.CriptomoedaHoje, "Id", "Id", transacao.CriptomoedaHojeId);
-            ViewData["SaldoId"] = new SelectList(_context.Saldo, "Id", "Id", transacao.SaldoId);
-            return View(transacao);
-        }
-
-        // GET: Transacoes/Delete/5
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var transacao = await _context.Transacao
-                .Include(t => t.ContaCliente)
-                .Include(t => t.CriptoSaldo)
-                .Include(t => t.CriptomoedaHoje)
-                .Include(t => t.Saldo)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (transacao == null)
-            {
-                return NotFound();
-            }
-
-            return View(transacao);
-        }
-
-        // POST: Transacoes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var transacao = await _context.Transacao.FindAsync(id);
-            _context.Transacao.Remove(transacao);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool TransacaoExists(int id)
         {
             return _context.Transacao.Any(e => e.Id == id);
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(viewModel);
         }
     }
 }

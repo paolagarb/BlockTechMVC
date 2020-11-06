@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Diagnostics;
 
 namespace BlockTechMVC.Controllers
 {
@@ -31,7 +32,6 @@ namespace BlockTechMVC.Controllers
                 .Where(c => c.Data.Equals(DateTime.Now.Date))
                 .Include(c => c.Criptomoeda);
 
-        
             if (searchDate != DateTime.MinValue)
             {
                 criptomoedas = _context.CriptomoedaHoje
@@ -41,7 +41,7 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
             ViewBag.ValueSortParm = sortOrder == "Valor" ? "Valor_desc" : "Valor";
-            
+
             if (sortOrder != null)
             {
 
@@ -67,7 +67,6 @@ namespace BlockTechMVC.Controllers
                 return View(await criptomoeda.ToListAsync());
             }
 
-
             return View(await criptomoedas.ToListAsync());
         }
 
@@ -76,7 +75,7 @@ namespace BlockTechMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
             }
 
             var criptomoedaHoje = await _context.CriptomoedaHoje
@@ -84,7 +83,7 @@ namespace BlockTechMVC.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (criptomoedaHoje == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
             }
 
             return View(criptomoedaHoje);
@@ -107,13 +106,21 @@ namespace BlockTechMVC.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(criptomoedaHoje);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(criptomoedaHoje);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
-            return View();
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Error), new { message = "" });
+            }
+
         }
 
         // GET: CriptomoedasHoje/Edit/5
@@ -122,13 +129,13 @@ namespace BlockTechMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
             }
 
             var criptomoedaHoje = await _context.CriptomoedaHoje.FindAsync(id);
             if (criptomoedaHoje == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
             }
 
             ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
@@ -146,7 +153,7 @@ namespace BlockTechMVC.Controllers
         {
             if (id != criptomoedaHoje.Id)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
             }
 
             if (ModelState.IsValid)
@@ -160,7 +167,7 @@ namespace BlockTechMVC.Controllers
                 {
                     if (!CriptomoedaHojeExists(criptomoedaHoje.Id))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
                     }
                     else
                     {
@@ -179,7 +186,7 @@ namespace BlockTechMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
             }
 
             var criptomoedaHoje = await _context.CriptomoedaHoje
@@ -187,7 +194,7 @@ namespace BlockTechMVC.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (criptomoedaHoje == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
             }
 
             return View(criptomoedaHoje);
@@ -208,6 +215,17 @@ namespace BlockTechMVC.Controllers
         private bool CriptomoedaHojeExists(int id)
         {
             return _context.CriptomoedaHoje.Any(e => e.Id == id);
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(viewModel);
         }
     }
 }

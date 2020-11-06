@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
 
 namespace BlockTechMVC.Controllers
 {
@@ -59,9 +60,7 @@ namespace BlockTechMVC.Controllers
                     }
 
                     return View(await usuario.ToListAsync());
-
                 }
-
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
@@ -94,7 +93,6 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.Saldo)
                     .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
 
-
                 return View(await usuario.ToListAsync());
             }
         }
@@ -106,7 +104,7 @@ namespace BlockTechMVC.Controllers
 
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Transação não encontrada!" });
             }
 
             var transacao = await _context.Transacao
@@ -119,7 +117,7 @@ namespace BlockTechMVC.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transacao == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Transação não encontrada!" });
             }
 
             return View(transacao);
@@ -132,7 +130,6 @@ namespace BlockTechMVC.Controllers
 
         public async Task<IActionResult> Aplicacoes(int? id)
         {
-
             var user = User.Identity.Name;
 
             if (user == "Administrador")
@@ -164,6 +161,17 @@ namespace BlockTechMVC.Controllers
 
                 return View(await usuario.ToListAsync());
             }
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(viewModel);
         }
     }
 }
