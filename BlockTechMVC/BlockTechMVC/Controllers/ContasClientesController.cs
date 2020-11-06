@@ -22,7 +22,7 @@ namespace BlockTechMVC.Controllers
         }
 
         // GET: ContasClientes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sortOrder, string sortOrder2)
         {
             var user = User.Identity.Name;
 
@@ -35,6 +35,51 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.ContaCliente.ApplicationUser)
                     .Include(t => t.CriptomoedaHoje.Criptomoeda)
                     .Include(t => t.Saldo);
+
+                ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome" : "";
+                ViewBag.ValueSortParm = String.IsNullOrEmpty(sortOrder2) ? "Valor" : "";
+
+
+                switch (sortOrder)
+                {
+                    case "Nome":
+                        var usuario = applicationDbContext.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
+                        return View(await usuario.ToListAsync());
+                    default:
+                        usuario = applicationDbContext.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
+                        return View(await usuario.ToListAsync());
+                        break;
+                }
+
+                switch (sortOrder2)
+                {
+
+                    case "Valor":
+                        var usuario = applicationDbContext.OrderBy(c => c.Valor);
+                        return View(await usuario.ToListAsync());
+                        break;
+                    default:
+                        usuario = applicationDbContext.OrderByDescending(c => c.Valor);
+                        return View(await usuario.ToListAsync());
+                        break;
+                }
+
+
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    var usuarioSelecionado = _context.Transacao
+                        .Include(t => t.ContaCliente)
+                        .Include(t => t.CriptoSaldo)
+                        .Include(t => t.CriptomoedaHoje)
+                        .Include(t => t.ContaCliente.ApplicationUser)
+                        .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                        .Include(t => t.Saldo)
+                        .Where(t => t.ContaCliente.ApplicationUser.Nome.Contains(searchString));
+
+                    return View(usuarioSelecionado.ToList());
+                    //applicationDbContext = applicationDbContext.Where(x => x.ContaCliente.ApplicationUser.Nome.Contains(searchString));
+                }
 
                 return View(await applicationDbContext.ToListAsync());
             }

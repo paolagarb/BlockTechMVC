@@ -38,26 +38,27 @@ namespace BlockTechMVC.Controllers
                 .Include(c => c.Criptomoeda);
             }
 
-            //ViewBag.PriceSortParm = sortOrder == "Valor" ? "Valor_desc" : "";
-
-            //switch (sortOrder)
-            //{
-            //    case "Valor":
-            //        criptomoedas = criptomoedas
-            //            .OrderBy(c => c.Nome);
-
-            //        //criptomoedas = criptomoedas
-            //        //    .OrderBy(s => s.Valor)
-            //        //    .ToList();
-            //        break;
-            //        //case "Valor_desc":
-            //        //    criptomoedas = criptomoedas.OrderByDescending(s => s.Valor);
-            //        //    break;
-            //        //default:
-            //        //    criptomoedas = criptomoedas.OrderBy(s => s.Nome);
-            //        //    break;
-            //}
-
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome_asc" : "";
+            ViewBag.ValueSortParm = String.IsNullOrEmpty(sortOrder) ? "Valor_desc" : "Valor_asc";
+            switch (sortOrder)
+            {
+                case "Nome_asc":
+                    var criptomoeda = criptomoedas.OrderBy(c => c.Criptomoeda.Nome);
+                    return View(await criptomoeda.ToListAsync());
+                    break;
+                case "Valor_desc":
+                    criptomoeda = criptomoedas.OrderByDescending(c => c.Valor);
+                    return View(await criptomoeda.ToListAsync());
+                    break;
+                case "Valor_asc":
+                    criptomoeda = criptomoedas.OrderBy(c => c.Valor);
+                    return View(await criptomoeda.ToListAsync());
+                    break;
+                default:
+                    criptomoeda = criptomoedas.OrderByDescending(c => c.Criptomoeda.Nome);
+                    return View(await criptomoeda.ToListAsync());
+                    break;
+            }
 
             return View(await criptomoedas.ToListAsync());
         }

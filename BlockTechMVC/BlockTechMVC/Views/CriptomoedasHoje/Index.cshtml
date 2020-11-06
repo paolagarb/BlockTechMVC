@@ -31,10 +31,12 @@
                     @Html.DisplayNameFor(model => model.Data)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Criptomoeda.Nome)
+                    @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "text-white imgOrder" })
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Valor)
+                    @*@Html.DisplayNameFor(model => model.Valor)*@
+                    @Html.ActionLink("Valor", "Index", new { sortOrder = ViewBag.ValueSortParm }, new { @class = "text-white imgOrder" })
+
                 </th>
                 <th></th>
             </trclass="bg-dark>

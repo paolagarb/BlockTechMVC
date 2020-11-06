@@ -3,10 +3,23 @@
 @{
     ViewData["Title"] = "Conta";
 }
-
-<h1>@ViewData["Title"]</h1>
-
-<br />
+@if (!User.IsInRole("Admin"))
+{
+    <h1>@ViewData["Title"]</h1>
+    <br />
+}
+@if (User.IsInRole("Admin"))
+{
+    <br />
+    <h1>Contas</h1>
+    <br />
+    <form asp-controller="ContasClientes" asp-action="Index" method="get">
+        <p>
+            Nome/Razão Social: <input type="text" name="SearchString">
+            <input type="submit" value="Filtrar"/>
+        </p>
+    </form>
+}
 
 <div class="table-responsive">
     <table class="table table-hover">
@@ -20,23 +33,27 @@
         }
 
         <thead>
-            <tr>
+            <tr class="bg-dark text-white">
                 <th>
                     @Html.DisplayNameFor(model => model.ContaCliente.DataAbertura)
                 </th>
                 @if (User.IsInRole("Admin"))
                 {
                     <th>
-                        @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+                        @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "text-white imgOrder" })
+
+                        @*@Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)*@
                     </th>
                 }
                 <th>
                     @Html.DisplayNameFor(model => model.ContaCliente.NumeroConta)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Saldo.SaldoAtualRS)
+                    @Html.ActionLink("Saldo", "Index", new { sortOrder = ViewBag.ValueSortParm }, new { @class = "text-white imgOrder" })
+
                 </th>
                 <th></th>
+                <th style="white-space: nowrap"></th>
             </tr>
         </thead>
         <tbody>
