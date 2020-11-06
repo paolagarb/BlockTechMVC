@@ -94,6 +94,7 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.Saldo)
                     .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
 
+
                 return View(await usuario.ToListAsync());
             }
         }

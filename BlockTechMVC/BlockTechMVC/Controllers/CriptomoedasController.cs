@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Composition;
+using System.Diagnostics;
 
 namespace BlockTechMVC.Controllers
 {
@@ -54,14 +56,14 @@ namespace BlockTechMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado!" });
             }
 
             var criptomoeda = await _context.Criptomoeda
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (criptomoeda == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado!" });
             }
 
             return View(criptomoeda);
@@ -80,10 +82,8 @@ namespace BlockTechMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Simbolo,Cadastro")] Criptomoeda criptomoeda)
         {
-            if (_context.Criptomoeda.Any(c => c.Nome == criptomoeda.Nome))
-            {
-                //"Criptomoeda já cadastrada!";
-            }
+            if (_context.Criptomoeda.Any(c => c.Nome == criptomoeda.Nome)) return RedirectToAction(nameof(Error), new { message = "Criptomoeda já cadastrada!" });
+            if (_context.Criptomoeda.Any(c => c.Simbolo == criptomoeda.Simbolo)) return RedirectToAction(nameof(Error), new { message = "Criptomoeda já cadastrada!" });
 
             if (ModelState.IsValid)
             {
@@ -99,13 +99,13 @@ namespace BlockTechMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado!" });
             }
 
             var criptomoeda = await _context.Criptomoeda.FindAsync(id);
             if (criptomoeda == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado!" });
             }
             return View(criptomoeda);
         }
@@ -119,7 +119,7 @@ namespace BlockTechMVC.Controllers
         {
             if (id != criptomoeda.Id)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado!" });
             }
 
             if (ModelState.IsValid)
@@ -133,11 +133,11 @@ namespace BlockTechMVC.Controllers
                 {
                     if (!CriptomoedaExists(criptomoeda.Id))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
                     }
                     else
                     {
-                        throw;
+                        return RedirectToAction(nameof(Error), new { message = "" });
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -150,14 +150,14 @@ namespace BlockTechMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado!" });
             }
 
             var criptomoeda = await _context.Criptomoeda
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (criptomoeda == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
             }
 
             return View(criptomoeda);
@@ -178,5 +178,17 @@ namespace BlockTechMVC.Controllers
         {
             return _context.Criptomoeda.Any(e => e.Id == id);
         }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier 
+            };
+
+            return View(viewModel);
+        }
     }
+
 }
