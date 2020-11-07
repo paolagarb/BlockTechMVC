@@ -120,7 +120,6 @@ namespace BlockTechMVC.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "" });
             }
-
         }
 
         // GET: CriptomoedasHoje/Edit/5

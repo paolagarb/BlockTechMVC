@@ -4,7 +4,33 @@
     ViewData["Title"] = "Aplicações";
 }
 
+<br />
 <h1>@ViewData["Title"]</h1>
+<br />
+@if (User.IsInRole("Admin"))
+{
+    <form asp-controller="ContasClientes" asp-action="Aplicacoes" method="get">
+        <p>
+            @Html.DropDownList("Busca", null, new { 
+           onchange = "document.location.href='/ContasClientes/Aplicacoes?Busca='+this.value;" })
+
+            @*Nome/Razão Social:*@
+            <input type="text" name="SearchString">
+            <input type="submit" value="Filtrar" />
+        </p>
+    </form>
+}
+else
+{
+    <form asp-controller="ContasClientes" asp-action="Aplicacoes" method="get">
+        <p>
+            Criptomoeda: 
+            <input type="text" name="SearchString">
+            <input type="submit" value="Filtrar" />
+        </p>
+    </form>
+}
+
 
 <div class="table-responsive">
     <table class="table">

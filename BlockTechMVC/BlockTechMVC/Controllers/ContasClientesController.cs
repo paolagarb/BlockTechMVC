@@ -9,6 +9,7 @@ using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
+using Microsoft.Extensions.Primitives;
 
 namespace BlockTechMVC.Controllers
 {
@@ -128,12 +129,20 @@ namespace BlockTechMVC.Controllers
             return _context.Transacao.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> Aplicacoes(int? id)
+        public async Task<IActionResult> Aplicacoes(int? id, string searchString, int? Busca)
         {
             var user = User.Identity.Name;
 
             if (user == "Administrador")
             {
+                List<SelectListItem> itens = new List<SelectListItem>();
+                SelectListItem item1 = new SelectListItem() { Text = "Nome/Razão Social", Value = "1", Selected = true };
+                SelectListItem item2 = new SelectListItem() { Text = "Criptomoeda", Value = "2", Selected = false };
+                itens.Add(item1);
+                itens.Add(item2);
+
+                ViewBag.Busca = itens;
+
                 var applicationDbContext = _context.Transacao
                     .Include(t => t.ContaCliente)
                     .Include(t => t.CriptoSaldo)
@@ -141,6 +150,48 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.ContaCliente.ApplicationUser)
                     .Include(t => t.CriptomoedaHoje.Criptomoeda)
                     .Include(t => t.Saldo);
+
+                if (Busca != null)
+                {
+
+                    itens.Where(i => i.Value == Busca.ToString()).First().Selected = true;
+                }
+                    if (Busca==1)
+                    {
+
+                        if (!String.IsNullOrEmpty(searchString))
+                        {
+                            var usuarioSelecionado = _context.Transacao
+                                .Include(t => t.ContaCliente)
+                                .Include(t => t.CriptoSaldo)
+                                .Include(t => t.CriptomoedaHoje)
+                                .Include(t => t.ContaCliente.ApplicationUser)
+                                .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                                .Include(t => t.Saldo)
+                                .Where(t => t.ContaCliente.ApplicationUser.Nome.Contains(searchString));
+
+                            return View(usuarioSelecionado.ToList());
+                        }
+                    }
+                    if (Busca == 2)
+                    {
+                        if (!String.IsNullOrEmpty(searchString))
+                        {
+                            var usuarioSelecionado = _context.Transacao
+                                .Include(t => t.ContaCliente)
+                                .Include(t => t.CriptoSaldo)
+                                .Include(t => t.CriptomoedaHoje)
+                                .Include(t => t.ContaCliente.ApplicationUser)
+                                .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                                .Include(t => t.Saldo)
+                                .Where(t => t.CriptomoedaHoje.Criptomoeda.Nome.Contains(searchString));
+
+                            return View(usuarioSelecionado.ToList());
+                        }
+                    }
+
+               
+
 
                 return View(await applicationDbContext.ToListAsync());
             }
@@ -159,8 +210,24 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.Saldo)
                     .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
 
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    var criptoSelecionada = _context.Transacao
+                        .Include(t => t.ContaCliente)
+                        .Include(t => t.CriptoSaldo)
+                        .Include(t => t.CriptomoedaHoje)
+                        .Include(t => t.ContaCliente.ApplicationUser)
+                        .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                        .Include(t => t.Saldo)
+                        .Where(t => t.CriptomoedaHoje.Criptomoeda.Nome.Contains(searchString));
+
+                    return View(criptoSelecionada.ToList());
+                }
+
                 return View(await usuario.ToListAsync());
             }
+
+
         }
 
         public IActionResult Error(string message)
