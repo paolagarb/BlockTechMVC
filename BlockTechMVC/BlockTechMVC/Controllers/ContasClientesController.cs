@@ -190,9 +190,6 @@ namespace BlockTechMVC.Controllers
                         }
                     }
 
-               
-
-
                 return View(await applicationDbContext.ToListAsync());
             }
             else
@@ -219,15 +216,13 @@ namespace BlockTechMVC.Controllers
                         .Include(t => t.ContaCliente.ApplicationUser)
                         .Include(t => t.CriptomoedaHoje.Criptomoeda)
                         .Include(t => t.Saldo)
-                        .Where(t => t.CriptomoedaHoje.Criptomoeda.Nome.Contains(searchString));
+                        .Where(t => t.CriptomoedaHoje.Criptomoeda.Nome.Contains(searchString) && t.Saldo.ContaCliente.ApplicationUser.UserName == user);
 
                     return View(criptoSelecionada.ToList());
                 }
 
                 return View(await usuario.ToListAsync());
             }
-
-
         }
 
         public IActionResult Error(string message)

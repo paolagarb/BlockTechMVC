@@ -25,8 +25,9 @@ namespace BlockTechMVC.Models
 
         }
 
-        public Saldo(double saldoAtualRS)
+        public Saldo(double saldoAtualRS, ContaCliente contaCliente)
         {
+            ContaCliente = contaCliente;
             SaldoAtualRS = saldoAtualRS;
         }
     }

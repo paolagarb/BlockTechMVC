@@ -113,7 +113,7 @@ namespace BlockTechMVC.Controllers
         {
             var valorList = new List<double>();
 
-            for (int i = 6; i >= 0; i--)
+            for (int i = 7; i >= 0; i--)
             {
                 DateTime diasSete = DateTime.Today;
                 diasSete = diasSete.AddDays(-i);

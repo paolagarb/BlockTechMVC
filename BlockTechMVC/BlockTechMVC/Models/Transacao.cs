@@ -44,12 +44,13 @@ namespace BlockTechMVC.Models
 
         }
 
-        public Transacao(TipoTransacao tipo, DateTime data, double valor, CriptomoedaHoje criptomoedaHoje)
+        public Transacao(TipoTransacao tipo, DateTime data, double valor, CriptomoedaHoje criptomoedaHoje, ContaCliente contaCliente)
         {
             Tipo = tipo;
             Data = data;
             Valor = valor;
             CriptomoedaHoje = criptomoedaHoje;
+            ContaCliente = contaCliente;
 
             CriptoSaldo.Criptomoeda = CriptomoedaHoje.Criptomoeda.Nome;
             Quantidade();

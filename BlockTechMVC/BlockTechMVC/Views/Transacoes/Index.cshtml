@@ -3,8 +3,24 @@
 @{
     ViewData["Title"] = "Transações";
 }
-
+<br />
 <h1>@ViewData["Title"]</h1>
+<br />
+
+@if (User.IsInRole("Admin"))
+{
+    <form asp-controller="Transacoes" asp-action="Index" method="get">
+        <p>
+            @Html.DropDownList("Busca", null, new
+            {
+           onchange = "document.location.href='/Transacoes/Index?Busca='+this.value;"
+            })
+
+            <input type="text" name="SearchString">
+            <input type="submit" value="Filtrar" />
+        </p>
+    </form>
+}
 
 <div class="table-responsive">
     <table class="table">
