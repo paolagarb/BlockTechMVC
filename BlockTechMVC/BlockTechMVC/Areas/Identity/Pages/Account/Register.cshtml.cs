@@ -46,7 +46,7 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use apenas caracteres alfabéticos.")]
+            //[RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use apenas caracteres alfabéticos.")]
             [Required(ErrorMessage = "O campo 'Nome/Razão Social' está vazio.")]
             [Display(Name = "Nome/Razão Social")]
             public string Nome { get; set; }

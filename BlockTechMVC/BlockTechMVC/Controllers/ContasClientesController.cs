@@ -30,33 +30,33 @@ namespace BlockTechMVC.Controllers
 
             if (user == "Administrador")
             {
-                ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome" : "";
+                ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
                 ViewBag.ValueSortParm = sortOrder == "Valor" ? "Valor_desc" : "Valor";
 
-                var applicationDbContext = _context.Transacao
+                var application = _context.Saldo
                     .Include(t => t.ContaCliente)
-                    .Include(t => t.CriptoSaldo)
-                    .Include(t => t.CriptomoedaHoje)
-                    .Include(t => t.ContaCliente.ApplicationUser)
-                    .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                    .Include(t => t.Saldo);
+                    .Include(t => t.ContaCliente.ApplicationUser);
+
                 if (sortOrder != null)
                 {
-                    var usuario = applicationDbContext.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
+                    var usuario = application.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
 
                     switch (sortOrder)
                     {
                         case "Nome":
-                            usuario = applicationDbContext.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
+                            usuario = application.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
+                            break;
+                        case "Nome_desc":
+                            usuario = application.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
                             break;
                         case "Valor_desc":
-                            usuario = applicationDbContext.OrderByDescending(c => c.Valor);
+                            usuario = application.OrderByDescending(c => c.SaldoAtualRS);
                             break;
                         case "Valor":
-                            usuario = applicationDbContext.OrderBy(c => c.Valor);
+                            usuario = application.OrderBy(c => c.SaldoAtualRS);
                             break;
                         default:
-                            usuario = applicationDbContext.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
+                            usuario = application.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
                             break;
                     }
 
@@ -77,7 +77,7 @@ namespace BlockTechMVC.Controllers
                     return View(usuarioSelecionado.ToList());
                 }
 
-                return View(await applicationDbContext.ToListAsync());
+                return View(await application.ToListAsync());
             }
             else
             {

@@ -47,7 +47,8 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.CriptomoedaHoje)
                     .Include(t => t.ContaCliente.ApplicationUser)
                     .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                    .Include(t => t.Saldo);
+                    .Include(t => t.Saldo)
+                    .OrderBy(t => t.Data);
 
                 if (Busca != null)
                 {
@@ -84,21 +85,21 @@ namespace BlockTechMVC.Controllers
 
                         return View(usuarioSelecionado.ToList());
                     }
-                    if (Busca == 3)
+                }
+                if (Busca == 3)
+                {
+                    if (!String.IsNullOrEmpty(searchString))
                     {
-                        if (!String.IsNullOrEmpty(searchString))
-                        {
-                            var usuarioSelecionado = _context.Transacao
-                                .Include(t => t.ContaCliente)
-                                .Include(t => t.CriptoSaldo)
-                                .Include(t => t.CriptomoedaHoje)
-                                .Include(t => t.ContaCliente.ApplicationUser)
-                                .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                                .Include(t => t.Saldo)
-                                .Where(t => t.Tipo.Equals(searchString));
+                        var usuarioSelecionado = _context.Transacao
+                            .Include(t => t.ContaCliente)
+                            .Include(t => t.CriptoSaldo)
+                            .Include(t => t.CriptomoedaHoje)
+                            .Include(t => t.ContaCliente.ApplicationUser)
+                            .Include(t => t.CriptomoedaHoje.Criptomoeda)
+                            .Include(t => t.Saldo)
+                            .Where(t => t.Tipo.Equals(searchString));
 
-                            return View(usuarioSelecionado.ToList());
-                        }
+                        return View(usuarioSelecionado.ToList());
                     }
                 }
                 return View(await applicationDbContext.ToListAsync());

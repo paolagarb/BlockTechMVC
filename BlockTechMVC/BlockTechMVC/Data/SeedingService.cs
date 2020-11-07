@@ -64,7 +64,6 @@ namespace BlockTechMVC.Data
             //    _context.Saldo.AddRange(s1);
 
             //    _context.SaveChanges();
-
         }
     }
 }

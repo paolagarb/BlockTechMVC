@@ -19,7 +19,7 @@ namespace BlockTechMVC.Models
         [DisplayFormat(DataFormatString ="{0:F2}")]
         public double Valor { get; set; }
 
-        public virtual Criptomoeda Criptomoeda { get; set; }  
+        public Criptomoeda Criptomoeda { get; set; }  
         
         [Display(Name ="Criptomoeda")]
         public int CriptomoedaId { get; set; }

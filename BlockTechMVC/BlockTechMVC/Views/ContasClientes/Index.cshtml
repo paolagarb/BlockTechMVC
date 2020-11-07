@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BlockTechMVC.Models.Transacao>
+﻿@model IEnumerable<BlockTechMVC.Models.Saldo>
 
 @{
     ViewData["Title"] = "Conta";
@@ -41,8 +41,6 @@
                 {
                     <th>
                         @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "imgOrder" })
-
-                        @*@Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)*@
                     </th>
                 }
                 <th>
@@ -58,7 +56,7 @@
                 else
                 {
                     <th>
-                        @Html.DisplayNameFor(model => model.Saldo)
+                        @Html.DisplayNameFor(model => model.SaldoAtualRS)
                     </th>
                 }
 
@@ -83,7 +81,7 @@
                         @Html.DisplayFor(modelItem => item.ContaCliente.NumeroConta)
                     </td>
                     <td>
-                        R$ @Html.DisplayFor(modelItem => item.Saldo.SaldoAtualRS)
+                        R$ @Html.DisplayFor(modelItem => item.SaldoAtualRS)
                     </td>
 
                     <td>

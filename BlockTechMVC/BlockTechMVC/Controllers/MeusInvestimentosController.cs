@@ -138,7 +138,7 @@ namespace BlockTechMVC.Controllers
                                  where criptomoedas.Nome == criptomoeda &&
                                  usuario.UserName == user &&
                                  transacoes.Tipo.Equals(TipoTransacao.Compra)
-                                 select criptosaldo.Quantidade).FirstOrDefault();
+                                 select criptosaldo.Quantidade).Sum();
 
             return investimentos;
         }
@@ -171,7 +171,7 @@ namespace BlockTechMVC.Controllers
                                  where criptomoedas.Nome == criptomoeda &&
                                  usuario.UserName == user &&
                                  transacoes.Tipo.Equals(TipoTransacao.Compra)
-                                 select transacoes.Valor).FirstOrDefault();
+                                 select transacoes.Valor).Sum();
 
             return investimentos;
         }
