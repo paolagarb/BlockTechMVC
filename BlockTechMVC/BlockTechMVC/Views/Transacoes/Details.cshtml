@@ -9,51 +9,54 @@
 <div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Tipo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Tipo)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Data)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Data)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Valor)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Valor)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriptomoedaHoje)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriptomoedaHoje.Criptomoeda.Nome)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriptomoedaHoje.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriptomoedaHoje.Criptomoeda.Nome)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContaCliente)
+
+        @if (User.IsInRole("Admin"))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ContaCliente.ApplicationUser.Nome)
+            </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CriptoSaldo.Quantidade)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContaCliente.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CriptoSaldo.Quantidade)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriptoSaldo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriptoSaldo.Id)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Saldo)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Saldo.Id)
+        <dd class="col-sm-10">
+            R$ @Html.DisplayFor(model => model.Saldo.SaldoAtualRS)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>

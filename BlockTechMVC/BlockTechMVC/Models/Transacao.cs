@@ -25,18 +25,23 @@ namespace BlockTechMVC.Models
 
         [Display(Name = "Criptomoeda")]
         public int CriptomoedaHojeId { get; set; }
+        [Display(Name = "Criptomoeda")]
         public CriptomoedaHoje CriptomoedaHoje { get; set; }
 
         [Display(Name = "Conta")]
         public int ContaClienteId { get; set; }
+
+        [Display(Name = "Conta")]
         public ContaCliente ContaCliente { get; set; }
 
-        [Display(Name = "Saldo")]
+        [Display(Name = "Saldo Criptomoeda")]
         public CriptoSaldo CriptoSaldo { get; set; }
+        [Display(Name = "Saldo Criptomoeda")]
         public int CriptoSaldoId { get; set; }
 
         [Display(Name = "Saldo")]
         public int SaldoId { get; set; }
+        [Display(Name = "Saldo")]
         public Saldo Saldo { get; set; }
 
         public Transacao()

@@ -21,7 +21,8 @@ namespace BlockTechMVC.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataAbertura { get; set; }
-        
+
+        [Display(Name = "Nome/Razão Social")]
         public virtual ApplicationUser ApplicationUser { get; set; }
         [Display(Name = "Nome/Razão Social")]
         public string ApplicationUserID { get; set; }

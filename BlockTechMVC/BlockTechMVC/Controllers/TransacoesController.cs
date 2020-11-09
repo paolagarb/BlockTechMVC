@@ -34,10 +34,8 @@ namespace BlockTechMVC.Controllers
                 List<SelectListItem> itens = new List<SelectListItem>();
                 SelectListItem item1 = new SelectListItem() { Text = "Cliente", Value = "1", Selected = true };
                 SelectListItem item2 = new SelectListItem() { Text = "Criptomoeda", Value = "2", Selected = false };
-                SelectListItem item3 = new SelectListItem() { Text = "Tipo de Transação", Value = "3", Selected = false };
                 itens.Add(item1);
                 itens.Add(item2);
-                itens.Add(item3);
 
                 ViewBag.Busca = itens;
 
@@ -86,22 +84,7 @@ namespace BlockTechMVC.Controllers
                         return View(usuarioSelecionado.ToList());
                     }
                 }
-                if (Busca == 3)
-                {
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        var usuarioSelecionado = _context.Transacao
-                            .Include(t => t.ContaCliente)
-                            .Include(t => t.CriptoSaldo)
-                            .Include(t => t.CriptomoedaHoje)
-                            .Include(t => t.ContaCliente.ApplicationUser)
-                            .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                            .Include(t => t.Saldo)
-                            .Where(t => t.Tipo.Equals(searchString));
 
-                        return View(usuarioSelecionado.ToList());
-                    }
-                }
                 return View(await applicationDbContext.ToListAsync());
             }
             else
@@ -142,6 +125,7 @@ namespace BlockTechMVC.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "Transação não encontrada!" });
             }
+
             return View(transacao);
         }
 

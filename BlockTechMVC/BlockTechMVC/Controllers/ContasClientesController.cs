@@ -65,14 +65,10 @@ namespace BlockTechMVC.Controllers
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    var usuarioSelecionado = _context.Transacao
-                        .Include(t => t.ContaCliente)
-                        .Include(t => t.CriptoSaldo)
-                        .Include(t => t.CriptomoedaHoje)
-                        .Include(t => t.ContaCliente.ApplicationUser)
-                        .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                        .Include(t => t.Saldo)
-                        .Where(t => t.ContaCliente.ApplicationUser.Nome.Contains(searchString));
+                    var usuarioSelecionado = _context.Saldo
+                   .Include(t => t.ContaCliente)
+                   .Include(t => t.ContaCliente.ApplicationUser)
+                   .Where(t => t.ContaCliente.ApplicationUser.Nome.Contains(searchString));
 
                     return View(usuarioSelecionado.ToList());
                 }
@@ -101,7 +97,6 @@ namespace BlockTechMVC.Controllers
         // GET: ContasClientes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            ViewData["ContaVinculada"] = "Conta Vinculada";
 
             if (id == null)
             {
@@ -115,12 +110,14 @@ namespace BlockTechMVC.Controllers
                 .Include(t => t.ContaCliente.Conta)
                 .Include(t => t.ContaCliente.ApplicationUser)
                 .Include(t => t.Saldo)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Saldo.Id == id);
+
             if (transacao == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Transação não encontrada!" });
             }
 
+            ViewData["ContaVinculada"] = "Conta Vinculada";
             return View(transacao);
         }
 
@@ -129,12 +126,20 @@ namespace BlockTechMVC.Controllers
             return _context.Transacao.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> Aplicacoes(int? id, string searchString, int? Busca)
+        public async Task<IActionResult> Aplicacoes(int? id, string searchString, int? Busca, string sortOrder)
         {
             var user = User.Identity.Name;
 
+
             if (user == "Administrador")
             {
+
+                ViewBag.Nome = sortOrder == "Nome" ? "Nome_desc" : "Nome";
+                ViewBag.Data = sortOrder == "Data" ? "Data_desc" : "Data";
+                ViewBag.Quantidade = sortOrder == "Quantidade" ? "Quantidade_desc" : "Quantidade";
+                ViewBag.Criptomoeda = sortOrder == "Criptomoeda" ? "Criptomoeda_desc" : "Criptomoeda";
+
+
                 List<SelectListItem> itens = new List<SelectListItem>();
                 SelectListItem item1 = new SelectListItem() { Text = "Nome/Razão Social", Value = "1", Selected = true };
                 SelectListItem item2 = new SelectListItem() { Text = "Criptomoeda", Value = "2", Selected = false };
@@ -150,6 +155,47 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.ContaCliente.ApplicationUser)
                     .Include(t => t.CriptomoedaHoje.Criptomoeda)
                     .Include(t => t.Saldo);
+          
+                if (sortOrder != null)
+                {
+                    var orderName = applicationDbContext.OrderBy(t => t.ContaCliente.ApplicationUser.Nome);
+
+                    switch (sortOrder)
+                    {
+                        case "Nome_desc":
+                            orderName = orderName.OrderByDescending(s => s.ContaCliente.ApplicationUser.Nome);
+                            break;
+                        case "Nome":
+                            orderName = applicationDbContext.OrderBy(s => s.ContaCliente.ApplicationUser.Nome);
+                            break;
+                        case "Data":
+                            orderName = applicationDbContext.OrderBy(s => s.Data);
+                            break;
+                        case "Data_desc":
+                            orderName = applicationDbContext.OrderByDescending(s => s.Data);
+                            break;
+                        case "Quantidade":
+                            orderName = applicationDbContext.OrderBy(s => s.CriptoSaldo.Quantidade);
+                            break;
+                        case "Quantidade_desc":
+                            orderName = applicationDbContext.OrderByDescending(s => s.CriptoSaldo.Quantidade);
+                            break;
+                        case "Criptomoeda":
+                            orderName = applicationDbContext.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                            break;
+                        case "Criptomoeda_desc":
+                            orderName = applicationDbContext.OrderByDescending(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                            break;
+                        default:
+                            orderName = applicationDbContext.OrderBy(s => s.ContaCliente.ApplicationUser.Nome);
+                            break;
+                    };
+                    return View(orderName.ToList());
+
+
+                }
+
+
 
                 if (Busca != null)
                 {
@@ -158,7 +204,6 @@ namespace BlockTechMVC.Controllers
                 }
                     if (Busca==1)
                     {
-
                         if (!String.IsNullOrEmpty(searchString))
                         {
                             var usuarioSelecionado = _context.Transacao
