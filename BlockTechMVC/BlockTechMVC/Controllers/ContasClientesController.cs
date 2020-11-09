@@ -77,18 +77,10 @@ namespace BlockTechMVC.Controllers
             }
             else
             {
-                var usuario = _context.Transacao
-                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
-                    .Include(t => t.ContaCliente)
-                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
-                    .Include(t => t.CriptoSaldo)
-                    .Where(t => t.CriptoSaldo.ContaCliente.ApplicationUser.UserName == user)
-                    .Include(t => t.CriptomoedaHoje)
-                    .Include(t => t.ContaCliente.ApplicationUser)
-                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
-                    .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                    .Include(t => t.Saldo)
-                    .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
+                var usuario = _context.Saldo
+                      .Include(t => t.ContaCliente)
+                      .Include(t => t.ContaCliente.ApplicationUser)
+                      .Where(t=>t.ContaCliente.ApplicationUser.UserName == user);
 
                 return View(await usuario.ToListAsync());
             }
@@ -130,15 +122,15 @@ namespace BlockTechMVC.Controllers
         {
             var user = User.Identity.Name;
 
+            ViewBag.Data = sortOrder == "Data" ? "Data_desc" : "Data";
+            ViewBag.Quantidade = sortOrder == "Quantidade" ? "Quantidade_desc" : "Quantidade";
+            ViewBag.Criptomoeda = sortOrder == "Criptomoeda" ? "Criptomoeda_desc" : "Criptomoeda";
+
 
             if (user == "Administrador")
             {
 
                 ViewBag.Nome = sortOrder == "Nome" ? "Nome_desc" : "Nome";
-                ViewBag.Data = sortOrder == "Data" ? "Data_desc" : "Data";
-                ViewBag.Quantidade = sortOrder == "Quantidade" ? "Quantidade_desc" : "Quantidade";
-                ViewBag.Criptomoeda = sortOrder == "Criptomoeda" ? "Criptomoeda_desc" : "Criptomoeda";
-
 
                 List<SelectListItem> itens = new List<SelectListItem>();
                 SelectListItem item1 = new SelectListItem() { Text = "Nome/Razão Social", Value = "1", Selected = true };
@@ -191,11 +183,7 @@ namespace BlockTechMVC.Controllers
                             break;
                     };
                     return View(orderName.ToList());
-
-
                 }
-
-
 
                 if (Busca != null)
                 {
@@ -251,6 +239,37 @@ namespace BlockTechMVC.Controllers
                     .Include(t => t.CriptomoedaHoje.Criptomoeda)
                     .Include(t => t.Saldo)
                     .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
+
+                if (sortOrder != null)
+                {
+                    var orderName = usuario.OrderBy(t => t.CriptomoedaHoje.Criptomoeda.Nome);
+
+                    switch (sortOrder)
+                    {
+                        case "Data":
+                            orderName = usuario.OrderBy(s => s.Data);
+                            break;
+                        case "Data_desc":
+                            orderName = usuario.OrderByDescending(s => s.Data);
+                            break;
+                        case "Quantidade":
+                            orderName = usuario.OrderBy(s => s.CriptoSaldo.Quantidade);
+                            break;
+                        case "Quantidade_desc":
+                            orderName = usuario.OrderByDescending(s => s.CriptoSaldo.Quantidade);
+                            break;
+                        case "Criptomoeda":
+                            orderName = usuario.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                            break;
+                        case "Criptomoeda_desc":
+                            orderName = usuario.OrderByDescending(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                            break;
+                        default:
+                            orderName = usuario.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                            break;
+                    };
+                    return View(orderName.ToList());
+                }
 
                 if (!String.IsNullOrEmpty(searchString))
                 {

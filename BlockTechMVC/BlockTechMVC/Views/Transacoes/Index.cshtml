@@ -21,31 +21,41 @@
         </p>
     </form>
 }
+else
+{
+    <form asp-controller="Transacoes" asp-action="Index" method="get">
+        <p>
+            Criptomoeda:
+            <input type="text" name="SearchString">
+            <input type="submit" value="Filtrar" />
+        </p>
+    </form>
+}
 
 <div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Data)
+                    @Html.ActionLink("Data", "Index", new { sortOrder = ViewBag.Data }, new { @class = "imgOrder" })
                 </th>
                 @if (User.IsInRole("Admin"))
                 {
                     <th>
-                        @Html.DisplayNameFor(model => model.ContaCliente.ApplicationUser.Nome)
+                        @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.Nome }, new { @class = "imgOrder" })
                     </th>
                 }
                 <th>
                     @Html.DisplayNameFor(model => model.Tipo)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Valor)
+                    @Html.ActionLink("Valor", "Index", new { sortOrder = ViewBag.Valor }, new { @class = "imgOrder" })
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CriptomoedaHoje.Criptomoeda.Nome)
+                    @Html.ActionLink("Criptomoeda", "Index", new { sortOrder = ViewBag.Criptomoeda }, new { @class = "imgOrder" })
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CriptoSaldo.Quantidade)
+                    @Html.ActionLink("Quantidade", "Index", new { sortOrder = ViewBag.Quantidade }, new { @class = "imgOrder" })
                 </th>
                 <th></th>
             </tr>
@@ -74,9 +84,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CriptoSaldo.Quantidade)
-                    </td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>
                     </td>
                 </tr>
             }

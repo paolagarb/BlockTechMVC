@@ -26,8 +26,10 @@
     var litecoinValorReal = ViewBag.QuantidadaEmRealLitecoin;
     var litecoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoLitecoin);
 
-    var saldoSemInvestimento = ViewBag.SaldoSemInvestimento;
+    var saldoSemInvestimento = Convert.ToDouble(ViewBag.SaldoSemInvestimento);
     var dinheiroTotalContaRS = Convert.ToDouble(ViewBag.DinheiroTotalContaRS);
+
+    var investido = (dinheiroTotalContaRS - saldoSemInvestimento);
 
     //Adm
     var Bitcoin = Convert.ToDouble(ViewBag.Bitcoin);
@@ -47,6 +49,7 @@
 
     var Xrp = Convert.ToDouble(ViewBag.Xrp);
     var XrpRS = ViewBag.XrpValorRS;
+
 }
 
 @if (User.IsInRole("Admin"))
@@ -175,8 +178,9 @@
     <br />
     <h2 class="text-center">Investimento Atual</h2>
     <br />
-    <h5>Não investido: R$ @saldoSemInvestimento</h5>
-    <h5>Saldo Total na Conta: R$ @dinheiroTotalContaRS</h5>
+    <h5>Saldo BlockTech: R$ @saldoSemInvestimento</h5>
+    <h5>Meu investimento: R$ @investido</h5>
+    <h5>Total na Conta: R$ @dinheiroTotalContaRS</h5>
     <br />
 
     <div class="container">
