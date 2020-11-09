@@ -2,7 +2,9 @@
 
 @{
     ViewData["Title"] = "Conta";
+    var total = ViewBag.Total;
 }
+
 @if (!User.IsInRole("Admin"))
 {
     <h1>@ViewData["Title"]</h1>
@@ -80,9 +82,19 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ContaCliente.NumeroConta)
                     </td>
-                    <td>
-                        R$ @Html.DisplayFor(modelItem => item.SaldoAtualRS)
-                    </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            R$ @Html.DisplayFor(modelItem => item.SaldoAtualRS)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            R$ @total
+
+                        </td>
+                    }
 
                     <td>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>

@@ -28,6 +28,26 @@ namespace BlockTechMVC.Controllers
         {
             var user = User.Identity.Name;
 
+            //MeusInvestimentosController investimentos = new MeusInvestimentosController(_context);
+            //var saldoSemInvestimento = investimentos.SaldoSemInvestimento(user);
+            //double bitcoin = investimentos.QuantidadeTotalCriptomoeda("Bitcoin", user);
+            //double saldoTotalBitcoin = investimentos.CalcularSaldoAtual(bitcoin, "Bitcoin");
+            //double ethereum = investimentos.QuantidadeTotalCriptomoeda("Ethereum", user);
+            //double saldoTotalEthereum = investimentos.CalcularSaldoAtual(ethereum, "Ethereum");
+            //double bitcoinCash = investimentos.QuantidadeTotalCriptomoeda("Bitcoin Cash", user);
+            //double saldoTotalBitcoinCash = investimentos.CalcularSaldoAtual(bitcoinCash, "Bitcoin Cash");
+            //double xrp = investimentos.QuantidadeTotalCriptomoeda("XRP", user);
+            //double saldoTotalXrp = investimentos.CalcularSaldoAtual(xrp, "XRP");
+            //double paxGold = investimentos.QuantidadeTotalCriptomoeda("PAX Gold", user);
+            //double saldoTotalPaxGold = investimentos.CalcularSaldoAtual(paxGold, "PAX Gold");
+            //double litecoin = investimentos.QuantidadeTotalCriptomoeda("Litecoin", user);
+            //double saldoTotalLitecoin = investimentos.CalcularSaldoAtual(litecoin, "Litecoin");
+
+            //var total = (saldoSemInvestimento + saldoTotalBitcoin + saldoTotalEthereum + saldoTotalBitcoinCash + saldoTotalXrp + saldoTotalPaxGold + saldoTotalLitecoin).ToString("F2");
+            //ViewBag.Total = total;
+
+            ViewBag.Total = SaldoTotal(user);
+
             if (user == "Administrador")
             {
                 ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
@@ -89,6 +109,7 @@ namespace BlockTechMVC.Controllers
         // GET: ContasClientes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var user = User.Identity.Name;
 
             if (id == null)
             {
@@ -110,6 +131,8 @@ namespace BlockTechMVC.Controllers
             }
 
             ViewData["ContaVinculada"] = "Conta Vinculada";
+            ViewBag.Total = SaldoTotal(user);
+
             return View(transacao);
         }
 
@@ -298,6 +321,30 @@ namespace BlockTechMVC.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public double SaldoTotal(string user)
+        {
+
+            MeusInvestimentosController investimentos = new MeusInvestimentosController(_context);
+            var saldoSemInvestimento = investimentos.SaldoSemInvestimento(user);
+            double bitcoin = investimentos.QuantidadeTotalCriptomoeda("Bitcoin", user);
+            double saldoTotalBitcoin = investimentos.CalcularSaldoAtual(bitcoin, "Bitcoin");
+            double ethereum = investimentos.QuantidadeTotalCriptomoeda("Ethereum", user);
+            double saldoTotalEthereum = investimentos.CalcularSaldoAtual(ethereum, "Ethereum");
+            double bitcoinCash = investimentos.QuantidadeTotalCriptomoeda("Bitcoin Cash", user);
+            double saldoTotalBitcoinCash = investimentos.CalcularSaldoAtual(bitcoinCash, "Bitcoin Cash");
+            double xrp = investimentos.QuantidadeTotalCriptomoeda("XRP", user);
+            double saldoTotalXrp = investimentos.CalcularSaldoAtual(xrp, "XRP");
+            double paxGold = investimentos.QuantidadeTotalCriptomoeda("PAX Gold", user);
+            double saldoTotalPaxGold = investimentos.CalcularSaldoAtual(paxGold, "PAX Gold");
+            double litecoin = investimentos.QuantidadeTotalCriptomoeda("Litecoin", user);
+            double saldoTotalLitecoin = investimentos.CalcularSaldoAtual(litecoin, "Litecoin");
+
+            var total = (saldoSemInvestimento + saldoTotalBitcoin + saldoTotalEthereum + saldoTotalBitcoinCash + saldoTotalXrp + saldoTotalPaxGold + saldoTotalLitecoin).ToString("F2");
+            ViewBag.Total = total;
+
+            return Convert.ToDouble(total);
         }
     }
 }

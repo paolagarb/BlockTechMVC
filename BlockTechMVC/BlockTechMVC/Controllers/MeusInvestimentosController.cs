@@ -94,7 +94,6 @@ namespace BlockTechMVC.Controllers
                 double valorInvestidoXrp = ValorInvestido("XRP", user);
                 ViewBag.ValorInvestidoXrp = valorInvestidoXrp.ToString("F2");
 
-
                 double paxGold = QuantidadeTotalCriptomoeda("PAX Gold", user);
                 ViewBag.QuantidadaTotalPaxGold = paxGold.ToString("F6");
 

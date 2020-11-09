@@ -12,10 +12,11 @@ namespace BlockTechMVC.Models
         public int Id { get; set; }
         public string Criptomoeda { get; set; } //Nome
 
-
         //[Display(Name = "Saldo em Criptomoeda")]
         [Display(Name = "Quantidade")]
-        [Column(TypeName = "decimal(20,2)")]
+        [Column(TypeName = "decimal(20,6)")]
+        [DisplayFormat(DataFormatString = "{0:F6}")]
+
         public double Quantidade { get; set; } //Quantidade de Criptomoedas
 
         public ContaCliente ContaCliente { get; set; }

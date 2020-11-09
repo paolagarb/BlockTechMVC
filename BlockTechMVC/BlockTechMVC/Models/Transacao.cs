@@ -19,7 +19,6 @@ namespace BlockTechMVC.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Data { get; set; }
 
-        //[Column(TypeName = "decimal(20,2)")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
         public double Valor { get; set; }
 
