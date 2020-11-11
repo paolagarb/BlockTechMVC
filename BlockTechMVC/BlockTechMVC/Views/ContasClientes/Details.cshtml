@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Detalhes";
     var total = ViewBag.Total;
+    var totalAdm = ViewBag.TotalAdm;
 }
 <br />
 <h1>@ViewData["Title"]</h1>
@@ -33,9 +34,9 @@
         </dt>
         @if (User.IsInRole("Admin"))
         {
-            <dd class="col-sm-10">
-                R$ @Html.DisplayFor(model => model.Saldo.SaldoAtualRS)
-            </dd>
+    <dd class="col-sm-10">
+        R$ @totalAdm
+    </dd>
         }
         else
         {

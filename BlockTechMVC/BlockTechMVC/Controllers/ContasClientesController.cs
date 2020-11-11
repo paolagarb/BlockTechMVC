@@ -114,7 +114,18 @@ namespace BlockTechMVC.Controllers
             {
                 var user = User.Identity.Name;
 
-                if (id == null)
+
+            var usuario = (from c in _context.Saldo
+                           join conta in _context.ContaCliente
+                           on c.ContaClienteId equals conta.Id
+                           join cliente in _context.ApplicationUser
+                           on conta.ApplicationUserID equals cliente.Id
+                           where c.Id == id
+                           select cliente.UserName).FirstOrDefault();
+            ViewBag.TotalAdm = SaldoTotal(usuario);
+
+
+            if (id == null)
                 {
                     return RedirectToAction(nameof(Error), new { message = "Transação não encontrada!" });
                 }
