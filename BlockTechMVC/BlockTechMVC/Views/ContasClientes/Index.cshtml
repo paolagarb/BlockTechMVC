@@ -3,6 +3,17 @@
 @{
     ViewData["Title"] = "Conta";
     var total = ViewBag.Total;
+
+    int i = 0;
+
+    double[] totalGeral = new double[20];
+
+    foreach (var item in ViewBag.Total)
+    {
+        totalGeral[i] = item;
+        i++;
+    }
+    i = 0;
 }
 
 @if (!User.IsInRole("Admin"))
@@ -85,21 +96,21 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <td>
-                            R$ @Html.DisplayFor(modelItem => item.SaldoAtualRS)
+                            @totalGeral[i]
+                            @{ i++; }
                         </td>
                     }
                     else
                     {
                         <td>
                             R$ @total
-
                         </td>
                     }
-
                     <td>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark">Detalhes</a>
                     </td>
                 </tr>
+
             }
         </tbody>
     </table>
