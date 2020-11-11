@@ -144,3 +144,11 @@ body {
     margin-right: 15px;
     max-width: 90%;
 }
+
+.bg-light-d {
+    background-color: #e5e5e5;
+    width: 300px;
+    height: 350px;
+    border-radius: 10px;
+    margin: 0 auto;
+}

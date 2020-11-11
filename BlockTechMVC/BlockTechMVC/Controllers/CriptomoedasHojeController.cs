@@ -245,7 +245,6 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.Busca = itens;
 
-
             double valor = Convert.ToDouble(searchString);
             var valorHoje = 0.0;
 

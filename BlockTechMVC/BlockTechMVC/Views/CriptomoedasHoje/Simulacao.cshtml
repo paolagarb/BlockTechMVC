@@ -4,26 +4,28 @@
     var total = ViewBag.Total;
 }
 <br />
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 <br />
-
-<div class="text-center">
+<div class="text-center bg-light-d">
     <form asp-controller="CriptomoedasHoje" asp-action="Simulacao" method="get">
+        <br />
         <p>
-            Criptomoeda:
+            Criptomoeda
             @Html.DropDownList("Busca", null, new
-          {
-         onchange = "document.location.href='/CriptomoedasHoje/Simulacao?Busca='+this.value;"
-          })
+       {
+           onchange = "document.location.href='/CriptomoedasHoje/Simulacao?Busca='+this.value;"
+       })
         </p>
         <p>
-            Valor:
+            Valor
             <input type="text" name="SearchString">
         </p>
         <p>
-            <input type="submit" value="Simular" />
+            <input type="submit" value="Simular" class="btn btn-dark" />
         </p>
-   
-   <p>Total de criptomoeda: @total</p>
+        <br />
+        <h4>Total de criptomoeda </h4><br />
+        <h4>@total</h4>
+        <br />
     </form>
 </div>
