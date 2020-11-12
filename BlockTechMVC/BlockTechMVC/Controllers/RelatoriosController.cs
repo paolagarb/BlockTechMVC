@@ -54,10 +54,26 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        public ActionResult Bitcoin30()
+        {
+            ViewBag.Dias = Ultimos30Dias();
+            ViewBag.Valores = Valores30Dias("Bitcoin");
+
+            return View();
+        }
+
         public ActionResult Ethereum()
         {
             ViewBag.Dias = Ultimos7Dias();
             ViewBag.Valores = Valores7Dias("Ethereum");
+
+            return View();
+        }
+
+        public ActionResult Ethereum30()
+        {
+            ViewBag.Dias = Ultimos30Dias();
+            ViewBag.Valores = Valores30Dias("Ethereum");
 
             return View();
         }
@@ -70,10 +86,26 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        public ActionResult BitcoinCash30()
+        {
+            ViewBag.Dias = Ultimos30Dias();
+            ViewBag.Valores = Valores30Dias("Bitcoin Cash");
+
+            return View();
+        }
+
         public ActionResult Xrp()
         {
             ViewBag.Dias = Ultimos7Dias();
             ViewBag.Valores = Valores7Dias("XRP");
+
+            return View();
+        }
+
+        public ActionResult Xrp30()
+        {
+            ViewBag.Dias = Ultimos30Dias();
+            ViewBag.Valores = Valores30Dias("XRP");
 
             return View();
         }
@@ -86,10 +118,26 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        public ActionResult PaxGold30()
+        {
+            ViewBag.Dias = Ultimos30Dias();
+            ViewBag.Valores = Valores30Dias("PAX Gold");
+
+            return View();
+        }
+
         public ActionResult Litecoin()
         {
             ViewBag.Dias = Ultimos7Dias();
             ViewBag.Valores = Valores7Dias("Litecoin");
+
+            return View();
+        }
+
+        public ActionResult Litecoin30()
+        {
+            ViewBag.Dias = Ultimos30Dias();
+            ViewBag.Valores = Valores30Dias("Litecoin");
 
             return View();
         }
@@ -108,12 +156,48 @@ namespace BlockTechMVC.Controllers
             }
             return diasList;
         }
+        
+        public List<int> Ultimos30Dias() { 
+     
+            var diasList = new List<int>();
+
+            DateTime diasTrinta = DateTime.Today;
+
+            for (int i = 30; i >= 0; i--)
+            {
+                diasTrinta = DateTime.Today;
+                diasTrinta = diasTrinta.AddDays(-i);
+                diasList.Add(diasTrinta.Day);
+            }
+            return diasList;
+        }
 
         public List<double> Valores7Dias(string nome)
         {
             var valorList = new List<double>();
 
             for (int i = 7; i >= 0; i--)
+            {
+                DateTime diasSete = DateTime.Today;
+                diasSete = diasSete.AddDays(-i);
+                DateTime data = diasSete;
+
+                var valor = (from coin in _context.Criptomoeda
+                             join criptohoje in _context.CriptomoedaHoje
+                             on coin.Id equals criptohoje.CriptomoedaId
+                             where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
+                             select criptohoje.Valor).Single();
+                valorList.Add(valor);
+            }
+
+            return valorList;
+        }
+
+        public List<double> Valores30Dias(string nome)
+        {
+            var valorList = new List<double>();
+
+            for (int i = 30; i >= 0; i--)
             {
                 DateTime diasSete = DateTime.Today;
                 diasSete = diasSete.AddDays(-i);
@@ -140,6 +224,18 @@ namespace BlockTechMVC.Controllers
             ViewBag.PaxGold = Porcentagem("PAX Gold");
             ViewBag.Litecoin = Porcentagem("Litecoin");
             return View();
+        } 
+        
+        public IActionResult Mensal()
+        {
+            ViewBag.Dias = Ultimos30Dias();
+            ViewBag.Bitcoin = PorcentagemTrinta("Bitcoin");
+            ViewBag.Ethereum = PorcentagemTrinta("Ethereum");
+            ViewBag.BitcoinCash = PorcentagemTrinta("Bitcoin Cash");
+            ViewBag.XRP = PorcentagemTrinta("XRP");
+            ViewBag.PaxGold = PorcentagemTrinta("PAX Gold");
+            ViewBag.Litecoin = PorcentagemTrinta("Litecoin");
+            return View();
         }
 
         public List<double> Porcentagem(string nome)
@@ -157,6 +253,44 @@ namespace BlockTechMVC.Controllers
             var porcentagem = new List<double>();
 
             for (int i = 7; i >= 0; i--)
+            {
+                DateTime dia = DateTime.Today;
+                dia = dia.AddDays(-i);
+                DateTime data = dia;
+
+                var valorDia = (from coin in _context.Criptomoeda
+                             join criptohoje in _context.CriptomoedaHoje
+                             on coin.Id equals criptohoje.CriptomoedaId
+                             where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
+                             select criptohoje.Valor).Single();
+
+                var regra3 = ((valorDia * calculo) / valor);
+                var resultado = regra3 - 100;
+                valor = valorDia;
+
+                var duasCasas = resultado.ToString("F2");
+                var duasCasasDouble = Convert.ToDouble(duasCasas);
+                porcentagem.Add(duasCasasDouble);
+            }
+
+            return porcentagem;
+        }
+        
+        public List<double> PorcentagemTrinta(string nome)
+        {
+            var date = DateTime.Today;
+            date = date.AddDays(-31);
+
+            var valor = (from coin in _context.Criptomoeda
+                         join criptohoje in _context.CriptomoedaHoje
+                         on coin.Id equals criptohoje.CriptomoedaId
+                         where coin.Nome == nome && criptohoje.Data.Date.Equals(date.Date)
+                         select criptohoje.Valor).Single();
+
+            var calculo = 100.0; 
+            var porcentagem = new List<double>();
+
+            for (int i = 30; i >= 0; i--)
             {
                 DateTime dia = DateTime.Today;
                 dia = dia.AddDays(-i);

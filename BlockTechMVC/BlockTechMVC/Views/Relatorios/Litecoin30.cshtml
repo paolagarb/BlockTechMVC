@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Bitcoin Cash";
+    ViewData["Title"] = "Litecoin";
     var diasList = ViewBag.Dias;
     var valoresList = ViewBag.Valores;
     var dias = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(diasList));
@@ -10,23 +10,21 @@
 <br />
 
 <div class="flex-row">
-
-    <a asp-action="Index" class="btn btn-outline-dark">Hoje</a>   
-    <a asp-action="Mensal" class="btn btn-outline-dark">Últimos 30 dias</a>
-    <a asp-action="Semanal" class="btn btn-outline-dark">Todas as Criptomoedas</a>
-    <a asp-action="Bitcoin" class="btn btn-outline-dark">Bitcoin</a>
-    <a asp-action="Ethereum" class="btn btn-outline-dark">Ethereum</a>
-    <a asp-action="BitcoinCash" class="btn btn-dark text-white">Bitcoin Cash</a>
-    <a asp-action="Xrp" class="btn btn-outline-dark">XRP</a>
-    <a asp-action="PaxGold" class="btn btn-outline-dark">PAX Gold</a>
-    <a asp-action="Litecoin" class="btn btn-outline-dark">Litecoin</a>
-
+    <a asp-action="Index" class="btn btn-outline-dark menu">Hoje</a>
+    <a asp-action="Semanal" class="btn btn-outline-dark menu">Últimos 7 dias</a>
+    <a asp-action="Mensal" class="btn btn-outline-dark menu">Todas as Criptomoedas</a>
+    <a asp-action="Bitcoin30" class="btn btn-outline-dark menu">Bitcoin</a>
+    <a asp-action="Ethereum30" class="btn btn-outline-dark menu">Ethereum</a>
+    <a asp-action="BitcoinCash30" class="btn btn-outline-dark menu">Bitcoin Cash</a>
+    <a asp-action="Xrp30" class="btn btn-outline-dark menu">XRP</a>
+    <a asp-action="PaxGold30" class="btn btn-outline-dark menu">PAX Gold</a>
+    <a asp-action="Litecoin30" class="btn btn-dark text-white">Litecoin</a>
 </div>
 <br />
 <h1>@ViewData["Title"]</h1>
 <br />
-<h4 class="text-center">Últimos 7 Dias</h4>
-<canvas id="graficoBitcoinCash" width="400" height="150">
+<h4 class="text-center">Últimos 30 Dias</h4>
+<canvas id="graficoLitecoin" width="400" height="150">
 </canvas>
 
 @section Scripts {
@@ -36,15 +34,15 @@
         $(document)
             .ready(function () {
 
-                var ctx = document.getElementById('graficoBitcoinCash').getContext('2d');
+                var ctx = document.getElementById('graficoLitecoin').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: @dias,
                         datasets: [{
                             data: @valores,
-                            backgroundColor: 'rgba(141, 195, 81, 0.0)',
-                            borderColor: 'rgba(141, 195, 81, 1)',
+                            backgroundColor: 'rgba(52, 92, 157, 0.0)',
+                            borderColor: 'rgba(52, 92, 157, 1)',
                             borderWidth: 1
                         }]
                     },
