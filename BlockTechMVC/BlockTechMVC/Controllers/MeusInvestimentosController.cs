@@ -135,9 +135,8 @@ namespace BlockTechMVC.Controllers
                                  join criptosaldo in _context.CriptoSaldo
                                  on transacoes.CriptoSaldoId equals criptosaldo.Id
                                  where criptomoedas.Nome == criptomoeda &&
-                                 usuario.UserName == user &&
-                                 transacoes.Tipo.Equals(TipoTransacao.Compra)
-                                 select criptosaldo.Quantidade).Sum();
+                                 usuario.UserName == user
+                                 select criptosaldo.Quantidade).FirstOrDefault();
 
             return investimentos;
         }
@@ -172,7 +171,23 @@ namespace BlockTechMVC.Controllers
                                  transacoes.Tipo.Equals(TipoTransacao.Compra)
                                  select transacoes.Valor).Sum();
 
-            return investimentos;
+            var investimentosVenda = (from transacoes in _context.Transacao
+                                      join conta in _context.ContaCliente
+                                      on transacoes.ContaClienteId equals conta.Id
+                                      join usuario in _context.ApplicationUser
+                                      on conta.ApplicationUserID equals usuario.Id
+                                      join criptomoedahoje in _context.CriptomoedaHoje
+                                      on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
+                                      join criptomoedas in _context.Criptomoeda
+                                      on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
+                                      join criptosaldo in _context.CriptoSaldo
+                                      on transacoes.CriptoSaldoId equals criptosaldo.Id
+                                      where criptomoedas.Nome == criptomoeda &&
+                                      usuario.UserName == user &&
+                                      transacoes.Tipo.Equals(TipoTransacao.Venda)
+                                      select transacoes.Valor).Sum();
+
+            return investimentos - investimentosVenda;
         }
 
         public double ValorInvestidoAdm(string criptomoeda)
@@ -189,8 +204,21 @@ namespace BlockTechMVC.Controllers
                                  where criptomoedas.Nome == criptomoeda &&
                                  transacoes.Tipo.Equals(TipoTransacao.Compra)
                                  select transacoes.Valor).Sum();
+            
+            var investimentosVenda = (from transacoes in _context.Transacao
+                                      join conta in _context.ContaCliente
+                                      on transacoes.ContaClienteId equals conta.Id
+                                      join criptomoedahoje in _context.CriptomoedaHoje
+                                      on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
+                                      join criptomoedas in _context.Criptomoeda
+                                      on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
+                                      join criptosaldo in _context.CriptoSaldo
+                                      on transacoes.CriptoSaldoId equals criptosaldo.Id
+                                      where criptomoedas.Nome == criptomoeda &&
+                                      transacoes.Tipo.Equals(TipoTransacao.Venda)
+                                      select transacoes.Valor).Sum();
 
-            return investimentos;
+            return investimentos - investimentosVenda;
         }
 
         public double SaldoSemInvestimento(string user)
@@ -553,6 +581,7 @@ namespace BlockTechMVC.Controllers
 
             return valorList;
         }
+
         public List<double> Valores7DiasAdm(string nome, double quantidadeTotalCriptomoeda)
         {
 
@@ -575,7 +604,6 @@ namespace BlockTechMVC.Controllers
 
                 valorList.Add(Convert.ToDouble(totalDia));
             }
-
             return valorList;
         }
 
