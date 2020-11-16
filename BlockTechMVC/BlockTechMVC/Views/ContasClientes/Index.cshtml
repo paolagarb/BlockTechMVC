@@ -8,12 +8,14 @@
 
     double[] totalGeral = new double[20];
 
-    foreach (var item in ViewBag.Total)
-    {
-        totalGeral[i] = item;
-        i++;
+    if (User.IsInRole("Admin")) {
+        foreach (var item in ViewBag.TotalAdm)
+        {
+            totalGeral[i] = item;
+            i++;
+        }
+        i = 0;
     }
-    i = 0;
 }
 
 @if (!User.IsInRole("Admin"))

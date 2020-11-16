@@ -48,7 +48,7 @@ namespace BlockTechMVC.Controllers
                     usuarios[i] = saldo;
                     i++;
                 }
-                ViewBag.Total = usuarios.ToList();
+                ViewBag.TotalAdm = usuarios.ToList();
             }
 
                 if (user == "Administrador")
