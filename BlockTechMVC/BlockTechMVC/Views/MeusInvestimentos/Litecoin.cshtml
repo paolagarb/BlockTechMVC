@@ -12,6 +12,11 @@
     var valores7Dias = ViewBag.ValorLitecoin7Dias;
     var valores = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(valores7Dias));
 
+    var dias30List = ViewBag.UltimoMes;
+    var dias30 = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(dias30List));
+    var valores30Dias = ViewBag.ValorMes;
+    var valores30 = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(valores30Dias));
+
     var bitcoinInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoin);
     var ethereumInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoEthereum);
     var xrpInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoXrp);
@@ -79,10 +84,23 @@
         <h5>Perda: R$ @lucroOuPerda</h5>
     }
 
+    <div id="botaoMes">
+        <button type="button" class="btn btn-light" onclick="TrocarGrafico()">Mensal</button>
+    </div>
+    <div id="botaoSemana">
+        <button type="button" class="btn btn-light" onclick="TrocarGraficoSemana()">Semanal</button>
+    </div>
+
     <br />
 
-    <canvas id="graficoLitecoin" width="400" height="150">
-    </canvas>
+    <div id="graficoSemana">
+        <canvas id="graficoLitecoin" width="400" height="150">
+        </canvas>
+    </div>
+    <div id="graficoMes">
+        <canvas id="graficoLitecoin30" width="400" height="150">
+        </canvas>
+    </div>
 
     @section Scripts {
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -98,6 +116,37 @@
                         labels: @dias,
                         datasets: [{
                             data: @valores,
+                            backgroundColor: 'rgba(250, 244, 15,  0.0)',
+                            borderColor: 'rgba(250, 244, 15, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            });
+
+              $(document)
+            .ready(function () {
+
+                var ctx = document.getElementById('graficoLitecoin30').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @dias30,
+                        datasets: [{
+                            data: @valores30,
                             backgroundColor: 'rgba(250, 244, 15,  0.0)',
                             borderColor: 'rgba(250, 244, 15, 1)',
                             borderWidth: 1

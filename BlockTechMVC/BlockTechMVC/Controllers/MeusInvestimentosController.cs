@@ -288,7 +288,6 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerdaAdm = (BitcoinValorRS - BitcoinInvestido).ToString("F2");
 
-
             int primeiroInvestimento = DataPrimeiroInvestimento("Bitcoin", user);
             if (primeiroInvestimento <= 30)
             {
@@ -299,8 +298,6 @@ namespace BlockTechMVC.Controllers
                 ViewBag.UltimoMes = Ultimos30Dias();
                 ViewBag.ValorBitcoinMes = Valores30Dias("Bitcoin", bitcoin);
             }
-
-
 
             return View();
         }
@@ -352,6 +349,18 @@ namespace BlockTechMVC.Controllers
             ViewBag.EthereumInvestido = EthereumInvestido;
 
             ViewBag.LucroOuPerdaAdm = (EthereumValorRS - EthereumInvestido).ToString("F2");
+            
+            int primeiroInvestimento = DataPrimeiroInvestimento("Ethereum", user);
+            if (primeiroInvestimento <= 30)
+            {
+                ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
+                ViewBag.ValorMes = ValoresDias("Ethereum", ethereum, primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.UltimoMes = Ultimos30Dias();
+                ViewBag.ValorMes = Valores30Dias("Ethereum", ethereum);
+            }
 
             return View();
         }
@@ -402,6 +411,19 @@ namespace BlockTechMVC.Controllers
             ViewBag.BitcoinCashInvestido = BitcoinCashInvestido;
 
             ViewBag.LucroOuPerdaAdm = (BitcoinCashValorRS - BitcoinCashInvestido).ToString("F2");
+
+            int primeiroInvestimento = DataPrimeiroInvestimento("Bitcoin Cash", user);
+            if (primeiroInvestimento <= 30)
+            {
+                ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
+                ViewBag.ValorMes = ValoresDias("Bitcoin Cash", bitcoinCash, primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.UltimoMes = Ultimos30Dias();
+                ViewBag.ValorMes = Valores30Dias("Bitcoin Cash", bitcoinCash);
+            }
+
             return View();
         }
 
@@ -451,6 +473,18 @@ namespace BlockTechMVC.Controllers
             ViewBag.XrpInvestido = XrpInvestido;
 
             ViewBag.LucroOuPerdaAdm = (XrpValorRS - XrpInvestido).ToString("F2");
+
+            int primeiroInvestimento = DataPrimeiroInvestimento("XRP", user);
+            if (primeiroInvestimento <= 30)
+            {
+                ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
+                ViewBag.ValorMes = ValoresDias("XRP", xrp, primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.UltimoMes = Ultimos30Dias();
+                ViewBag.ValorMes = Valores30Dias("XRP", xrp);
+            }
 
             return View();
         }
@@ -502,6 +536,18 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerdaAdm = (PaxGoldValorRS - PaxGoldInvestido).ToString("F2");
 
+            int primeiroInvestimento = DataPrimeiroInvestimento("PAX Gold", user);
+            if (primeiroInvestimento <= 30)
+            {
+                ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
+                ViewBag.ValorMes = ValoresDias("PAX Gold", paxGold, primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.UltimoMes = Ultimos30Dias();
+                ViewBag.ValorMes = Valores30Dias("PAX Gold", paxGold);
+            }
+
             return View();
         }
 
@@ -551,6 +597,18 @@ namespace BlockTechMVC.Controllers
             ViewBag.LitecoinInvestido = LitecoinInvestido;
 
             ViewBag.LucroOuPerdaAdm = (LitecoinValorRS - LitecoinInvestido).ToString("F2");
+
+            int primeiroInvestimento = DataPrimeiroInvestimento("Litecoin", user);
+            if (primeiroInvestimento <= 30)
+            {
+                ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
+                ViewBag.ValorMes = ValoresDias("Litecoin", litecoin, primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.UltimoMes = Ultimos30Dias();
+                ViewBag.ValorMes = Valores30Dias("Litecoin", litecoin);
+            }
 
             return View();
         }
@@ -648,14 +706,6 @@ namespace BlockTechMVC.Controllers
 
             return cripto * quantidadeCripto;
         }
-
-
-
-
-
-
-
-        //
 
         public int DataPrimeiroInvestimento(string criptomoeda, string user)
         {
@@ -758,9 +808,6 @@ namespace BlockTechMVC.Controllers
 
             return valorList;
         }
-        //
-
-
 
         private bool TransacaoExists(int id)
         {

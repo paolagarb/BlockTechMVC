@@ -4,15 +4,15 @@
 // Write your JavaScript code.
 
 function TrocarGrafico() {
-    document.getElementById('graficoBitcoin').style.display = 'none'
-    document.getElementById('graficoBitcoin30').style.display = 'block'
+    document.getElementById('graficoSemana').style.display = 'none'
+    document.getElementById('graficoMes').style.display = 'block'
     document.getElementById('botaoMes').style.display = 'none'
     document.getElementById('botaoSemana').style.display = 'block'
 }
 
 function TrocarGraficoSemana() {
-    document.getElementById('graficoBitcoin').style.display = 'block'
-    document.getElementById('graficoBitcoin30').style.display = 'none'
+    document.getElementById('graficoSemana').style.display = 'block'
+    document.getElementById('graficoMes').style.display = 'none'
     document.getElementById('botaoMes').style.display = 'block'
     document.getElementById('botaoSemana').style.display = 'none'
 }

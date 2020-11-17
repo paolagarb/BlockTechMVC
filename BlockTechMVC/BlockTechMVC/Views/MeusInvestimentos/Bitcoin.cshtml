@@ -17,7 +17,6 @@
     var valores30Dias = ViewBag.ValorBitcoinMes;
     var valores30 = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(valores30Dias));
 
-
     var ethereumInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoEthereum);
     var bitcoinCashInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoBitcoinCash);
     var xrpInvestimento = Convert.ToDouble(ViewBag.ValorInvestidoXrp);
@@ -86,10 +85,10 @@
     }
 
     <div id="botaoMes">
-        <button type="button" class="btn btn-light" onclick="TrocarGrafico">Mensal</button>
+        <button type="button" class="btn btn-light" onclick="TrocarGrafico()">Mensal</button>
     </div>
     <div id="botaoSemana">
-        <button type="button" class="btn btn-light" onclick="TrocarGraficoSemana">Semanal</button>
+        <button type="button" class="btn btn-light" onclick="TrocarGraficoSemana()">Semanal</button>
     </div>
 
     <br />
@@ -102,11 +101,6 @@
         <canvas id="graficoBitcoin30" width="400" height="150">
         </canvas>
     </div>
-
-
-
-
-
 
     @section Scripts {
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
