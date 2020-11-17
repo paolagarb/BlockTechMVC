@@ -1,10 +1,6 @@
 ﻿using BlockTechMVC.Models.Enums;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlockTechMVC.Models
 {
@@ -55,28 +51,6 @@ namespace BlockTechMVC.Models
             Valor = valor;
             CriptomoedaHoje = criptomoedaHoje;
             ContaCliente = contaCliente;
-
-            CriptoSaldo.Criptomoeda = CriptomoedaHoje.Criptomoeda.Nome;
-            Quantidade();
-        }
-
-
-        public void Quantidade()
-        {
-            if (Tipo == Enums.TipoTransacao.Compra)
-            {
-                Saldo.SaldoAtualRS -= Valor;
-                CriptoSaldo.Quantidade += Valor / CriptomoedaHoje.Valor; 
-            }
-            if (Tipo == Enums.TipoTransacao.Venda)
-            {
-                Saldo.SaldoAtualRS += Valor;
-                CriptoSaldo.Quantidade -= Valor / CriptomoedaHoje.Valor;
-            }
-            if (Tipo == Enums.TipoTransacao.Transferencia)
-            {
-                Saldo.SaldoAtualRS -= Valor;
-            }
         }
     }
 }

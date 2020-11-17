@@ -8,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using BlockTechMVC.Data;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using System.Web.Helpers;
 using System.Diagnostics;
 
 namespace BlockTechMVC.Controllers
