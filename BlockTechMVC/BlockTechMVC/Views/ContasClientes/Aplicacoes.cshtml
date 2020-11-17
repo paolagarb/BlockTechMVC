@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BlockTechMVC.Models.Transacao>
+﻿@*@model IEnumerable<BlockTechMVC.Models.Transacao>*@
+@model IEnumerable<BlockTechMVC.Models.Transacao>
 
 @{
     ViewData["Title"] = "Aplicações";
@@ -48,10 +49,10 @@ else
                 <th>
                     @Html.ActionLink("Quantidade", "Aplicacoes", new { sortOrder = ViewBag.Quantidade }, new { @class = "imgOrder" })
                 </th>
-                <th>
+                @*<th>
                     @Html.ActionLink("Data", "Aplicacoes", new { sortOrder = ViewBag.Data }, new { @class = "imgOrder" })
 
-                </th>
+                </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -71,9 +72,9 @@ else
                     <td>
                         @Html.DisplayFor(modelItem => item.CriptoSaldo.Quantidade)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.Data)
-                    </td>
+                    </td>*@
                 </tr>
             }
         </tbody>
