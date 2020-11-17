@@ -34,7 +34,7 @@ else
 
 <div class="table-responsive">
     <table class="table">
-        <caption>Lista de Transações</caption> 
+        <caption>Lista de Transações</caption>
         <thead>
             <tr>
                 <th>
@@ -50,43 +50,49 @@ else
                     @Html.DisplayNameFor(model => model.Tipo)
                 </th>
                 <th>
-                    @Html.ActionLink("Valor", "Index", new { sortOrder = ViewBag.Valor }, new { @class = "imgOrder" })
-                </th>
-                <th>
                     @Html.ActionLink("Criptomoeda", "Index", new { sortOrder = ViewBag.Criptomoeda }, new { @class = "imgOrder" })
                 </th>
                 <th>
-                    @Html.ActionLink("Quantidade", "Index", new { sortOrder = ViewBag.Quantidade }, new { @class = "imgOrder" })
+                    @Html.ActionLink("Valor", "Index", new { sortOrder = ViewBag.Valor }, new { @class = "imgOrder" })
                 </th>
+                <th>
+                        @Html.ActionLink("Quantidade", "Index", new { sortOrder = ViewBag.Quantidade }, new { @class = "imgOrder" })
+                    </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+               
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
                     <td>
-                        @Html.DisplayFor(modelItem => item.Data)
+                        @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
                     </td>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
-                        </td>
-                    }
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tipo)
-                    </td>
-                    <td>
-                        R$ @Html.DisplayFor(modelItem => item.Valor)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CriptomoedaHoje.Criptomoeda.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CriptoSaldo.Quantidade)
-                    </td>
-                </tr>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CriptomoedaHoje.Criptomoeda.Nome)
+                </td>
+                <td>
+                    R$ @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                @if (User.IsInRole("Admin") || (!User.IsInRole("Adimin")))
+                {
+                    var valor = item.Valor;
+                    var valorCriptomoedaData = item.CriptomoedaHoje.Valor;
+                    var total = (valor / valorCriptomoedaData).ToString("F6");
+                    <td> @total  </td>
+                }
+            </tr>
             }
         </tbody>
     </table>
