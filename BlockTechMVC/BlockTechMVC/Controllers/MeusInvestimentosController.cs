@@ -842,7 +842,6 @@ namespace BlockTechMVC.Controllers
 
             for (int i = dias; i >= 0; i--)
             {
-
                 DateTime diasTotal = DateTime.Today;
                 diasTotal = diasTotal.AddDays(-i);
                 DateTime data = diasTotal;

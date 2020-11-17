@@ -258,6 +258,37 @@ else
                 });
 
             });
+
+              $(document)
+            .ready(function () {
+
+                var ctx = document.getElementById('graficoPaxGold30').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @diasAdm30,
+                        datasets: [{
+                            data: @TotalAdm30,
+                            backgroundColor: 'rgba(250, 244, 15, 0.0)',
+                            borderColor: 'rgba(250, 244, 15, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            });
         </script>
 
     }
