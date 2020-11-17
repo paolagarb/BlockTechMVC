@@ -159,7 +159,6 @@ namespace BlockTechMVC.Controllers
             {
                 var user = User.Identity.Name;
 
-                ViewBag.Data = sortOrder == "Data" ? "Data_desc" : "Data";
                 ViewBag.Quantidade = sortOrder == "Quantidade" ? "Quantidade_desc" : "Quantidade";
                 ViewBag.Criptomoeda = sortOrder == "Criptomoeda" ? "Criptomoeda_desc" : "Criptomoeda";
 
@@ -196,12 +195,6 @@ namespace BlockTechMVC.Controllers
                                 break;
                             case "Nome":
                                 orderName = applicationDbContext.OrderBy(s => s.ContaCliente.ApplicationUser.Nome);
-                                break;
-                            case "Data":
-                                orderName = applicationDbContext.OrderBy(s => s.Data);
-                                break;
-                            case "Data_desc":
-                                orderName = applicationDbContext.OrderByDescending(s => s.Data);
                                 break;
                             case "Quantidade":
                                 orderName = applicationDbContext.OrderBy(s => s.CriptoSaldo.Quantidade);
@@ -264,45 +257,31 @@ namespace BlockTechMVC.Controllers
                 }
                 else
                 {
-                var usuario = _context.Transacao
+                var usuario = _context.CriptoSaldo
                     .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
                     .Include(t => t.ContaCliente)
-                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
-                    .Include(t => t.CriptoSaldo)
-                    .Where(t => t.CriptoSaldo.ContaCliente.ApplicationUser.UserName == user)
-                    .Include(t => t.CriptomoedaHoje)
-                    .Include(t => t.ContaCliente.ApplicationUser)
-                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
-                    .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                    .Include(t => t.Saldo)
-                    .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
+                    .Where(t => t.ContaCliente.ApplicationUser.UserName == user);
                 
                 if (sortOrder != null)
                 {
-                    var orderName = usuario.OrderBy(t => t.CriptomoedaHoje.Criptomoeda.Nome);
+                    var orderName = usuario.OrderBy(t => t.Criptomoeda);
 
                     switch (sortOrder)
                     {
-                        case "Data":
-                            orderName = usuario.OrderBy(s => s.Data);
-                            break;
-                        case "Data_desc":
-                            orderName = usuario.OrderByDescending(s => s.Data);
-                            break;
                         case "Quantidade":
-                            orderName = usuario.OrderBy(s => s.CriptoSaldo.Quantidade);
+                            orderName = usuario.OrderBy(s => s.Quantidade);
                             break;
                         case "Quantidade_desc":
-                            orderName = usuario.OrderByDescending(s => s.CriptoSaldo.Quantidade);
+                            orderName = usuario.OrderByDescending(s => s.Quantidade);
                             break;
                         case "Criptomoeda":
-                            orderName = usuario.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                            orderName = usuario.OrderBy(s => s.Criptomoeda);
                             break;
                         case "Criptomoeda_desc":
-                            orderName = usuario.OrderByDescending(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                            orderName = usuario.OrderByDescending(s => s.Criptomoeda);
                             break;
                         default:
-                            orderName = usuario.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                            orderName = usuario.OrderBy(s => s.Criptomoeda);
                             break;
                     };
                     return View(orderName.ToList());

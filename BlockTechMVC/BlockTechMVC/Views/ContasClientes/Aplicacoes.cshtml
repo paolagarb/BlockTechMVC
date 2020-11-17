@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<BlockTechMVC.Models.Transacao>*@
-@model IEnumerable<BlockTechMVC.Models.Transacao>
+﻿@model IEnumerable<BlockTechMVC.Models.CriptoSaldo>
 
 @{
     ViewData["Title"] = "Aplicações";
@@ -12,8 +11,10 @@
 {
     <form asp-controller="ContasClientes" asp-action="Aplicacoes" method="get">
         <p>
-            @Html.DropDownList("Busca", null, new { 
-           onchange = "document.location.href='/ContasClientes/Aplicacoes?Busca='+this.value;" })
+            @Html.DropDownList("Busca", null, new
+            {
+           onchange = "document.location.href='/ContasClientes/Aplicacoes?Busca='+this.value;"
+            })
 
             <input type="text" name="SearchString">
             <input type="submit" value="Filtrar" />
@@ -24,7 +25,7 @@ else
 {
     <form asp-controller="ContasClientes" asp-action="Aplicacoes" method="get">
         <p>
-            Criptomoeda: 
+            Criptomoeda:
             <input type="text" name="SearchString">
             <input type="submit" value="Filtrar" />
         </p>
@@ -49,10 +50,6 @@ else
                 <th>
                     @Html.ActionLink("Quantidade", "Aplicacoes", new { sortOrder = ViewBag.Quantidade }, new { @class = "imgOrder" })
                 </th>
-                @*<th>
-                    @Html.ActionLink("Data", "Aplicacoes", new { sortOrder = ViewBag.Data }, new { @class = "imgOrder" })
-
-                </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -67,14 +64,11 @@ else
                         </td>
                     }
                     <td>
-                        @Html.DisplayFor(modelItem => item.CriptoSaldo.Criptomoeda)
+                        @Html.DisplayFor(modelItem => item.Criptomoeda)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CriptoSaldo.Quantidade)
+                        @Html.DisplayFor(modelItem => item.Quantidade)
                     </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Data)
-                    </td>*@
                 </tr>
             }
         </tbody>
