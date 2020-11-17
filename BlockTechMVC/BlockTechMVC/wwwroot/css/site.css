@@ -152,3 +152,7 @@ body {
     border-radius: 10px;
     margin: 0 auto;
 }
+
+#graficoMes, #botaoSemana {
+    display: none;
+}

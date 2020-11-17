@@ -204,7 +204,7 @@ namespace BlockTechMVC.Controllers
                                  where criptomoedas.Nome == criptomoeda &&
                                  transacoes.Tipo.Equals(TipoTransacao.Compra)
                                  select transacoes.Valor).Sum();
-            
+
             var investimentosVenda = (from transacoes in _context.Transacao
                                       join conta in _context.ContaCliente
                                       on transacoes.ContaClienteId equals conta.Id
@@ -287,6 +287,20 @@ namespace BlockTechMVC.Controllers
             ViewBag.BitcoinInvestido = BitcoinInvestido;
 
             ViewBag.LucroOuPerdaAdm = (BitcoinValorRS - BitcoinInvestido).ToString("F2");
+
+
+            int primeiroInvestimento = DataPrimeiroInvestimento("Bitcoin", user);
+            if (primeiroInvestimento <= 30)
+            {
+                ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
+                ViewBag.ValorBitcoinMes = ValoresDias("Bitcoin", bitcoin, primeiroInvestimento);
+            } else
+            {
+                ViewBag.UltimoMes = Ultimos30Dias();
+                ViewBag.ValorBitcoinMes = Valores30Dias("Bitcoin", bitcoin);
+            }
+
+
 
             return View();
         }
@@ -634,6 +648,119 @@ namespace BlockTechMVC.Controllers
 
             return cripto * quantidadeCripto;
         }
+
+
+
+
+
+
+
+        //
+
+        public int DataPrimeiroInvestimento(string criptomoeda, string user)
+        {
+            var primeiraData = (from transacao in _context.Transacao
+                                join contacliente in _context.ContaCliente
+                                on transacao.ContaClienteId equals contacliente.Id
+                                join usuario in _context.ApplicationUser
+                                on contacliente.ApplicationUserID equals usuario.Id
+                                where usuario.UserName == user
+                                join criptohoje in _context.CriptomoedaHoje
+                                on transacao.CriptomoedaHojeId equals criptohoje.Id
+                                join cripto in _context.Criptomoeda
+                                on criptohoje.CriptomoedaId equals cripto.Id
+                                where cripto.Nome == criptomoeda
+                                orderby transacao.Data ascending
+                                select transacao.Data).FirstOrDefault();
+
+            DateTime hoje = DateTime.Today;
+
+            return hoje.Subtract(primeiraData).Days;
+        }
+
+
+        public List<int> UltimosDias(int dias) //retorno do DataPrimeiroInvestimento() 
+        {
+            var diasList = new List<int>();
+            DateTime diaAtual;
+
+            for (int i = dias; i >= 0; i--)
+            {
+                diaAtual = DateTime.Today;
+                diaAtual = diaAtual.AddDays(-i);
+                diasList.Add(diaAtual.Day);
+            }
+
+            return diasList;
+        }
+
+        public List<double> ValoresDias(string nome, double quantidadeTotalCriptomoeda, int dias) //dias = retorno do DataPrimeiroInvestimento() 
+        {
+            var valorList = new List<double>();
+
+            for (int i = dias; i >= 0; i--)
+            {
+
+                DateTime diasTotal = DateTime.Today;
+                diasTotal = diasTotal.AddDays(-i);
+                DateTime data = diasTotal;
+
+                var valor = (from coin in _context.Criptomoeda
+                             join criptohoje in _context.CriptomoedaHoje
+                             on coin.Id equals criptohoje.CriptomoedaId
+                             where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
+                             select criptohoje.Valor).Single();
+
+                var totalDia = (quantidadeTotalCriptomoeda * valor).ToString("F2");
+
+                valorList.Add(Convert.ToDouble(totalDia));
+            }
+
+            return valorList;
+        }
+
+        public List<int> Ultimos30Dias() 
+        {
+            var diasList = new List<int>();
+            DateTime diaAtual;
+
+            for (int i = 31; i >= 0; i--)
+            {
+                diaAtual = DateTime.Today;
+                diaAtual = diaAtual.AddDays(-i);
+                diasList.Add(diaAtual.Day);
+            }
+
+            return diasList;
+        }
+
+        public List<double> Valores30Dias(string nome, double quantidadeTotalCriptomoeda) 
+        {
+            var valorList = new List<double>();
+
+            for (int i = 31; i >= 0; i--)
+            {
+
+                DateTime diasTotal = DateTime.Today;
+                diasTotal = diasTotal.AddDays(-i);
+                DateTime data = diasTotal;
+
+                var valor = (from coin in _context.Criptomoeda
+                             join criptohoje in _context.CriptomoedaHoje
+                             on coin.Id equals criptohoje.CriptomoedaId
+                             where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
+                             select criptohoje.Valor).Single();
+
+                var totalDia = (quantidadeTotalCriptomoeda * valor).ToString("F2");
+
+                valorList.Add(Convert.ToDouble(totalDia));
+            }
+
+            return valorList;
+        }
+        //
+
+
 
         private bool TransacaoExists(int id)
         {
