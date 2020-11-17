@@ -29,9 +29,13 @@
         </dd>
     </dl>
 </div>
+@if (User.IsInRole("Admin")) 
+{
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-dark">Editar</a> 
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-dark">Editar</a>
 </div>
+}
+
 <div>
     <a asp-action="Index">Voltar</a>
 </div>
