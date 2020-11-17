@@ -29,8 +29,12 @@
     var PaxGoldValorRS = ViewBag.PaxGoldValorRS;
     var PaxGoldInvestido = ViewBag.PaxGoldInvestido;
 
-    var lucroOuPerdaAdm = Convert.ToDouble(ViewBag.LucroOuPerdaAdm);
+    var TotalAdmMes = ViewBag.ValorMesAdm;
+    var TotalAdm30 = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(TotalAdmMes));
+    var dias30ListAdm = ViewBag.UltimoMesAdm;
+    var diasAdm30 = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(dias30ListAdm));
 
+    var lucroOuPerdaAdm = Convert.ToDouble(ViewBag.LucroOuPerdaAdm);
 }
 
 @if (!User.IsInRole("Admin"))
@@ -201,10 +205,24 @@ else
         }
         <h5>Perda: R$ @lucroOuPerdaAdm</h5>
     }
+
+    <div id="botaoMes">
+        <button type="button" class="btn btn-light" onclick="TrocarGrafico()">Mensal</button>
+    </div>
+    <div id="botaoSemana">
+        <button type="button" class="btn btn-light" onclick="TrocarGraficoSemana()">Semanal</button>
+    </div>
+
     <br />
 
-    <canvas id="graficoPaxGold" width="400" height="150">
-    </canvas>
+    <div id="graficoSemana">
+        <canvas id="graficoPaxGold" width="400" height="150">
+        </canvas>
+    </div>
+    <div id="graficoMes">
+        <canvas id="graficoPaxGold30" width="400" height="150">
+        </canvas>
+    </div>
 
     @section Scripts {
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

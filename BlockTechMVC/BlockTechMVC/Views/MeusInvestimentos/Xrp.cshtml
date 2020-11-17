@@ -29,6 +29,11 @@
     var XrpValorRS = ViewBag.XrpValorRS;
     var XrpInvestido = ViewBag.XrpInvestido;
 
+    var TotalAdmMes = ViewBag.ValorMesAdm;
+    var TotalAdm30 = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(TotalAdmMes));
+    var dias30ListAdm = ViewBag.UltimoMesAdm;
+    var diasAdm30 = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(dias30ListAdm));
+
     var lucroOuPerdaAdm = Convert.ToDouble(ViewBag.LucroOuPerdaAdm);
 
 }
@@ -201,10 +206,25 @@ else
         }
         <h5>Perda: R$ @lucroOuPerdaAdm</h5>
     }
+
+    <div id="botaoMes">
+        <button type="button" class="btn btn-light" onclick="TrocarGrafico()">Mensal</button>
+    </div>
+    <div id="botaoSemana">
+        <button type="button" class="btn btn-light" onclick="TrocarGraficoSemana()">Semanal</button>
+    </div>
+
     <br />
 
-    <canvas id="graficoXrp" width="400" height="150">
-    </canvas>
+    <div id="graficoSemana">
+        <canvas id="graficoXrp" width="400" height="150">
+        </canvas>
+    </div>
+    <div id="graficoMes">
+        <canvas id="graficoXrp30" width="400" height="150">
+        </canvas>
+    </div>
+
 
     @section Scripts {
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -220,6 +240,37 @@ else
                         labels: @dias,
                         datasets: [{
                             data: @xrpTotalAdm,
+                            backgroundColor: 'rgba(35, 41, 47, 0.0)',
+                            borderColor: 'rgba(35, 41, 47, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: false
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            });
+
+                   $(document)
+            .ready(function () {
+
+                var ctx = document.getElementById('graficoXrp30').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @diasAdm30,
+                        datasets: [{
+                            data: @TotalAdm30,
                             backgroundColor: 'rgba(35, 41, 47, 0.0)',
                             borderColor: 'rgba(35, 41, 47, 1)',
                             borderWidth: 1

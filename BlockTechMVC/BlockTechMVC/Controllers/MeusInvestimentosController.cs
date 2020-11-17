@@ -299,6 +299,17 @@ namespace BlockTechMVC.Controllers
                 ViewBag.ValorBitcoinMes = Valores30Dias("Bitcoin", bitcoin);
             }
 
+            int primeiroInvestimentoGeralAdm = DataPrimeiroInvestimentoAdm("Bitcoin");
+            if (primeiroInvestimentoGeralAdm <= 30)
+            {
+                ViewBag.UltimoMesAdm = UltimosDias(primeiroInvestimentoGeralAdm);
+                ViewBag.ValorBitcoinMesAdm = ValoresDias("Bitcoin", Bitcoin, primeiroInvestimentoGeralAdm);
+            } else
+            {
+                ViewBag.UltimoMesAdm = Ultimos30Dias();
+                ViewBag.ValorBitcoinMesAdm = Valores30Dias("Bitcoin", Bitcoin);
+            }
+
             return View();
         }
 
@@ -360,6 +371,18 @@ namespace BlockTechMVC.Controllers
             {
                 ViewBag.UltimoMes = Ultimos30Dias();
                 ViewBag.ValorMes = Valores30Dias("Ethereum", ethereum);
+            }
+
+            int primeiroInvestimentoGeralAdm = DataPrimeiroInvestimentoAdm("Ethereum");
+            if (primeiroInvestimentoGeralAdm <= 30)
+            {
+                ViewBag.UltimoMesAdm = UltimosDias(primeiroInvestimentoGeralAdm);
+                ViewBag.ValorMesAdm = ValoresDias("Ethereum", Ethereum, primeiroInvestimentoGeralAdm);
+            }
+            else
+            {
+                ViewBag.UltimoMesAdm = Ultimos30Dias();
+                ViewBag.ValorMesAdm = Valores30Dias("Ethereum", Ethereum);
             }
 
             return View();
@@ -424,6 +447,18 @@ namespace BlockTechMVC.Controllers
                 ViewBag.ValorMes = Valores30Dias("Bitcoin Cash", bitcoinCash);
             }
 
+            int primeiroInvestimentoGeralAdm = DataPrimeiroInvestimentoAdm("Bitcoin Cash");
+            if (primeiroInvestimentoGeralAdm <= 30)
+            {
+                ViewBag.UltimoMesAdm = UltimosDias(primeiroInvestimentoGeralAdm);
+                ViewBag.ValorMesAdm = ValoresDias("Bitcoin Cash", BitcoinCash, primeiroInvestimentoGeralAdm);
+            }
+            else
+            {
+                ViewBag.UltimoMesAdm = Ultimos30Dias();
+                ViewBag.ValorMesAdm = Valores30Dias("Bitcoin Cash", BitcoinCash);
+            }
+
             return View();
         }
 
@@ -484,6 +519,18 @@ namespace BlockTechMVC.Controllers
             {
                 ViewBag.UltimoMes = Ultimos30Dias();
                 ViewBag.ValorMes = Valores30Dias("XRP", xrp);
+            }
+
+            int primeiroInvestimentoGeralAdm = DataPrimeiroInvestimentoAdm("XRP");
+            if (primeiroInvestimentoGeralAdm <= 30)
+            {
+                ViewBag.UltimoMesAdm = UltimosDias(primeiroInvestimentoGeralAdm);
+                ViewBag.ValorMesAdm = ValoresDias("XRP", Xrp, primeiroInvestimentoGeralAdm);
+            }
+            else
+            {
+                ViewBag.UltimoMesAdm = Ultimos30Dias();
+                ViewBag.ValorMesAdm = Valores30Dias("XRP", Xrp);
             }
 
             return View();
@@ -548,6 +595,18 @@ namespace BlockTechMVC.Controllers
                 ViewBag.ValorMes = Valores30Dias("PAX Gold", paxGold);
             }
 
+            int primeiroInvestimentoGeralAdm = DataPrimeiroInvestimentoAdm("PAX Gold");
+            if (primeiroInvestimentoGeralAdm <= 30)
+            {
+                ViewBag.UltimoMesAdm = UltimosDias(primeiroInvestimentoGeralAdm);
+                ViewBag.ValorMesAdm = ValoresDias("PAX Gold", PaxGold, primeiroInvestimentoGeralAdm);
+            }
+            else
+            {
+                ViewBag.UltimoMesAdm = Ultimos30Dias();
+                ViewBag.ValorMesAdm = Valores30Dias("PAX Gold", PaxGold);
+            }
+
             return View();
         }
 
@@ -608,6 +667,18 @@ namespace BlockTechMVC.Controllers
             {
                 ViewBag.UltimoMes = Ultimos30Dias();
                 ViewBag.ValorMes = Valores30Dias("Litecoin", litecoin);
+            }
+
+            int primeiroInvestimentoGeralAdm = DataPrimeiroInvestimentoAdm("Litecoin");
+            if (primeiroInvestimentoGeralAdm <= 30)
+            {
+                ViewBag.UltimoMesAdm = UltimosDias(primeiroInvestimentoGeralAdm);
+                ViewBag.ValorMesAdm = ValoresDias("Litecoin", Litecoin, primeiroInvestimentoGeralAdm);
+            }
+            else
+            {
+                ViewBag.UltimoMesAdm = Ultimos30Dias();
+                ViewBag.ValorMesAdm = Valores30Dias("Litecoin", Litecoin);
             }
 
             return View();
@@ -707,6 +778,8 @@ namespace BlockTechMVC.Controllers
             return cripto * quantidadeCripto;
         }
 
+        //
+
         public int DataPrimeiroInvestimento(string criptomoeda, string user)
         {
             var primeiraData = (from transacao in _context.Transacao
@@ -728,8 +801,27 @@ namespace BlockTechMVC.Controllers
             return hoje.Subtract(primeiraData).Days;
         }
 
+        public int DataPrimeiroInvestimentoAdm(string criptomoeda)
+        {
+            var primeiraData = (from transacao in _context.Transacao
+                                join contacliente in _context.ContaCliente
+                                on transacao.ContaClienteId equals contacliente.Id
+                                join usuario in _context.ApplicationUser
+                                on contacliente.ApplicationUserID equals usuario.Id
+                                join criptohoje in _context.CriptomoedaHoje
+                                on transacao.CriptomoedaHojeId equals criptohoje.Id
+                                join cripto in _context.Criptomoeda
+                                on criptohoje.CriptomoedaId equals cripto.Id
+                                where cripto.Nome == criptomoeda
+                                orderby transacao.Data ascending
+                                select transacao.Data).FirstOrDefault();
 
-        public List<int> UltimosDias(int dias) //retorno do DataPrimeiroInvestimento() 
+            DateTime hoje = DateTime.Today;
+
+            return hoje.Subtract(primeiraData).Days;
+        }
+
+        public List<int> UltimosDias(int dias) //retorno do DataPrimeiroInvestimento() //Mesmo ara ADM
         {
             var diasList = new List<int>();
             DateTime diaAtual;
