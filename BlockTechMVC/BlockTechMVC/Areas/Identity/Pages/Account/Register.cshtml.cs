@@ -96,7 +96,7 @@ namespace BlockTechMVC.Areas.Identity.Pages.Account
             public string UserName { get; set; }
 
             [Required(ErrorMessage="O campo 'Senha' está vazio")]
-            [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres", MinimumLength = 6)]
+            [StringLength(12, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
             public string Password { get; set; }

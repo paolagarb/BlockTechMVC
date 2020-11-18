@@ -174,13 +174,6 @@ namespace BlockTechMVC.Controllers
 
                 ViewBag.Busca = itens;
 
-                //var applicationDbContext = _context.Transacao
-                //    .Include(t => t.ContaCliente)
-                //    .Include(t => t.CriptoSaldo)
-                //    .Include(t => t.CriptomoedaHoje)
-                //    .Include(t => t.ContaCliente.ApplicationUser)
-                //    .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                //    .Include(t => t.Saldo);
                 var applicationDbContext = _context.CriptoSaldo
                     .Include(t => t.ContaCliente)
                     .Include(t => t.ContaCliente.ApplicationUser);
@@ -218,7 +211,6 @@ namespace BlockTechMVC.Controllers
 
                 if (Busca != null)
                 {
-
                     itens.Where(i => i.Value == Busca.ToString()).First().Selected = true;
                 }
                 if (Busca == 1)
@@ -282,14 +274,10 @@ namespace BlockTechMVC.Controllers
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    var criptoSelecionada = _context.Transacao
-                        .Include(t => t.ContaCliente)
-                        .Include(t => t.CriptoSaldo)
-                        .Include(t => t.CriptomoedaHoje)
-                        .Include(t => t.ContaCliente.ApplicationUser)
-                        .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                        .Include(t => t.Saldo)
-                        .Where(t => t.CriptomoedaHoje.Criptomoeda.Nome.Contains(searchString) && t.Saldo.ContaCliente.ApplicationUser.UserName == user);
+                    var criptoSelecionada = _context.CriptoSaldo
+                       .Include(t => t.ContaCliente)
+                       .Include(t => t.ContaCliente.ApplicationUser)
+                       .Where(t => t.Criptomoeda.Contains(searchString) && (t.ContaCliente.ApplicationUser.UserName == user));
 
                     return View(criptoSelecionada.ToList());
                 }
