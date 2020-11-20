@@ -1,31 +1,59 @@
 ﻿
 @{
     ViewData["Title"] = "Simulação";
-    var total = ViewBag.Total;
+    var total = ViewBag.Total + " " + ViewBag.Simbolo;
+    var totalVenda = "R$" + ViewBag.TotalVenda;
 }
 <br />
 <h1 class="text-center">@ViewData["Title"]</h1>
 <br />
-<div class="text-center bg-light-d">
-    <form asp-controller="CriptomoedasHoje" asp-action="Simulacao" method="get">
-        <br />
-        <p>
-            Criptomoeda
-            @Html.DropDownList("Busca", null, new
-       {
-           onchange = "document.location.href='/CriptomoedasHoje/Simulacao?Busca='+this.value;"
-       })
-        </p>
-        <p>
-            Valor
-            <input type="text" name="SearchString">
-        </p>
-        <p>
-            <input type="submit" value="Simular" class="btn btn-dark" />
-        </p>
-        <br />
-        <h4>Total de criptomoeda </h4><br />
-        <h4>@total</h4>
-        <br />
-    </form>
+<div class="text-center d-flex justify-content-center flex-wrap">
+    <div class="bg-light-d my-2">
+        <form asp-controller="CriptomoedasHoje" asp-action="Simulacao" method="get">
+            <br />
+            <h3>Compra</h3>
+            <p>
+                Criptomoeda
+                @Html.DropDownList("Busca", null, new
+           {
+               onchange = "document.location.href='/CriptomoedasHoje/Simulacao?Busca='+this.value;"
+           })
+            </p>
+            <p>
+                Valor
+                <input type="text" name="SearchString">
+            </p>
+            <p>
+                <input type="submit" value="Simular" class="btn btn-dark" />
+            </p>
+            <br />
+            <h4>Total</h4>
+            <h5>@total</h5>
+            <br />
+        </form>
+    </div>
+    <div class="bg-light-d">
+        <form asp-controller="CriptomoedasHoje" asp-action="Simulacao" method="get">
+            <br />
+            <h3>Venda</h3>
+            <p>
+                Criptomoeda
+                @Html.DropDownList("BuscaVenda", null, new
+           {
+               onchange = "document.location.href='/CriptomoedasHoje/Simulacao?BuscaVenda='+this.value;"
+           })
+            </p>
+            <p>
+                Quantidade
+                <input type="text" name="SearchString">
+            </p>
+            <p>
+                <input type="submit" value="Simular" class="btn btn-dark"/>
+            </p>
+            <br />
+            <h4>Total</h4>
+            <h5 id="total">@totalVenda</h5>
+            <br />
+        </form>
+    </div>
 </div>

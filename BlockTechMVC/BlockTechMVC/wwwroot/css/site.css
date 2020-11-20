@@ -153,6 +153,6 @@ body {
     margin: 0 auto;
 }
 
-#graficoMes, #botaoSemana {
+#graficoMes, #botaoSemana{
     display: none;
 }
