@@ -18,6 +18,7 @@ namespace BlockTechMVC.Controllers
             _context = context;
         }
 
+        [Route("investimentos")]
         // GET: MeusInvestimentos
         public IActionResult Index()
         {
@@ -236,6 +237,7 @@ namespace BlockTechMVC.Controllers
             return saldoNaoInvestido;
         }
 
+        [Route("investimentos/bitcoin")]
         public ActionResult Bitcoin()
         {
             var user = User.Identity.Name;
@@ -319,6 +321,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("investimentos/ethereum")]
         public ActionResult Ethereum()
         {
             var user = User.Identity.Name;
@@ -405,6 +408,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("investimentos/bitcoin-cash")]
         public ActionResult BitcoinCash()
         {
             var user = User.Identity.Name;
@@ -488,6 +492,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("investimentos/xrp")]
         public ActionResult Xrp()
         {
             var user = User.Identity.Name;
@@ -571,6 +576,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("investimentos/pax-gold")]
         public ActionResult PaxGold()
         {
             var user = User.Identity.Name;
@@ -654,6 +660,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("investimentos/litecoin")]
         public ActionResult Litecoin()
         {
             var user = User.Identity.Name;

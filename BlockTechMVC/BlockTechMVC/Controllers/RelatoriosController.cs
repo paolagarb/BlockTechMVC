@@ -17,6 +17,7 @@ namespace BlockTechMVC.Controllers
             _context = context;
         }
 
+        [Route("relatorios")]
         // GET: Relatorios
         public ActionResult Index()
         {
@@ -41,6 +42,7 @@ namespace BlockTechMVC.Controllers
             return criptomoeda;
         }
 
+        [Route("relatorios/bitcoin")]
         public ActionResult Bitcoin()
         {
             ViewBag.Dias = Ultimos7Dias();
@@ -49,6 +51,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/bitcoin-mes")]
         public ActionResult Bitcoin30()
         {
             ViewBag.Dias = Ultimos30Dias();
@@ -57,6 +60,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/ethereum")]
         public ActionResult Ethereum()
         {
             ViewBag.Dias = Ultimos7Dias();
@@ -65,6 +69,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/ethereum-mes")]
         public ActionResult Ethereum30()
         {
             ViewBag.Dias = Ultimos30Dias();
@@ -73,6 +78,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/bitcoin-cash")]
         public ActionResult BitcoinCash()
         {
             ViewBag.Dias = Ultimos7Dias();
@@ -81,6 +87,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/bitcoin-cash-mes")]
         public ActionResult BitcoinCash30()
         {
             ViewBag.Dias = Ultimos30Dias();
@@ -89,6 +96,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/xrp")]
         public ActionResult Xrp()
         {
             ViewBag.Dias = Ultimos7Dias();
@@ -97,6 +105,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/xrp-mes")]
         public ActionResult Xrp30()
         {
             ViewBag.Dias = Ultimos30Dias();
@@ -105,6 +114,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/pax-gold")]
         public ActionResult PaxGold()
         {
             ViewBag.Dias = Ultimos7Dias();
@@ -113,6 +123,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/pax-gold-mes")]
         public ActionResult PaxGold30()
         {
             ViewBag.Dias = Ultimos30Dias();
@@ -121,6 +132,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/litecoin")]
         public ActionResult Litecoin()
         {
             ViewBag.Dias = Ultimos7Dias();
@@ -129,6 +141,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("relatorios/litecoin-mes")]
         public ActionResult Litecoin30()
         {
             ViewBag.Dias = Ultimos30Dias();
@@ -137,8 +150,9 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
-        public List<int> Ultimos7Dias() { 
-     
+        public List<int> Ultimos7Dias()
+        {
+
             var diasList = new List<int>();
 
             DateTime diasSete = DateTime.Today;
@@ -151,9 +165,10 @@ namespace BlockTechMVC.Controllers
             }
             return diasList;
         }
-        
-        public List<int> Ultimos30Dias() { 
-     
+
+        public List<int> Ultimos30Dias()
+        {
+
             var diasList = new List<int>();
 
             DateTime diasTrinta = DateTime.Today;
@@ -209,6 +224,7 @@ namespace BlockTechMVC.Controllers
             return valorList;
         }
 
+        [Route("relatorios/semanal")]
         public IActionResult Semanal()
         {
             ViewBag.Dias = Ultimos7Dias();
@@ -219,8 +235,9 @@ namespace BlockTechMVC.Controllers
             ViewBag.PaxGold = Porcentagem("PAX Gold");
             ViewBag.Litecoin = Porcentagem("Litecoin");
             return View();
-        } 
-        
+        }
+
+        [Route("relatorios/mensal")]
         public IActionResult Mensal()
         {
             ViewBag.Dias = Ultimos30Dias();
@@ -244,7 +261,7 @@ namespace BlockTechMVC.Controllers
                          where coin.Nome == nome && criptohoje.Data.Date.Equals(date.Date)
                          select criptohoje.Valor).Single();
 
-            var calculo = 100.0; 
+            var calculo = 100.0;
             var porcentagem = new List<double>();
 
             for (int i = 7; i >= 0; i--)
@@ -254,10 +271,10 @@ namespace BlockTechMVC.Controllers
                 DateTime data = dia;
 
                 var valorDia = (from coin in _context.Criptomoeda
-                             join criptohoje in _context.CriptomoedaHoje
-                             on coin.Id equals criptohoje.CriptomoedaId
-                             where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
-                             select criptohoje.Valor).Single();
+                                join criptohoje in _context.CriptomoedaHoje
+                                on coin.Id equals criptohoje.CriptomoedaId
+                                where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
+                                select criptohoje.Valor).Single();
 
                 var regra3 = ((valorDia * calculo) / valor);
                 var resultado = regra3 - 100;
@@ -270,7 +287,7 @@ namespace BlockTechMVC.Controllers
 
             return porcentagem;
         }
-        
+
         public List<double> PorcentagemTrinta(string nome)
         {
             var date = DateTime.Today;
@@ -282,7 +299,7 @@ namespace BlockTechMVC.Controllers
                          where coin.Nome == nome && criptohoje.Data.Date.Equals(date.Date)
                          select criptohoje.Valor).Single();
 
-            var calculo = 100.0; 
+            var calculo = 100.0;
             var porcentagem = new List<double>();
 
             for (int i = 30; i >= 0; i--)
@@ -292,10 +309,10 @@ namespace BlockTechMVC.Controllers
                 DateTime data = dia;
 
                 var valorDia = (from coin in _context.Criptomoeda
-                             join criptohoje in _context.CriptomoedaHoje
-                             on coin.Id equals criptohoje.CriptomoedaId
-                             where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
-                             select criptohoje.Valor).Single();
+                                join criptohoje in _context.CriptomoedaHoje
+                                on coin.Id equals criptohoje.CriptomoedaId
+                                where coin.Nome == nome && criptohoje.Data.Date.Equals(data.Date)
+                                select criptohoje.Valor).Single();
 
                 var regra3 = ((valorDia * calculo) / valor);
                 var resultado = regra3 - 100;

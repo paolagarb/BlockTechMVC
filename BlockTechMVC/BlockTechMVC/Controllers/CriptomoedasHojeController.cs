@@ -22,6 +22,7 @@ namespace BlockTechMVC.Controllers
             _context = context;
         }
 
+        [Route("criptomoedas-valores")]
         // GET: CriptomoedasHoje
         public async Task<IActionResult> Index(DateTime searchDate, string sortOrder)
         {
@@ -72,6 +73,7 @@ namespace BlockTechMVC.Controllers
             }
         }
 
+        [Route("criptomoedas-valores/detalhes")]
         // GET: CriptomoedasHoje/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -91,6 +93,7 @@ namespace BlockTechMVC.Controllers
             return View(criptomoedaHoje);
         }
 
+        [Route("criptomoedas-valores/adicionar")]
         // GET: CriptomoedasHoje/Create
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
@@ -100,6 +103,7 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
+        [Route("criptomoedas-valores/adicionar")]
         // POST: CriptomoedasHoje/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -124,6 +128,7 @@ namespace BlockTechMVC.Controllers
             }
         }
 
+        [Route("criptomoedas-valores/editar")]
         // GET: CriptomoedasHoje/Edit/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
@@ -144,6 +149,7 @@ namespace BlockTechMVC.Controllers
             return View(criptomoedaHoje);
         }
 
+        [Route("criptomoedas-valores/editar")]
         // POST: CriptomoedasHoje/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -181,6 +187,7 @@ namespace BlockTechMVC.Controllers
             return View(criptomoedaHoje);
         }
 
+        [Route("criptomoedas-valores/deletar")]
         // GET: CriptomoedasHoje/Delete/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
@@ -201,6 +208,7 @@ namespace BlockTechMVC.Controllers
             return View(criptomoedaHoje);
         }
 
+        [Route("criptomoedas-valores/deletar")]
         // POST: CriptomoedasHoje/Delete/5
         [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
@@ -229,6 +237,7 @@ namespace BlockTechMVC.Controllers
             return View(viewModel);
         }
 
+        [Route("simulacao")]
         public IActionResult Simulacao(string searchString, int? Busca, int? BuscaVenda)
         {
             List<SelectListItem> itens = new List<SelectListItem>();

@@ -22,6 +22,7 @@ namespace BlockTechMVC.Controllers
             _context = context;
         }
 
+        [Route("criptomoedas")]
         // GET: Criptomoedas
         public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
@@ -48,6 +49,7 @@ namespace BlockTechMVC.Controllers
             return View(await criptomoedas.ToListAsync());
         }
      
+        [Route("criptomoedas/detalhes")]
         // GET: Criptomoedas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -66,6 +68,7 @@ namespace BlockTechMVC.Controllers
             return View(criptomoeda);
         }
 
+        [Route("criptomoedas/adicionar")]
         // GET: Criptomoedas/Create
         public IActionResult Create()
         {
@@ -91,6 +94,7 @@ namespace BlockTechMVC.Controllers
             return View(criptomoeda);
         }
 
+        [Route("criptomoedas/editar")]
         // GET: Criptomoedas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -107,6 +111,7 @@ namespace BlockTechMVC.Controllers
             return View(criptomoeda);
         }
 
+        [Route("criptomoedas/editar")]
         // POST: Criptomoedas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -140,35 +145,6 @@ namespace BlockTechMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(criptomoeda);
-        }
-
-        // GET: Criptomoedas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction(nameof(Error), new { message = "Id não encontrado!" });
-            }
-
-            var criptomoeda = await _context.Criptomoeda
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (criptomoeda == null)
-            {
-                return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-            }
-
-            return View(criptomoeda);
-        }
-
-        // POST: Criptomoedas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var criptomoeda = await _context.Criptomoeda.FindAsync(id);
-            _context.Criptomoeda.Remove(criptomoeda);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool CriptomoedaExists(int id)

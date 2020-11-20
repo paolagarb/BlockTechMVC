@@ -22,6 +22,7 @@ namespace BlockTechMVC.Controllers
             _context = context;
         }
 
+        [Route("conta")]
         // GET: ContasClientes
         public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
@@ -101,6 +102,7 @@ namespace BlockTechMVC.Controllers
             }
         }
 
+        [Route("conta/detalhes")]
         // GET: ContasClientes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -146,6 +148,7 @@ namespace BlockTechMVC.Controllers
             return _context.Transacao.Any(e => e.Id == id);
         }
 
+        [Route("aplicacoes")]
         public async Task<IActionResult> Aplicacoes(int? id, string searchString, int? Busca, string sortOrder)
         {
             var user = User.Identity.Name;
