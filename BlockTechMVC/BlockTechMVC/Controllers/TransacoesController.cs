@@ -71,12 +71,6 @@ namespace BlockTechMVC.Controllers
                         case "Data_desc":
                             orderName = applicationDbContext.OrderByDescending(s => s.Data);
                             break;
-                        case "Quantidade":
-                            orderName = applicationDbContext.OrderBy(s => s.CriptoSaldo.Quantidade);
-                            break;
-                        case "Quantidade_desc":
-                            orderName = applicationDbContext.OrderByDescending(s => s.CriptoSaldo.Quantidade);
-                            break;
                         case "Criptomoeda":
                             orderName = applicationDbContext.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
                             break;

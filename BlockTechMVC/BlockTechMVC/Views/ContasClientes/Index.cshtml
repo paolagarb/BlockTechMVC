@@ -63,10 +63,9 @@
                 </th>
                 @if (User.IsInRole("Admin"))
                 {
-                    <th>
-                        @Html.ActionLink("Saldo", "Index", new { sortOrder = ViewBag.ValueSortParm }, new { @class = "imgOrder" })
-
-                    </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaldoAtualRS)
+            </th>
                 }
                 else
                 {

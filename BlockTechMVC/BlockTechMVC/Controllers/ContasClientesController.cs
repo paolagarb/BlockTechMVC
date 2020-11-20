@@ -53,7 +53,6 @@ namespace BlockTechMVC.Controllers
             if (user == "Administrador")
             {
                 ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
-                ViewBag.ValueSortParm = sortOrder == "Valor" ? "Valor_desc" : "Valor";
 
                 var application = _context.Saldo
                     .Include(t => t.ContaCliente)
@@ -70,12 +69,6 @@ namespace BlockTechMVC.Controllers
                             break;
                         case "Nome_desc":
                             usuario = application.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
-                            break;
-                        case "Valor_desc":
-                            usuario = application.OrderByDescending(c => c.SaldoAtualRS);
-                            break;
-                        case "Valor":
-                            usuario = application.OrderBy(c => c.SaldoAtualRS);
                             break;
                         default:
                             usuario = application.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
@@ -162,7 +155,6 @@ namespace BlockTechMVC.Controllers
 
             if (user == "Administrador")
             {
-
                 ViewBag.Nome = sortOrder == "Nome" ? "Nome_desc" : "Nome";
 
                 List<SelectListItem> itens = new List<SelectListItem>();
@@ -280,7 +272,6 @@ namespace BlockTechMVC.Controllers
 
                     return View(criptoSelecionada.ToList());
                 }
-
                 return View(await usuario.ToListAsync());
 
             }
@@ -293,13 +284,11 @@ namespace BlockTechMVC.Controllers
                 Message = message,
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             };
-
             return View(viewModel);
         }
 
         public double SaldoTotal(string user)
         {
-
             MeusInvestimentosController investimentos = new MeusInvestimentosController(_context);
             var saldoSemInvestimento = investimentos.SaldoSemInvestimento(user);
             double bitcoin = investimentos.QuantidadeTotalCriptomoeda("Bitcoin", user);

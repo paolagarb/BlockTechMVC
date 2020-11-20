@@ -56,8 +56,10 @@ else
                     @Html.ActionLink("Valor", "Index", new { sortOrder = ViewBag.Valor }, new { @class = "imgOrder" })
                 </th>
                 <th>
-                        @Html.ActionLink("Quantidade", "Index", new { sortOrder = ViewBag.Quantidade }, new { @class = "imgOrder" })
-                    </th>
+                    @Html.DisplayNameFor(model => model.CriptoSaldo.Quantidade)
+
+                    @*@Html.ActionLink("Quantidade", "Index", new { sortOrder = ViewBag.Quantidade }, new { @class = "imgOrder" })*@
+                </th>
                 <th></th>
             </tr>
         </thead>
