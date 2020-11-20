@@ -251,9 +251,6 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerda = (saldoTotalBitcoin - valorInvestidoBitcoin).ToString("F2");
 
-            ViewBag.ValorBitcoin7Dias = Valores7Dias("Bitcoin", bitcoin);
-            ViewBag.Ultimos7Dias = Ultimos7Dias();
-
             double valorInvestidoEthereum = ValorInvestido("Ethereum", user);
             ViewBag.ValorInvestidoEthereum = valorInvestidoEthereum.ToString("F2");
 
@@ -284,11 +281,24 @@ namespace BlockTechMVC.Controllers
             ViewBag.LucroOuPerdaAdm = (BitcoinValorRS - BitcoinInvestido).ToString("F2");
 
             int primeiroInvestimento = DataPrimeiroInvestimento("Bitcoin", user);
+
+            if (primeiroInvestimento < 7)
+            {
+                ViewBag.Ultimos7Dias = UltimosDias(primeiroInvestimento);
+                ViewBag.ValorBitcoin7Dias = ValoresDias("Bitcoin", bitcoin, primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.ValorBitcoin7Dias = Valores7Dias("Bitcoin", bitcoin);
+                ViewBag.Ultimos7Dias = Ultimos7Dias();
+            }
+
             if (primeiroInvestimento <= 30)
             {
                 ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
                 ViewBag.ValorBitcoinMes = ValoresDias("Bitcoin", bitcoin, primeiroInvestimento);
-            } else
+            }
+            else
             {
                 ViewBag.UltimoMes = Ultimos30Dias();
                 ViewBag.ValorBitcoinMes = Valores30Dias("Bitcoin", bitcoin);
@@ -299,7 +309,8 @@ namespace BlockTechMVC.Controllers
             {
                 ViewBag.UltimoMesAdm = UltimosDias(primeiroInvestimentoGeralAdm);
                 ViewBag.ValorBitcoinMesAdm = ValoresDias("Bitcoin", Bitcoin, primeiroInvestimentoGeralAdm);
-            } else
+            }
+            else
             {
                 ViewBag.UltimoMesAdm = Ultimos30Dias();
                 ViewBag.ValorBitcoinMesAdm = Valores30Dias("Bitcoin", Bitcoin);
@@ -323,8 +334,7 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerda = (saldoTotalEthereum - valorInvestidoEthereum).ToString("F2");
 
-            ViewBag.ValorEthereum7Dias = Valores7Dias("Ethereum", ethereum);
-            ViewBag.Ultimos7Dias = Ultimos7Dias();
+
 
             double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
             ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
@@ -355,8 +365,20 @@ namespace BlockTechMVC.Controllers
             ViewBag.EthereumInvestido = EthereumInvestido;
 
             ViewBag.LucroOuPerdaAdm = (EthereumValorRS - EthereumInvestido).ToString("F2");
-            
+
             int primeiroInvestimento = DataPrimeiroInvestimento("Ethereum", user);
+
+            if (primeiroInvestimento < 7)
+            {
+                ViewBag.ValorEthereum7Dias = ValoresDias("Ethereum", ethereum, primeiroInvestimento);
+                ViewBag.Ultimos7Dias = UltimosDias(primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.ValorEthereum7Dias = Valores7Dias("Ethereum", ethereum);
+                ViewBag.Ultimos7Dias = Ultimos7Dias();
+            }
+
             if (primeiroInvestimento <= 30)
             {
                 ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
@@ -398,9 +420,6 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerda = (saldoTotalBitcoinCash - valorInvestidoBitcoinCash).ToString("F2");
 
-            ViewBag.ValorBitcoinCash7Dias = Valores7Dias("Bitcoin Cash", bitcoinCash);
-            ViewBag.Ultimos7Dias = Ultimos7Dias();
-
             double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
             ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
 
@@ -431,6 +450,18 @@ namespace BlockTechMVC.Controllers
             ViewBag.LucroOuPerdaAdm = (BitcoinCashValorRS - BitcoinCashInvestido).ToString("F2");
 
             int primeiroInvestimento = DataPrimeiroInvestimento("Bitcoin Cash", user);
+
+            if (primeiroInvestimento < 7)
+            {
+                ViewBag.ValorBitcoinCash7Dias = ValoresDias("Bitcoin Cash", bitcoinCash, primeiroInvestimento);
+                ViewBag.Ultimos7Dias = UltimosDias(primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.ValorBitcoinCash7Dias = Valores7Dias("Bitcoin Cash", bitcoinCash);
+                ViewBag.Ultimos7Dias = Ultimos7Dias();
+            }
+
             if (primeiroInvestimento <= 30)
             {
                 ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
@@ -472,9 +503,6 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerda = (saldoTotalXrp - valorInvestidoXrp).ToString("F2");
 
-            ViewBag.ValorXrp7Dias = Valores7Dias("XRP", xrp);
-            ViewBag.Ultimos7Dias = Ultimos7Dias();
-
             double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
             ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
 
@@ -505,6 +533,18 @@ namespace BlockTechMVC.Controllers
             ViewBag.LucroOuPerdaAdm = (XrpValorRS - XrpInvestido).ToString("F2");
 
             int primeiroInvestimento = DataPrimeiroInvestimento("XRP", user);
+
+            if (primeiroInvestimento < 7)
+            {
+                ViewBag.ValorXrp7Dias = ValoresDias("XRP", xrp, primeiroInvestimento);
+                ViewBag.Ultimos7Dias = UltimosDias(primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.ValorXrp7Dias = Valores7Dias("XRP", xrp);
+                ViewBag.Ultimos7Dias = Ultimos7Dias();
+            }
+
             if (primeiroInvestimento <= 30)
             {
                 ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
@@ -546,9 +586,6 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerda = (saldoTotalPaxGold - valorInvestidoPaxGold).ToString("F2");
 
-            ViewBag.ValorPaxGold7Dias = Valores7Dias("PAX Gold", paxGold);
-            ViewBag.Ultimos7Dias = Ultimos7Dias();
-
             double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
             ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
 
@@ -579,6 +616,18 @@ namespace BlockTechMVC.Controllers
             ViewBag.LucroOuPerdaAdm = (PaxGoldValorRS - PaxGoldInvestido).ToString("F2");
 
             int primeiroInvestimento = DataPrimeiroInvestimento("PAX Gold", user);
+
+            if (primeiroInvestimento < 7)
+            {
+                ViewBag.ValorPaxGold7Dias = ValoresDias("PAX Gold", paxGold, primeiroInvestimento);
+                ViewBag.Ultimos7Dias = UltimosDias(primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.ValorPaxGold7Dias = Valores7Dias("PAX Gold", paxGold);
+                ViewBag.Ultimos7Dias = Ultimos7Dias();
+            }
+
             if (primeiroInvestimento <= 30)
             {
                 ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
@@ -620,9 +669,6 @@ namespace BlockTechMVC.Controllers
 
             ViewBag.LucroOuPerda = (saldoTotalLitecoin - valorInvestidoLitecoin).ToString("F2");
 
-            ViewBag.ValorLitecoin7Dias = Valores7Dias("Litecoin", litecoin);
-            ViewBag.Ultimos7Dias = Ultimos7Dias();
-
             double valorInvestidoBitcoin = ValorInvestido("Bitcoin", user);
             ViewBag.ValorInvestidoBitcoin = valorInvestidoBitcoin.ToString("F2");
 
@@ -653,6 +699,18 @@ namespace BlockTechMVC.Controllers
             ViewBag.LucroOuPerdaAdm = (LitecoinValorRS - LitecoinInvestido).ToString("F2");
 
             int primeiroInvestimento = DataPrimeiroInvestimento("Litecoin", user);
+
+            if (primeiroInvestimento < 7)
+            {
+                ViewBag.ValorLitecoin7Dias = ValoresDias("Litecoin", litecoin, primeiroInvestimento);
+                ViewBag.Ultimos7Dias = UltimosDias(primeiroInvestimento);
+            }
+            else
+            {
+                ViewBag.ValorLitecoin7Dias = Valores7Dias("Litecoin", litecoin);
+                ViewBag.Ultimos7Dias = Ultimos7Dias();
+            }
+
             if (primeiroInvestimento <= 30)
             {
                 ViewBag.UltimoMes = UltimosDias(primeiroInvestimento);
@@ -855,7 +913,7 @@ namespace BlockTechMVC.Controllers
             return valorList;
         }
 
-        public List<int> Ultimos30Dias() 
+        public List<int> Ultimos30Dias()
         {
             var diasList = new List<int>();
             DateTime diaAtual;
@@ -870,7 +928,7 @@ namespace BlockTechMVC.Controllers
             return diasList;
         }
 
-        public List<double> Valores30Dias(string nome, double quantidadeTotalCriptomoeda) 
+        public List<double> Valores30Dias(string nome, double quantidadeTotalCriptomoeda)
         {
             var valorList = new List<double>();
 
