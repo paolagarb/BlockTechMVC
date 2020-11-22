@@ -26,11 +26,12 @@ namespace BlockTechMVC.Controllers
         // GET: CriptomoedasHoje
         public async Task<IActionResult> Index(DateTime searchDate, string sortOrder)
         {
-            var criptomoedas = _context.CriptomoedaHoje
-                .Where(c => c.Data.Equals(DateTime.Now.Date))
-                .Include(c => c.Criptomoeda);
             try
             {
+                var criptomoedas = _context.CriptomoedaHoje
+                    .Where(c => c.Data.Equals(DateTime.Now.Date))
+                    .Include(c => c.Criptomoeda);
+
                 if (searchDate != DateTime.MinValue)
                 {
                     criptomoedas = _context.CriptomoedaHoje
@@ -73,8 +74,8 @@ namespace BlockTechMVC.Controllers
             }
         }
 
-        [Route("criptomoedas-valores/detalhes")]
         // GET: CriptomoedasHoje/Details/5
+        [Route("criptomoedas-valores/detalhes")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -93,8 +94,8 @@ namespace BlockTechMVC.Controllers
             return View(criptomoedaHoje);
         }
 
-        [Route("criptomoedas-valores/adicionar")]
         // GET: CriptomoedasHoje/Create
+        [Route("criptomoedas-valores/adicionar")]
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
@@ -103,12 +104,12 @@ namespace BlockTechMVC.Controllers
             return View();
         }
 
-        [Route("criptomoedas-valores/adicionar")]
         // POST: CriptomoedasHoje/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("criptomoedas-valores/adicionar")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
@@ -128,8 +129,8 @@ namespace BlockTechMVC.Controllers
             }
         }
 
-        [Route("criptomoedas-valores/editar")]
         // GET: CriptomoedasHoje/Edit/5
+        [Route("criptomoedas-valores/editar")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -149,12 +150,12 @@ namespace BlockTechMVC.Controllers
             return View(criptomoedaHoje);
         }
 
-        [Route("criptomoedas-valores/editar")]
         // POST: CriptomoedasHoje/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("criptomoedas-valores/editar")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
@@ -187,9 +188,9 @@ namespace BlockTechMVC.Controllers
             return View(criptomoedaHoje);
         }
 
-        [Route("criptomoedas-valores/deletar")]
         // GET: CriptomoedasHoje/Delete/5
         [Authorize(Roles = "Admin")]
+        [Route("criptomoedas-valores/deletar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -208,10 +209,10 @@ namespace BlockTechMVC.Controllers
             return View(criptomoedaHoje);
         }
 
-        [Route("criptomoedas-valores/deletar")]
         // POST: CriptomoedasHoje/Delete/5
         [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
+        [Route("criptomoedas-valores/deletar")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

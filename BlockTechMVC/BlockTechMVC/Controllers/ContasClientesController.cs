@@ -27,78 +27,84 @@ namespace BlockTechMVC.Controllers
         public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
             var user = User.Identity.Name;
-
-            ViewBag.Total = SaldoTotal(user);
-
-            if (user == "Administrador")
+            try
             {
-                double[] usuarios = new double[20];
-                int i = 0;
-                foreach (var item in _context.Saldo)
+                ViewBag.Total = SaldoTotal(user);
+
+                if (user == "Administrador")
                 {
-                    var usuario = (from c in _context.Saldo
-                                   join conta in _context.ContaCliente
-                                   on c.ContaClienteId equals conta.Id
-                                   join cliente in _context.ApplicationUser
-                                   on conta.ApplicationUserID equals cliente.Id
-                                   where item.ContaClienteId == conta.Id
-                                   select cliente.UserName).FirstOrDefault();
-                    var saldo = SaldoTotal(usuario);
-
-                    usuarios[i] = saldo;
-                    i++;
-                }
-                ViewBag.TotalAdm = usuarios.ToList();
-            }
-
-            if (user == "Administrador")
-            {
-                ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
-
-                var application = _context.Saldo
-                    .Include(t => t.ContaCliente)
-                    .Include(t => t.ContaCliente.ApplicationUser);
-
-                if (sortOrder != null)
-                {
-                    var usuario = application.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
-
-                    switch (sortOrder)
+                    double[] usuarios = new double[20];
+                    int i = 0;
+                    foreach (var item in _context.Saldo)
                     {
-                        case "Nome":
-                            usuario = application.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
-                            break;
-                        case "Nome_desc":
-                            usuario = application.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
-                            break;
-                        default:
-                            usuario = application.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
-                            break;
+                        var usuario = (from c in _context.Saldo
+                                       join conta in _context.ContaCliente
+                                       on c.ContaClienteId equals conta.Id
+                                       join cliente in _context.ApplicationUser
+                                       on conta.ApplicationUserID equals cliente.Id
+                                       where item.ContaClienteId == conta.Id
+                                       select cliente.UserName).FirstOrDefault();
+                        var saldo = SaldoTotal(usuario);
+
+                        usuarios[i] = saldo;
+                        i++;
                     }
+                    ViewBag.TotalAdm = usuarios.ToList();
+                }
+
+                if (user == "Administrador")
+                {
+                    ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
+
+                    var application = _context.Saldo
+                        .Include(t => t.ContaCliente)
+                        .Include(t => t.ContaCliente.ApplicationUser);
+
+                    if (sortOrder != null)
+                    {
+                        var usuario = application.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
+
+                        switch (sortOrder)
+                        {
+                            case "Nome":
+                                usuario = application.OrderBy(c => c.ContaCliente.ApplicationUser.Nome);
+                                break;
+                            case "Nome_desc":
+                                usuario = application.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
+                                break;
+                            default:
+                                usuario = application.OrderByDescending(c => c.ContaCliente.ApplicationUser.Nome);
+                                break;
+                        }
+
+                        return View(await usuario.ToListAsync());
+                    }
+
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        var usuarioSelecionado = _context.Saldo
+                       .Include(t => t.ContaCliente)
+                       .Include(t => t.ContaCliente.ApplicationUser)
+                       .Where(t => t.ContaCliente.ApplicationUser.Nome.Contains(searchString));
+
+                        return View(usuarioSelecionado.ToList());
+                    }
+
+                    return View(await application.ToListAsync());
+                }
+                else
+                {
+                    var usuario = _context.Saldo
+                          .Include(t => t.ContaCliente)
+                          .Include(t => t.ContaCliente.ApplicationUser)
+                          .Where(t => t.ContaCliente.ApplicationUser.UserName == user);
 
                     return View(await usuario.ToListAsync());
                 }
-
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    var usuarioSelecionado = _context.Saldo
-                   .Include(t => t.ContaCliente)
-                   .Include(t => t.ContaCliente.ApplicationUser)
-                   .Where(t => t.ContaCliente.ApplicationUser.Nome.Contains(searchString));
-
-                    return View(usuarioSelecionado.ToList());
-                }
-
-                return View(await application.ToListAsync());
             }
-            else
+            catch (Exception)
             {
-                var usuario = _context.Saldo
-                      .Include(t => t.ContaCliente)
-                      .Include(t => t.ContaCliente.ApplicationUser)
-                      .Where(t => t.ContaCliente.ApplicationUser.UserName == user);
-
-                return View(await usuario.ToListAsync());
+                return RedirectToAction(nameof(Error), new { message = "Ocorreu um erro inesperado! Tente novamente em alguns instantes." });
             }
         }
 
@@ -276,7 +282,6 @@ namespace BlockTechMVC.Controllers
                     return View(criptoSelecionada.ToList());
                 }
                 return View(await usuario.ToListAsync());
-
             }
         }
 
@@ -290,7 +295,7 @@ namespace BlockTechMVC.Controllers
             return View(viewModel);
         }
 
-        public double SaldoTotal(string user)
+        private double SaldoTotal(string user)
         {
             MeusInvestimentosController investimentos = new MeusInvestimentosController(_context);
             var saldoSemInvestimento = investimentos.SaldoSemInvestimento(user);
