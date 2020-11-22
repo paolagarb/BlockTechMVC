@@ -13,11 +13,11 @@ using System.Diagnostics;
 namespace BlockTechMVC.Controllers
 {
     [Authorize]
-    public class ContasClientesController : Controller
+    public class ContasClientesController : CoreController
     {
         private readonly ApplicationDbContext _context;
 
-        public ContasClientesController(ApplicationDbContext context)
+        public ContasClientesController(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
@@ -297,20 +297,19 @@ namespace BlockTechMVC.Controllers
 
         private double SaldoTotal(string user)
         {
-            MeusInvestimentosController investimentos = new MeusInvestimentosController(_context);
-            var saldoSemInvestimento = investimentos.SaldoSemInvestimento(user);
-            double bitcoin = investimentos.QuantidadeTotalCriptomoeda("Bitcoin", user);
-            double saldoTotalBitcoin = investimentos.CalcularSaldoAtual(bitcoin, "Bitcoin");
-            double ethereum = investimentos.QuantidadeTotalCriptomoeda("Ethereum", user);
-            double saldoTotalEthereum = investimentos.CalcularSaldoAtual(ethereum, "Ethereum");
-            double bitcoinCash = investimentos.QuantidadeTotalCriptomoeda("Bitcoin Cash", user);
-            double saldoTotalBitcoinCash = investimentos.CalcularSaldoAtual(bitcoinCash, "Bitcoin Cash");
-            double xrp = investimentos.QuantidadeTotalCriptomoeda("XRP", user);
-            double saldoTotalXrp = investimentos.CalcularSaldoAtual(xrp, "XRP");
-            double paxGold = investimentos.QuantidadeTotalCriptomoeda("PAX Gold", user);
-            double saldoTotalPaxGold = investimentos.CalcularSaldoAtual(paxGold, "PAX Gold");
-            double litecoin = investimentos.QuantidadeTotalCriptomoeda("Litecoin", user);
-            double saldoTotalLitecoin = investimentos.CalcularSaldoAtual(litecoin, "Litecoin");
+            var saldoSemInvestimento = SaldoSemInvestimento(user);
+            double bitcoin = QuantidadeTotalCriptomoeda("Bitcoin", user);
+            double saldoTotalBitcoin = CalcularSaldoAtual(bitcoin, "Bitcoin");
+            double ethereum = QuantidadeTotalCriptomoeda("Ethereum", user);
+            double saldoTotalEthereum = CalcularSaldoAtual(ethereum, "Ethereum");
+            double bitcoinCash = QuantidadeTotalCriptomoeda("Bitcoin Cash", user);
+            double saldoTotalBitcoinCash = CalcularSaldoAtual(bitcoinCash, "Bitcoin Cash");
+            double xrp = QuantidadeTotalCriptomoeda("XRP", user);
+            double saldoTotalXrp = CalcularSaldoAtual(xrp, "XRP");
+            double paxGold = QuantidadeTotalCriptomoeda("PAX Gold", user);
+            double saldoTotalPaxGold = CalcularSaldoAtual(paxGold, "PAX Gold");
+            double litecoin = QuantidadeTotalCriptomoeda("Litecoin", user);
+            double saldoTotalLitecoin = CalcularSaldoAtual(litecoin, "Litecoin");
 
             var total = (saldoSemInvestimento + saldoTotalBitcoin + saldoTotalEthereum + saldoTotalBitcoinCash + saldoTotalXrp + saldoTotalPaxGold + saldoTotalLitecoin).ToString("F2");
             ViewBag.Total = total;

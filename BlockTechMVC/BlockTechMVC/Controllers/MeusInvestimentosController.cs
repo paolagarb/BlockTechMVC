@@ -11,11 +11,11 @@ using System.Diagnostics;
 namespace BlockTechMVC.Controllers
 {
     [Authorize]
-    public class MeusInvestimentosController : Controller
+    public class MeusInvestimentosController : CoreController
     {
         private readonly ApplicationDbContext _context;
 
-        public MeusInvestimentosController(ApplicationDbContext context)
+        public MeusInvestimentosController(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
@@ -673,38 +673,6 @@ namespace BlockTechMVC.Controllers
             }
         }
 
-        public double QuantidadeTotalCriptomoeda(string criptomoeda, string user)
-        {
-            var investimentos = (from transacoes in _context.Transacao
-                                 join conta in _context.ContaCliente
-                                 on transacoes.ContaClienteId equals conta.Id
-                                 join usuario in _context.ApplicationUser
-                                 on conta.ApplicationUserID equals usuario.Id
-                                 join criptomoedahoje in _context.CriptomoedaHoje
-                                 on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
-                                 join criptomoedas in _context.Criptomoeda
-                                 on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
-                                 join criptosaldo in _context.CriptoSaldo
-                                 on transacoes.CriptoSaldoId equals criptosaldo.Id
-                                 where criptomoedas.Nome == criptomoeda &&
-                                 usuario.UserName == user
-                                 select criptosaldo.Quantidade).FirstOrDefault();
-
-            return investimentos;
-        }
-
-        public double CalcularSaldoAtual(double quantidadeCriptomoeda, string criptomoeda)
-        {
-            var valorAtual = (from criptohoje in _context.CriptomoedaHoje
-                              join cripto in _context.Criptomoeda
-                              on criptohoje.CriptomoedaId equals cripto.Id
-                              where cripto.Nome == criptomoeda &&
-                              criptohoje.Data == DateTime.Today
-                              select criptohoje.Valor).Single();
-
-            return quantidadeCriptomoeda * valorAtual;
-        }
-
         public double ValorInvestido(string criptomoeda, string user)
         {
             var investimentos = (from transacoes in _context.Transacao
@@ -773,25 +741,6 @@ namespace BlockTechMVC.Controllers
             return investimentos - investimentosVenda;
         }
 
-        public double SaldoSemInvestimento(string user)
-        {
-            var saldoNaoInvestido = (from transacoes in _context.Transacao
-                                     join conta in _context.ContaCliente
-                                     on transacoes.ContaClienteId equals conta.Id
-                                     join usuario in _context.ApplicationUser
-                                     on conta.ApplicationUserID equals usuario.Id
-                                     join criptomoedahoje in _context.CriptomoedaHoje
-                                     on transacoes.CriptomoedaHojeId equals criptomoedahoje.Id
-                                     join criptomoedas in _context.Criptomoeda
-                                     on criptomoedahoje.CriptomoedaId equals criptomoedas.Id
-                                     join criptosaldo in _context.CriptoSaldo
-                                     on transacoes.CriptoSaldoId equals criptosaldo.Id
-                                     join saldo in _context.Saldo
-                                     on transacoes.SaldoId equals saldo.Id
-                                     where usuario.UserName == user
-                                     select saldo.SaldoAtualRS).FirstOrDefault();
-            return saldoNaoInvestido;
-        }
         public List<int> Ultimos7Dias()
         {
             var diasList = new List<int>();
