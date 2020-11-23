@@ -22,7 +22,7 @@ namespace BlockTechMVC.Controllers
             _context = context;
         }
 
-        [Route("transacoes")]
+        [Route("transacoes/index")]
         // GET: Transacoes
         public async Task<IActionResult> Index(int? Busca, string searchString, string sortOrder)
         {
