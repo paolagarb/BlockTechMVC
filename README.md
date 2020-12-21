@@ -88,7 +88,7 @@ para análise dos investimentos ao longo do tempo."
 :white_check_mark: Simulação de compra e venda de criptomoedas
 
 
-## Imagens
+## :sunrise_over_mountains: Imagens
 
 | Tela Inicial | Cadastro |
 | -- | -- |
@@ -130,7 +130,9 @@ para análise dos investimentos ao longo do tempo."
 | -- | -- |
 | ![image](https://user-images.githubusercontent.com/69488783/102795987-5413d380-438c-11eb-9e8d-11bb05b6ba0e.png) | ![image](https://user-images.githubusercontent.com/69488783/102796009-5b3ae180-438c-11eb-88e6-3eedfb5cac6f.png) |
 
-
+:heavy_exclamation_mark: Para visualizar as funcionalidades do Administrador, realize o download do trabalho completo <a href="https://github.com/paolagarb/BlockTechMVC/blob/master/PIM%20IV.docx"> aqui. </a> 
+* Manual do usuário completo - página 56
+* Manual do administrador - página 86
 
 
 ## :woman: Autor
