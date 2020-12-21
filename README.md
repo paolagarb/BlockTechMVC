@@ -65,6 +65,8 @@ para análise dos investimentos ao longo do tempo."
 
 :white_check_mark: Exibição de conta do usuário, além de detalhes, como sua conta vinculada.
 
+:white_check_mark: Exibição de saldo atual - total do usuário (baseado no valor atual da criptomoeda na qual possui investimento + saldo não investido)
+
 :white_check_mark: Listagem de aplicações dos usuários (administrador pode visualizar todos os usuários).
 
 :white_check_mark: Gráfico com o valor atual de todas as criptomoedas cadastradas.
@@ -82,6 +84,58 @@ para análise dos investimentos ao longo do tempo."
 :white_check_mark: Todos os investimentos do usuário, indicando o valor investido e o valor atual.
 
 :white_check_mark: Gráficos semanais e mensais indicando o investimento do usuário (administrador visualiza gráfico com o investimento geral).
+
+:white_check_mark: Simulação de compra e venda de criptomoedas
+
+
+## Imagens
+
+| Tela Inicial | Cadastro |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102794367-0ac28480-438a-11eb-996f-bfac71bfd81a.png) | ![image](https://user-images.githubusercontent.com/69488783/102794421-2168db80-438a-11eb-8b4c-a29ecffff482.png) |
+
+| Criptomoedas | Criptomoedas - Pesquisa por data |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102794728-89b7bd00-438a-11eb-83c8-20aff945766d.png) | ![image](https://user-images.githubusercontent.com/69488783/102794760-976d4280-438a-11eb-9300-d9435bed1ed4.png) |
+
+| Transações | Transações - Pesquisa por criptomoeda |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102794850-b8359800-438a-11eb-8d65-3c89c36445c6.png) | ![image](https://user-images.githubusercontent.com/69488783/102794913-cdaac200-438a-11eb-910d-801b071835ae.png) |
+
+| Conta | Conta - Detalhes |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102794977-e2875580-438a-11eb-8258-efcbdaf700dc.png) | ![image](https://user-images.githubusercontent.com/69488783/102795016-ee731780-438a-11eb-85d1-89e7356272bd.png) |
+
+| Aplicações | Gráfico - valor dia atual |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102795116-237f6a00-438b-11eb-9e94-ab0121710b42.png) | ![image](https://user-images.githubusercontent.com/69488783/102795153-2c703b80-438b-11eb-80bd-d6900d60831b.png) |
+
+| Gráfico - Porcentual dos últimos 7 dias | Gráfico - Valor últimos 7 dias da criptomoeda selecionada |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102795207-40b43880-438b-11eb-82b7-93952be5c86c.png) | ![image](https://user-images.githubusercontent.com/69488783/102795306-5fb2ca80-438b-11eb-8ad1-c29bb3874326.png) |
+
+| Gráfico - Porcentual dos últimos 30 dias | Gráfico - Valor últimos 30 dias da criptomoeda selecionada |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102795413-8a048800-438b-11eb-845b-0277944fb296.png) | ![image](https://user-images.githubusercontent.com/69488783/102795459-9a1c6780-438b-11eb-9239-a01ef4bb244a.png) |
+
+| Investimentos | Investimento da criptomoeda selecioanda |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102795935-3f374000-438c-11eb-99f5-e613e1fc5a1a.png) | ![image](https://user-images.githubusercontent.com/69488783/102795534-b6b89f80-438b-11eb-86b4-b4b8586cc4ff.png) |
+
+| Investimentos - Gráfico mensal da criptomoeda selecionada | Simulação |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102795617-d059e700-438b-11eb-8cd1-29ece44137bd.png) | ![image](https://user-images.githubusercontent.com/69488783/102795668-df409980-438b-11eb-9e03-c21c7f85ce0b.png) |
+
+| Simulação - Compra | Simulação - Venda |
+| -- | -- |
+| ![image](https://user-images.githubusercontent.com/69488783/102795987-5413d380-438c-11eb-9e8d-11bb05b6ba0e.png) | ![image](https://user-images.githubusercontent.com/69488783/102796009-5b3ae180-438c-11eb-88e6-3eedfb5cac6f.png) |
+
+
+
+
+## :woman: Autor
+
+<img style="border-radius: 50%;" src="https://avatars2.githubusercontent.com/u/69488783?s=460&u=4328376abe8bfab21b4e18250971c4bed455c0c7&v=4" width="100px;">
 
 
 
