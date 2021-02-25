@@ -9,16 +9,21 @@
  
 ### <div align="center"> :school_satchel: Trabalho Semestral - PIM </div>
 
- ## Tecnologias
-
+<details>
+  <summary><strong> Tecnologias </strong></summary>
+  
 * Front-end: HTML5, CSS3, Bootstrap, JavaScript
 
 * Back-end: C#, ASP.NET Core
 
 *  Banco de Dados: SQL 
 
+</details>
 
-## Descrição
+<details>
+  
+<summary><strong> Descrição </strong></summary>
+
 
 "Uma empresa oferece serviços baseados na tecnologia blockchain para a manipulação de vários tipos de criptoativos 
 (criptomoedas, criptocommodities (Etherum), criptotokens etc). Como esta tecnologia ainda é nova, não houve tempo 
@@ -35,10 +40,13 @@ baseados no blockchain, logo devem ser apresentados relatórios parciais diário
 O que deve ser desenvolvido é um sistema de gerenciamento e controle administrativos, que com base nas operações realizadas pelos clientes ofereça ferramental 
 para análise dos investimentos ao longo do tempo."
 
+</details>
 
-
-## Funcionalidades
-
+<details>
+  
+<summary><strong> Funcionalidades </strong></summary>
+  
+ 
 :white_check_mark: Cadastro de clientes.
 
 :white_check_mark: Funcionalidades visíveis apenas aos usuários logados no sistema.
@@ -87,8 +95,12 @@ para análise dos investimentos ao longo do tempo."
 
 :white_check_mark: Simulação de compra e venda de criptomoedas
 
+</details>
 
-## :sunrise_over_mountains: Imagens
+<details>
+  
+<summary><strong> :sunrise_over_mountains: Imagens </strong></summary>
+ 
 
 | Tela Inicial | Cadastro |
 | -- | -- |
@@ -130,11 +142,18 @@ para análise dos investimentos ao longo do tempo."
 | -- | -- |
 | ![image](https://user-images.githubusercontent.com/69488783/102795987-5413d380-438c-11eb-9e8d-11bb05b6ba0e.png) | ![image](https://user-images.githubusercontent.com/69488783/102796009-5b3ae180-438c-11eb-88e6-3eedfb5cac6f.png) |
 
-:heavy_exclamation_mark: Para visualizar as funcionalidades do Administrador, realize o download do trabalho completo <a href="https://github.com/paolagarb/BlockTechMVC/blob/master/PIM%20IV.docx"> aqui. </a> 
+</details>
+
+<details>
+  
+  <summary> :heavy_exclamation_mark: </summary>
+  Para visualizar as funcionalidades do Administrador, realize o download do trabalho completo <a href="https://github.com/paolagarb/BlockTechMVC/blob/master/PIM%20IV.docx"> aqui. </a> 
 * Manual do usuário completo - página 56
 * Manual do administrador - página 86
 
+</details>
 
+  
 ## :woman: Autor
 
 <img style="border-radius: 50%;" src="https://avatars2.githubusercontent.com/u/69488783?s=460&u=4328376abe8bfab21b4e18250971c4bed455c0c7&v=4" width="100px;">
@@ -142,4 +161,8 @@ para análise dos investimentos ao longo do tempo."
 
 
 
+<div align="center">
+  
 <img src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white"> <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white"> <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white"> <img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white">
+
+</div>
