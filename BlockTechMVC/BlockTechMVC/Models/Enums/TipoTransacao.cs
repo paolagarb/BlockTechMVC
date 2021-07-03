@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace BlockTechMVC.Models.Enums
 {
     public enum TipoTransacao : int
     {
         [Description("Transferencia")]
-           Transferencia = 0,
+        Transferencia = 0,
         [Description("Venda")]
         Venda = 1,
         [Description("Compra")]

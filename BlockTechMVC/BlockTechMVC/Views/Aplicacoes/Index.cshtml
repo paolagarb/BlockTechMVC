@@ -1,0 +1,76 @@
+﻿@model IEnumerable<BlockTechMVC.Models.CriptoSaldo>
+
+@{
+    ViewData["Title"] = "Aplicações";
+}
+
+<br />
+<h1>@ViewData["Title"]</h1>
+<br />
+@if (User.IsInRole("Admin"))
+{
+    <form asp-controller="ContasClientes" asp-action="Aplicacoes" method="get">
+        <p>
+            @Html.DropDownList("Busca", null, new
+            {
+           onchange = "document.location.href='/aplicacoes?Busca='+this.value;"
+            })
+
+            <input type="text" name="SearchString">
+            <input type="submit" value="Filtrar" />
+        </p>
+    </form>
+}
+else
+{
+    <form asp-controller="ContasClientes" asp-action="Aplicacoes" method="get">
+        <p>
+            Criptomoeda:
+            <input type="text" name="SearchString">
+            <input type="submit" value="Filtrar" />
+        </p>
+    </form>
+}
+
+
+<div class="table-responsive">
+    <table class="table">
+        <caption>Lista de Aplicações</caption>
+        <thead>
+            <tr>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>
+                        @Html.ActionLink("Nome", "Aplicacoes", new { sortOrder = ViewBag.Nome }, new { @class = "imgOrder" })
+                    </th>
+                }
+                <th>
+                    @Html.ActionLink("Criptomoeda", "Aplicacoes", new { sortOrder = ViewBag.Criptomoeda }, new { @class = "imgOrder" })
+                </th>
+                <th>
+                    @Html.ActionLink("Quantidade", "Aplicacoes", new { sortOrder = ViewBag.Quantidade }, new { @class = "imgOrder" })
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContaCliente.ApplicationUser.Nome)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Criptomoeda)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

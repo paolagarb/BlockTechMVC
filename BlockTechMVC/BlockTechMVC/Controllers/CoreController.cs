@@ -19,7 +19,7 @@ namespace BlockTechMVC.Controllers
             _context = context;
         }
 
-        protected double SaldoSemInvestimento(string user)
+        protected double SaldoSemInvestimento(string user) //TotalNaoInvestido
         {
             var saldoNaoInvestido = (from transacoes in _context.Transacao
                                      join conta in _context.ContaCliente

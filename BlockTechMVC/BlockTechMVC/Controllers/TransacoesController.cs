@@ -1,30 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BlockTechMVC.Data;
+﻿using BlockTechMVC.Interfaces;
 using BlockTechMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlockTechMVC.Controllers
 {
     [Authorize]
     public class TransacoesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITransacaoRepository _repository;
 
-        public TransacoesController(ApplicationDbContext context)
+        public TransacoesController(ITransacaoRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [Route("transacoes/index")]
-        // GET: Transacoes
-        public async Task<IActionResult> Index(int? Busca, string searchString, string sortOrder)
+        public async Task<IActionResult> Index(int? busca, string searchString, string sortOrder)
         {
             var user = User.Identity.Name;
             try
@@ -46,18 +44,11 @@ namespace BlockTechMVC.Controllers
 
                     ViewBag.Busca = itens;
 
-                    var applicationDbContext = _context.Transacao
-                        .Include(t => t.ContaCliente)
-                        .Include(t => t.CriptoSaldo)
-                        .Include(t => t.CriptomoedaHoje)
-                        .Include(t => t.ContaCliente.ApplicationUser)
-                        .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                        .Include(t => t.Saldo)
-                        .OrderBy(t => t.Data);
+                    var transacao = _repository.Carregar();
 
-                    if (sortOrder != null)
+                    if (String.IsNullOrEmpty(sortOrder))
                     {
-                        var orderName = applicationDbContext.OrderBy(t => t.ContaCliente.ApplicationUser.Nome);
+                        var orderName = transacao.OrderBy(t => t.ContaCliente.ApplicationUser.Nome);
 
                         switch (sortOrder)
                         {
@@ -65,88 +56,60 @@ namespace BlockTechMVC.Controllers
                                 orderName = orderName.OrderByDescending(s => s.ContaCliente.ApplicationUser.Nome);
                                 break;
                             case "Nome":
-                                orderName = applicationDbContext.OrderBy(s => s.ContaCliente.ApplicationUser.Nome);
+                                orderName = transacao.OrderBy(s => s.ContaCliente.ApplicationUser.Nome);
                                 break;
                             case "Data":
-                                orderName = applicationDbContext.OrderBy(s => s.Data);
+                                orderName = transacao.OrderBy(s => s.Data);
                                 break;
                             case "Data_desc":
-                                orderName = applicationDbContext.OrderByDescending(s => s.Data);
+                                orderName = transacao.OrderByDescending(s => s.Data);
                                 break;
                             case "Criptomoeda":
-                                orderName = applicationDbContext.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                                orderName = transacao.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
                                 break;
                             case "Criptomoeda_desc":
-                                orderName = applicationDbContext.OrderByDescending(s => s.CriptomoedaHoje.Criptomoeda.Nome);
+                                orderName = transacao.OrderByDescending(s => s.CriptomoedaHoje.Criptomoeda.Nome);
                                 break;
                             case "Valor":
-                                orderName = applicationDbContext.OrderBy(s => s.Valor);
+                                orderName = transacao.OrderBy(s => s.Valor);
                                 break;
                             case "Valor_desc":
-                                orderName = applicationDbContext.OrderByDescending(s => s.Valor);
+                                orderName = transacao.OrderByDescending(s => s.Valor);
                                 break;
                             default:
-                                orderName = applicationDbContext.OrderBy(s => s.ContaCliente.ApplicationUser.Nome);
+                                orderName = transacao.OrderBy(s => s.ContaCliente.ApplicationUser.Nome);
                                 break;
                         };
+
                         return View(orderName.ToList());
                     }
 
-                    if (Busca != null)
-                    {
-                        itens.Where(i => i.Value == Busca.ToString()).First().Selected = true;
-                    }
-                    if (Busca == 1)
-                    {
-                        if (!String.IsNullOrEmpty(searchString))
-                        {
-                            var usuarioSelecionado = _context.Transacao
-                                .Include(t => t.ContaCliente)
-                                .Include(t => t.CriptoSaldo)
-                                .Include(t => t.CriptomoedaHoje)
-                                .Include(t => t.ContaCliente.ApplicationUser)
-                                .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                                .Include(t => t.Saldo)
-                                .Where(t => t.ContaCliente.ApplicationUser.Nome.Contains(searchString));
+                    if (busca != null)
+                        itens.Where(i => i.Value == busca.ToString()).First().Selected = true;
 
-                            return View(usuarioSelecionado.ToList());
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        if (busca == 1)
+                        {
+                            var usuarioSelecionado = _repository.Carregar(searchString);
+
+                            return View(usuarioSelecionado);
                         }
-                    }
-                    if (Busca == 2)
-                    {
-                        if (!String.IsNullOrEmpty(searchString))
+                        else if (busca == 2)
                         {
-                            var usuarioSelecionado = _context.Transacao
-                                .Include(t => t.ContaCliente)
-                                .Include(t => t.CriptoSaldo)
-                                .Include(t => t.CriptomoedaHoje)
-                                .Include(t => t.ContaCliente.ApplicationUser)
-                                .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                                .Include(t => t.Saldo)
-                                .Where(t => t.CriptomoedaHoje.Criptomoeda.Nome.Contains(searchString));
+                            var usuarioSelecionado = _repository.CarregarPorCriptomoedaAdm(searchString);
 
-                            return View(usuarioSelecionado.ToList());
+                            return View(usuarioSelecionado);
                         }
                     }
 
-                    return View(await applicationDbContext.ToListAsync());
+                    return View(transacao);
                 }
                 else
                 {
-                    var usuario = _context.Transacao
-                        .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
-                        .Include(t => t.ContaCliente)
-                        .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
-                        .Include(t => t.CriptoSaldo)
-                        .Where(t => t.CriptoSaldo.ContaCliente.ApplicationUser.UserName == user)
-                        .Include(t => t.CriptomoedaHoje)
-                        .Include(t => t.ContaCliente.ApplicationUser)
-                        .Where(t => t.ContaCliente.ApplicationUser.UserName == user)
-                        .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                        .Include(t => t.Saldo)
-                        .Where(t => t.Saldo.ContaCliente.ApplicationUser.UserName == user);
+                    var usuario = _repository.CarregarPorUsuario(user);
 
-                    if (sortOrder != null)
+                    if (String.IsNullOrEmpty(sortOrder))
                     {
                         var orderName = usuario.OrderBy(t => t.CriptomoedaHoje.Criptomoeda.Nome);
 
@@ -180,35 +143,24 @@ namespace BlockTechMVC.Controllers
                                 orderName = usuario.OrderBy(s => s.CriptomoedaHoje.Criptomoeda.Nome);
                                 break;
                         };
-                        return View(orderName.ToList());
+
+                        return View(orderName);
                     }
 
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        var criptoSelecionada = _context.Transacao
-                            .Include(t => t.ContaCliente)
-                            .Include(t => t.CriptoSaldo)
-                            .Include(t => t.CriptomoedaHoje)
-                            .Include(t => t.ContaCliente.ApplicationUser)
-                            .Include(t => t.CriptomoedaHoje.Criptomoeda)
-                            .Include(t => t.Saldo)
-                            .Where(t => t.CriptomoedaHoje.Criptomoeda.Nome.Contains(searchString) && t.Saldo.ContaCliente.ApplicationUser.UserName == user);
+                        var criptoSelecionada = _repository.CarregarPorCriptomoeda(searchString, user);
 
                         return View(criptoSelecionada.ToList());
                     }
 
-                    return View(await usuario.ToListAsync());
+                    return View(usuario);
                 }
             }
             catch (Exception)
             {
                 return RedirectToAction(nameof(Error), new { message = "Ocorreu um erro inesperado! Tente novamente em alguns instantes." });
             }
-        }
-
-        private bool TransacaoExists(int id)
-        {
-            return _context.Transacao.Any(e => e.Id == id);
         }
 
         public IActionResult Error(string message)

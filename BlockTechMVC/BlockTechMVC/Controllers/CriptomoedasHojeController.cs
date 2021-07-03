@@ -1,50 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BlockTechMVC.Interfaces;
+using BlockTechMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BlockTechMVC.Data;
-using BlockTechMVC.Models;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlockTechMVC.Controllers
 {
     [Authorize]
     public class CriptomoedasHojeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICriptomoedaHojeRepository _repository;
 
-        public CriptomoedasHojeController(ApplicationDbContext context)
+        public CriptomoedasHojeController(ICriptomoedaHojeRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [Route("criptomoedas-valores")]
-        // GET: CriptomoedasHoje
         public async Task<IActionResult> Index(DateTime searchDate, string sortOrder)
         {
             try
             {
-                var criptomoedas = _context.CriptomoedaHoje
-                    .Where(c => c.Data.Equals(DateTime.Now.Date))
-                    .Include(c => c.Criptomoeda);
-
-                if (searchDate != DateTime.MinValue)
-                {
-                    criptomoedas = _context.CriptomoedaHoje
-                    .Where(c => c.Data.Equals(searchDate))
-                    .Include(c => c.Criptomoeda);
-                }
-
                 ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
                 ViewBag.ValueSortParm = sortOrder == "Valor" ? "Valor_desc" : "Valor";
 
-                if (sortOrder != null)
+                var criptomoedas = _repository.Listar();
+
+                if (searchDate != DateTime.MinValue)
+                    criptomoedas = _repository.ListarPorData(searchDate);
+
+                if (String.IsNullOrEmpty(sortOrder))
                 {
                     var criptomoeda = criptomoedas.OrderBy(c => c.Criptomoeda.Nome);
+
                     switch (sortOrder)
                     {
                         case "Nome_desc":
@@ -63,10 +57,11 @@ namespace BlockTechMVC.Controllers
                             criptomoeda = criptomoedas.OrderBy(c => c.Criptomoeda.Nome);
                             break;
                     }
-                    return View(await criptomoeda.ToListAsync());
+
+                    return View(criptomoeda);
                 }
 
-                return View(await criptomoedas.ToListAsync());
+                return View(criptomoedas);
             }
             catch (Exception)
             {
@@ -74,157 +69,126 @@ namespace BlockTechMVC.Controllers
             }
         }
 
-        // GET: CriptomoedasHoje/Details/5
         [Route("criptomoedas-valores/detalhes")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-            }
 
-            var criptomoedaHoje = await _context.CriptomoedaHoje
-                .Include(c => c.Criptomoeda)
-                .FirstOrDefaultAsync(m => m.Id == id);
+
+            var criptomoedaHoje = _repository.Carregar(id);
+
             if (criptomoedaHoje == null)
-            {
                 return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-            }
 
             return View(criptomoedaHoje);
         }
 
-        // GET: CriptomoedasHoje/Create
-        [Route("criptomoedas-valores/adicionar")]
         [Authorize(Roles = "Admin")]
+        [Route("criptomoedas-valores/adicionar")]
         public IActionResult Create()
         {
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome");
-            ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
+            ViewData["CriptomoedaId"] = new SelectList(_repository.CarregarCriptomoedas(), "Id", "Nome");
+            ViewData["CriptomoedaIdSimb"] = new SelectList(_repository.CarregarCriptomoedas(), "Id", "Simbolo");
+
             return View();
         }
 
-        // POST: CriptomoedasHoje/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("criptomoedas-valores/adicionar")]
         [Authorize(Roles = "Admin")]
+        [Route("criptomoedas-valores/adicionar")]
         public async Task<IActionResult> Create([Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(criptomoedaHoje);
-                    await _context.SaveChangesAsync();
+                    _repository.Adicionar(criptomoedaHoje);
+
                     return RedirectToAction(nameof(Index));
                 }
+
                 return View();
             }
             catch (Exception)
             {
-                return RedirectToAction(nameof(Error), new { message = "" });
+                return RedirectToAction(nameof(Error));
             }
         }
 
-        // GET: CriptomoedasHoje/Edit/5
-        [Route("criptomoedas-valores/editar")]
         [Authorize(Roles = "Admin")]
+        [Route("criptomoedas-valores/editar")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-            }
 
-            var criptomoedaHoje = await _context.CriptomoedaHoje.FindAsync(id);
+            var criptomoedaHoje = _repository.Carregar(id);
+
             if (criptomoedaHoje == null)
-            {
                 return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-            }
 
-            ViewData["CriptomoedaId"] = new SelectList(_context.Criptomoeda, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
-            ViewData["CriptomoedaIdSimb"] = new SelectList(_context.Criptomoeda, "Id", "Simbolo");
+            var criptomoedas = _repository.CarregarCriptomoedas();
+
+            ViewData["CriptomoedaId"] = new SelectList(criptomoedas, "Id", "Nome", criptomoedaHoje.CriptomoedaId);
+            ViewData["CriptomoedaIdSimb"] = new SelectList(criptomoedas, "Id", "Simbolo");
+
             return View(criptomoedaHoje);
         }
 
-        // POST: CriptomoedasHoje/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("criptomoedas-valores/editar")]
         [Authorize(Roles = "Admin")]
+        [Route("criptomoedas-valores/editar")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Data,Valor,CriptomoedaId")] CriptomoedaHoje criptomoedaHoje)
         {
             if (id != criptomoedaHoje.Id)
-            {
                 return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(criptomoedaHoje);
-                    await _context.SaveChangesAsync();
+                    _repository.Atualizar(criptomoedaHoje);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CriptomoedaHojeExists(criptomoedaHoje.Id))
-                    {
+                    if (!(_repository.Carregar(criptomoedaHoje.Id) == null))
                         return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
 
             return View(criptomoedaHoje);
         }
 
-        // GET: CriptomoedasHoje/Delete/5
         [Authorize(Roles = "Admin")]
         [Route("criptomoedas-valores/deletar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-            }
 
-            var criptomoedaHoje = await _context.CriptomoedaHoje
-                .Include(c => c.Criptomoeda)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var criptomoedaHoje = _repository.Carregar(id);
+
             if (criptomoedaHoje == null)
-            {
                 return RedirectToAction(nameof(Error), new { message = "Criptomoeda não encontrada!" });
-            }
 
             return View(criptomoedaHoje);
         }
 
-        // POST: CriptomoedasHoje/Delete/5
-        [Authorize(Roles = "Admin")]
-        [HttpPost, ActionName("Delete")]
-        [Route("criptomoedas-valores/deletar")]
         [ValidateAntiForgeryToken]
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
+        [Route("criptomoedas-valores/deletar")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var criptomoedaHoje = await _context.CriptomoedaHoje.FindAsync(id);
-            _context.CriptomoedaHoje.Remove(criptomoedaHoje);
-            await _context.SaveChangesAsync();
+            _repository.Remover(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool CriptomoedaHojeExists(int id)
-        {
-            return _context.CriptomoedaHoje.Any(e => e.Id == id);
         }
 
         public IActionResult Error(string message)
@@ -239,7 +203,7 @@ namespace BlockTechMVC.Controllers
         }
 
         [Route("simulacao")]
-        public IActionResult Simulacao(string searchString, int? Busca, int? BuscaVenda)
+        public IActionResult Simulacao(string searchString, int? busca, int? buscaVenda)
         {
             List<SelectListItem> itens = new List<SelectListItem>();
             SelectListItem item1 = new SelectListItem() { Text = "Bitcoin", Value = "1", Selected = true };
@@ -270,259 +234,177 @@ namespace BlockTechMVC.Controllers
             itensVenda.Add(itemVenda4);
             itensVenda.Add(itemVenda5);
             itensVenda.Add(itemVenda6);
-            ViewBag.BuscaVenda = itensVenda;
+            ViewBag.buscaVenda = itensVenda;
 
             try
             {
                 double valor = Convert.ToDouble(searchString);
                 var valorHoje = 0.0;
 
-                if (Busca != null)
-                {
-                    itens.Where(i => i.Value == Busca.ToString()).First().Selected = true;
-                }
-                if (Busca == 1)
+                if (busca != null)
+                    itens.Where(i => i.Value == busca.ToString()).First().Selected = true;
+
+                if (busca == 1)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "Bitcoin" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
-
-                        var valorTotal = (valor / valorHoje).ToString("F6");
-
-                        var valorTotalDouble = Convert.ToDouble(valorTotal);
-                        if (valorTotalDouble >= 1)
-                        {
-                            ViewBag.Total = valorTotalDouble.ToString("F2");
-                        }
-                        else
-                        {
-                            ViewBag.Total = valorTotal;
-                        }
                         ViewBag.Simbolo = "BTC";
+                        valorHoje = _repository.CarregarValorHoje("Bitcoin");
+
+                        var total = (valor / valorHoje).ToString("F6");
+                        var valorTotalDouble = Convert.ToDouble(total);
+
+                        if (valorTotalDouble >= 1)
+                            ViewBag.Total = valorTotalDouble.ToString("F2");
+                        else
+                            ViewBag.Total = total;
                     }
                 }
-                if (Busca == 2)
+                else if (busca == 2)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "Ethereum" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
-                        var valorTotal = (valor / valorHoje).ToString("F6");
-
-                        var valorTotalDouble = Convert.ToDouble(valorTotal);
-                        if (valorTotalDouble >= 1)
-                        {
-                            ViewBag.Total = valorTotalDouble.ToString("F2");
-                        }
-                        else
-                        {
-                            ViewBag.Total = valorTotal;
-                        }
                         ViewBag.Simbolo = "ETH";
+                        valorHoje = _repository.CarregarValorHoje("Ethereum");
+
+                        var total = (valor / valorHoje).ToString("F6");
+                        var valorTotalDouble = Convert.ToDouble(total);
+
+                        if (valorTotalDouble >= 1)
+                            ViewBag.Total = valorTotalDouble.ToString("F2");
+                        else
+                            ViewBag.Total = total;
                     }
                 }
-                if (Busca == 3)
+                else if (busca == 3)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "Bitcoin Cash" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
-                        var valorTotal = (valor / valorHoje).ToString("F6");
-
-                        var valorTotalDouble = Convert.ToDouble(valorTotal);
-                        if (valorTotalDouble >= 1)
-                        {
-                            ViewBag.Total = valorTotalDouble.ToString("F2");
-                        }
-                        else
-                        {
-                            ViewBag.Total = valorTotal;
-                        }
                         ViewBag.Simbolo = "BCH";
+                        valorHoje = _repository.CarregarValorHoje("Bitcoin Cash");
+
+                        var valorTotal = (valor / valorHoje).ToString("F6");
+                        var valorTotalDouble = Convert.ToDouble(valorTotal);
+
+                        if (valorTotalDouble >= 1)
+                            ViewBag.Total = valorTotalDouble.ToString("F2");
+                        else
+                            ViewBag.Total = valorTotal;
                     }
                 }
-                if (Busca == 4)
+                else if (busca == 4)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "XRP" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
-                        var valorTotal = (valor / valorHoje).ToString("F6");
-
-                        var valorTotalDouble = Convert.ToDouble(valorTotal);
-                        if (valorTotalDouble >= 1)
-                        {
-                            ViewBag.Total = valorTotalDouble.ToString("F2");
-                        }
-                        else
-                        {
-                            ViewBag.Total = valorTotal;
-                        }
                         ViewBag.Simbolo = "XRP";
+                        valorHoje = _repository.CarregarValorHoje("XRP");
+
+                        var valorTotal = (valor / valorHoje).ToString("F6");
+                        var valorTotalDouble = Convert.ToDouble(valorTotal);
+
+                        if (valorTotalDouble >= 1)
+                            ViewBag.Total = valorTotalDouble.ToString("F2");
+                        else
+                            ViewBag.Total = valorTotal;
                     }
                 }
-                if (Busca == 5)
+                else if (busca == 5)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "PAX Gold" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
-                        var valorTotal = (valor / valorHoje).ToString("F6");
-
-                        var valorTotalDouble = Convert.ToDouble(valorTotal);
-                        if (valorTotalDouble >= 1)
-                        {
-                            ViewBag.Total = valorTotalDouble.ToString("F2");
-                        }
-                        else
-                        {
-                            ViewBag.Total = valorTotal;
-                        }
                         ViewBag.Simbolo = "PAXG";
-                    }
-                }
-                if (Busca == 6)
-                {
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "Litecoin" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
+                        valorHoje = _repository.CarregarValorHoje("PAX Gold");
+
                         var valorTotal = (valor / valorHoje).ToString("F6");
-
                         var valorTotalDouble = Convert.ToDouble(valorTotal);
+
                         if (valorTotalDouble >= 1)
-                        {
                             ViewBag.Total = valorTotalDouble.ToString("F2");
-                        }
                         else
-                        {
                             ViewBag.Total = valorTotal;
-                        }
+                    }
+                }
+                else if (busca == 6)
+                {
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
                         ViewBag.Simbolo = "LTC";
+                        valorHoje = _repository.CarregarValorHoje("Litecoin");
+
+                        var valorTotal = (valor / valorHoje).ToString("F6");
+                        var valorTotalDouble = Convert.ToDouble(valorTotal);
+
+                        if (valorTotalDouble >= 1)
+                            ViewBag.Total = valorTotalDouble.ToString("F2");
+                        else
+                            ViewBag.Total = valorTotal;
                     }
                 }
 
+                if (buscaVenda != null)
+                    itensVenda.Where(i => i.Value == buscaVenda.ToString()).First().Selected = true;
 
-                if (BuscaVenda != null)
-                {
-                    itensVenda.Where(i => i.Value == BuscaVenda.ToString()).First().Selected = true;
-                }
-                if (BuscaVenda == 1)
+                if (buscaVenda == 1)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "Bitcoin" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
+                        valorHoje = _repository.CarregarValorHoje("Bitcoin");
 
                         var valorTotal = (valor * valorHoje).ToString("F2");
                         ViewBag.TotalVenda = valorTotal;
                     }
                 }
-                if (BuscaVenda == 2)
+                else if (buscaVenda == 2)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "Ethereum" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
+                        valorHoje = _repository.CarregarValorHoje("Ethereum");
+                        
+                        var valorTotal = (valor * valorHoje).ToString("F2");
+                        ViewBag.TotalVenda = valorTotal;
+                    }
+                }
+                else if (buscaVenda == 3)
+                {
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        valorHoje = _repository.CarregarValorHoje("Bitcoin Cash");
 
                         var valorTotal = (valor * valorHoje).ToString("F2");
                         ViewBag.TotalVenda = valorTotal;
                     }
                 }
-                if (BuscaVenda == 3)
+                else if (buscaVenda == 4)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "Bitcoin Cash" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
+                        valorHoje = _repository.CarregarValorHoje("XRP");
 
                         var valorTotal = (valor * valorHoje).ToString("F2");
                         ViewBag.TotalVenda = valorTotal;
                     }
                 }
-                if (BuscaVenda == 4)
+                else if (buscaVenda == 5)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "XRP" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
-
-                        var valorTotal = (valor * valorHoje).ToString("F2");
-                        ViewBag.TotalVenda = valorTotal;
-
-                    }
-                }
-                if (BuscaVenda == 5)
-                {
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "PAX Gold" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
+                        valorHoje = _repository.CarregarValorHoje("PAX Gold");
 
                         var valorTotal = (valor * valorHoje).ToString("F2");
                         ViewBag.TotalVenda = valorTotal;
                     }
                 }
-                if (BuscaVenda == 6)
+                else if (buscaVenda == 6)
                 {
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        valorHoje = (from c in _context.CriptomoedaHoje
-                                     join cripto in _context.Criptomoeda
-                                     on c.CriptomoedaId equals cripto.Id
-                                     where cripto.Nome == "Litecoin" &&
-                                     c.Data == DateTime.Today
-                                     select c.Valor).Single();
+                        valorHoje = _repository.CarregarValorHoje("Litecoin");
 
                         var valorTotal = (valor * valorHoje).ToString("F2");
                         ViewBag.TotalVenda = valorTotal;
                     }
                 }
+
                 return View();
             }
             catch (Exception)
