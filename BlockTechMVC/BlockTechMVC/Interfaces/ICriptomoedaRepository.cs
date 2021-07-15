@@ -6,7 +6,7 @@ namespace BlockTechMVC.Interfaces
 {
     public interface ICriptomoedaRepository
     {
-        Task<List<Criptomoeda>> Carregar(string searchString, string sortOrder);
+        Task<List<Criptomoeda>> Carregar(string searchString = null, string sortOrder = null);
         Task<Criptomoeda> Carregar(int? id);
         Task<Criptomoeda> Detalhes(int id);
         Task Adicionar(Criptomoeda criptomoeda);

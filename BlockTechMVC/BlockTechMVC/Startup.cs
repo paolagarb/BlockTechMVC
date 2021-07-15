@@ -11,6 +11,7 @@ using BlockTechMVC.Models;
 using System.Globalization;
 using BlockTechMVC.Interfaces;
 using BlockTechMVC.Repositories;
+using BlockTechMVC.Services;
 
 namespace BlockTechMVC
 {
@@ -45,6 +46,11 @@ namespace BlockTechMVC
             services.AddScoped<IRelatorioRepository, RelatorioRepository>();
             services.AddScoped<IInvestimentoRepository, InvestimentoRepository>();
             services.AddScoped<ICriptomoedaHojeRepository, CriptomoedaHojeRepository>();
+            services.AddScoped<ICriptomoedaMercadoBitcoinFacade, CriptomoedaMercadoBitcoinFacade>();
+
+            services.Configure<MercadoBitcoinOptions>(Configuration.GetSection("MercadoBitcoinOptions"));
+
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

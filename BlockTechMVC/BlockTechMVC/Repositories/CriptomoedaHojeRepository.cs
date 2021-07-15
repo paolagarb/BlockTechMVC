@@ -2,9 +2,11 @@
 using BlockTechMVC.Interfaces;
 using BlockTechMVC.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlockTechMVC.Repositories
 {
@@ -17,10 +19,10 @@ namespace BlockTechMVC.Repositories
             _context = context;
         }
 
-        public void Adicionar(CriptomoedaHoje criptomoeda)
+        public async Task Adicionar(CriptomoedaHoje criptomoeda)
         {
             _context.Add(criptomoeda);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public void Atualizar(CriptomoedaHoje criptomoeda)
@@ -41,18 +43,43 @@ namespace BlockTechMVC.Repositories
             return _context.Criptomoeda.ToList();
         }
 
-        public List<CriptomoedaHoje> Listar()
+        public async Task<List<CriptomoedaHoje>> Listar()
         {
-            return _context.CriptomoedaHoje
-                    .Where(c => c.Data.Equals(DateTime.Now.Date))
-                    .Include(c => c.Criptomoeda).ToList();
+            //Caso mais de um usuário entre na página,
+            //o valor das criptomoedas serão salvos ao mesmo tempo,
+            //tornando essa filtragem ineficiente - seriam exibidas criptomoedas repetidas
+            //int criptomoedas = _context.Criptomoeda.Count();
+            //return await _context.CriptomoedaHoje
+            //        .OrderByDescending(c => c.Data)
+            //        .Where(c => c.Data.Date.Equals(DateTime.Now.Date))
+            //        .Take(criptomoedas)
+            //        .Include(c => c.Criptomoeda).ToListAsync();
+
+            var criptomoedas = _context.Criptomoeda.ToList();
+            List<CriptomoedaHoje> list = new List<CriptomoedaHoje>();
+
+            foreach (var item in criptomoedas)
+            {
+                var criptomoeda = await _context.CriptomoedaHoje
+                            .OrderByDescending(c => c.Data)
+                            .Where(c => c.Data.Date.Equals(DateTime.Now.Date) && c.Criptomoeda.Nome.Equals(item.Nome))
+                            .LastOrDefaultAsync();
+
+                list.Add(criptomoeda);
+            }
+
+            return list;
         }
 
-        public List<CriptomoedaHoje> ListarPorData(DateTime data)
+        public async Task<List<CriptomoedaHoje>> ListarPorData(DateTime data)
         {
-            return _context.CriptomoedaHoje
+            int criptomoedas = _context.Criptomoeda.Count();
+
+            return await _context.CriptomoedaHoje
+                     .OrderByDescending(c => c.Data)
                      .Where(c => c.Data.Equals(data))
-                     .Include(c => c.Criptomoeda).ToList();
+                     .Take(criptomoedas)
+                     .Include(c => c.Criptomoeda).ToListAsync();
         }
 
         public void Remover(int? id)

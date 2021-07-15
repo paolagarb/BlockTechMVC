@@ -16,10 +16,16 @@ namespace BlockTechMVC.Controllers
     public class CriptomoedasHojeController : Controller
     {
         private readonly ICriptomoedaHojeRepository _repository;
+        private readonly ICriptomoedaMercadoBitcoinFacade _criptomoedaMercadoBitcoin;
+        private readonly ICriptomoedaRepository _criptomoedaRepository;
 
-        public CriptomoedasHojeController(ICriptomoedaHojeRepository repository)
+        public CriptomoedasHojeController(ICriptomoedaHojeRepository repository,
+                                          ICriptomoedaMercadoBitcoinFacade criptomoedaMercadoBitcoin,
+                                          ICriptomoedaRepository criptomoedaRepository)
         {
             _repository = repository;
+            _criptomoedaMercadoBitcoin = criptomoedaMercadoBitcoin;
+            _criptomoedaRepository = criptomoedaRepository;
         }
 
         [Route("criptomoedas-valores")]
@@ -30,12 +36,56 @@ namespace BlockTechMVC.Controllers
                 ViewBag.NameSortParm = sortOrder == "Nome" ? "Nome_desc" : "Nome";
                 ViewBag.ValueSortParm = sortOrder == "Valor" ? "Valor_desc" : "Valor";
 
-                var criptomoedas = _repository.Listar();
+                var criptomoedas = await _repository.Listar();
 
-                if (searchDate != DateTime.MinValue)
-                    criptomoedas = _repository.ListarPorData(searchDate);
+                if (searchDate == DateTime.MinValue)
+                {
+                    var criptomoedasList = await _criptomoedaRepository.Carregar();
 
-                if (String.IsNullOrEmpty(sortOrder))
+                    foreach (var item in criptomoedasList)
+                    {
+                        var valorMB = await ObterValorAtual(item.Simbolo);
+
+                        if (valorMB > 0.0)
+                        {
+                            CriptomoedaHoje criptomoedaHoje = new CriptomoedaHoje
+                            {
+                                Data = DateTime.Now,
+                                CriptomoedaId = item.Id,
+                                Valor = valorMB
+                            };
+
+                            await _repository.Adicionar(criptomoedaHoje);
+                        }
+                    }
+
+                    criptomoedas = await _repository.Listar();
+                }
+                else
+                {
+                    var criptomoedasList = await _criptomoedaRepository.Carregar();
+
+                    foreach (var item in criptomoedasList)
+                    {
+                        var valorMB = await ObterValorPorData(item.Simbolo, searchDate);
+
+                        if (valorMB > 0.0)
+                        {
+                            CriptomoedaHoje criptomoedaHoje = new CriptomoedaHoje
+                            {
+                                Data = searchDate,
+                                CriptomoedaId = item.Id,
+                                Valor = valorMB
+                            };
+
+                            await _repository.Adicionar(criptomoedaHoje);
+                        }
+                    }
+
+                    criptomoedas = await _repository.ListarPorData(searchDate);
+                }
+
+                if (!String.IsNullOrEmpty(sortOrder))
                 {
                     var criptomoeda = criptomoedas.OrderBy(c => c.Criptomoeda.Nome);
 
@@ -63,7 +113,7 @@ namespace BlockTechMVC.Controllers
 
                 return View(criptomoedas);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return RedirectToAction(nameof(Error), new { message = "Ocorreu um erro inesperado. Tente novamente." });
             }
@@ -359,7 +409,7 @@ namespace BlockTechMVC.Controllers
                     if (!String.IsNullOrEmpty(searchString))
                     {
                         valorHoje = _repository.CarregarValorHoje("Ethereum");
-                        
+
                         var valorTotal = (valor * valorHoje).ToString("F2");
                         ViewBag.TotalVenda = valorTotal;
                     }
@@ -411,6 +461,26 @@ namespace BlockTechMVC.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "Ocorreu um erro inesperado ao realizar a simulação. Tente novamente." });
             }
+        }
+
+        public async Task<double> ObterValorAtual(string criptomoeda)
+        {
+            var retornoMB = await _criptomoedaMercadoBitcoin.ObterValorAtual(criptomoeda);
+
+            if (retornoMB.Ticker != null)
+                return Convert.ToDouble(retornoMB.Ticker.Last);
+
+            return 0.0;
+        }
+
+        public async Task<double> ObterValorPorData(string criptomoeda, DateTime data)
+        {
+            var retornoMB = await _criptomoedaMercadoBitcoin.ObterValor(criptomoeda, data);
+
+            if (retornoMB != null)
+                return (Convert.ToDouble(retornoMB.Lowest) + Convert.ToDouble(retornoMB.Highest)) / 2;
+
+            return 0.0;
         }
     }
 }
