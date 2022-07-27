@@ -152,7 +152,7 @@ para análise dos investimentos ao longo do tempo."
 * Manual do administrador - página 86
 
 </details>
-
+<!--
   
 ## :woman: Autor
 
@@ -166,3 +166,4 @@ para análise dos investimentos ao longo do tempo."
 <img src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white"> <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white"> <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white"> <img src="https://img.shields.io/badge/Microsoft_SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white">
 
 </div>
+-->
